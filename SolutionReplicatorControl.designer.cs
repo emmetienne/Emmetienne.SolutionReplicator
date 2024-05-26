@@ -93,8 +93,8 @@ namespace Emmetienne.SolutionReplicator
             // 
             this.tsbLoadSolution.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsbLoadSolution.Name = "tsbLoadSolution";
-            this.tsbLoadSolution.Size = new System.Drawing.Size(88, 22);
-            this.tsbLoadSolution.Text = "Load solutions";
+            this.tsbLoadSolution.Size = new System.Drawing.Size(179, 22);
+            this.tsbLoadSolution.Text = "Connect to source environment";
             this.tsbLoadSolution.Click += new System.EventHandler(this.tsbLoadSolution_Click);
             // 
             // tssSeparator1
