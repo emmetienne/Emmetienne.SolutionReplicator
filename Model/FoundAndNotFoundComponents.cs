@@ -13,7 +13,7 @@ namespace Emmetienne.SolutionReplicator.Model
             NotFoundComponents = new List<SolutionComponentWrapper>();
         }
 
-        public void AddGoodAndBadcomponents(FoundAndNotFoundComponents goodAndBadComponents)
+        public void AddComponentsToFoundAndNotFoundList(FoundAndNotFoundComponents goodAndBadComponents)
         {
             this.FoundComponents.AddRange(goodAndBadComponents.FoundComponents);
             this.NotFoundComponents.AddRange(goodAndBadComponents.NotFoundComponents);

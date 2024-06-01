@@ -48,18 +48,9 @@ namespace Emmetienne.SolutionReplicator.Repository
             if (componenType == 20)
                 addSolutionComponentRequest.DoNotIncludeSubcomponents = false;
 
+            logger.LogDebug($"Adding component {objectId} to solution {solutionUniqueName}");
+
             organizationService.Execute(addSolutionComponentRequest);
-        }
-
-        public void RemoveComponentToSolution(Guid objectId, int componenType, string solutionUniqueName)
-        {
-            var removeSolutionComponentRequest = new RemoveSolutionComponentRequest();
-
-            removeSolutionComponentRequest.ComponentType = componenType;
-            removeSolutionComponentRequest.ComponentId = objectId;
-            removeSolutionComponentRequest.SolutionUniqueName = solutionUniqueName;
-
-            var response = (RemoveSolutionComponentResponse)organizationService.Execute(removeSolutionComponentRequest);
         }
 
         public SolutionWrapper CreateSolution(TargetSolutionSettings targetSolutionSettings)
@@ -70,9 +61,9 @@ namespace Emmetienne.SolutionReplicator.Repository
             targetSolution[solution.version] = targetSolutionSettings.Version;
             targetSolution[solution.publisherid] = new EntityReference(nameof(publisher), targetSolutionSettings.Publisher.Value);
 
-            var createdSolutionId = organizationService.Create(targetSolution);
+            targetSolution.Id = organizationService.Create(targetSolution);
 
-            targetSolution.Id = createdSolutionId;
+            logger.LogDebug($"Solution {targetSolution[solution.uniquename]} created with id {targetSolution.Id} on the target environment");
 
             return SolutionWrapper.ToSolutionWrapper(targetSolution);
         }

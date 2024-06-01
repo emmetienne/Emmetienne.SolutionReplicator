@@ -202,6 +202,7 @@
     <Compile Include="Repository\SolutionComponentsRepository.cs" />
     <Compile Include="Repository\SolutionComponentTypesRepository.cs" />
     <Compile Include="Repository\SolutionRepository.cs" />
+    <Compile Include="Services\ComponentSearchServiceStrategy\GenericComponentSearchStrategy.cs" />
     <Compile Include="Services\ComponentTypeOptionSetService.cs" />
     <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\MetadataServiceSingleton.cs" />
@@ -211,6 +212,13 @@
     <Compile Include="Services\SolutionReplicatorService.cs" />
     <Compile Include="Services\SolutionReplicatorValidationService.cs" />
     <Compile Include="Services\SolutionRetrieverService.cs" />
+    <Compile Include="Services\ComponentSearchServiceStrategy\ComponentSearchStrategyFactory.cs" />
+    <Compile Include="Services\ComponentSearchServiceStrategy\AttributesSearchStrategy.cs" />
+    <Compile Include="Services\ComponentSearchServiceStrategy\EntityKeysSearchStraregy.cs" />
+    <Compile Include="Services\ComponentSearchServiceStrategy\GlobalOptionsetsSearchStrategy.cs" />
+    <Compile Include="Services\ComponentSearchServiceStrategy\EntityRelationshipsSearchStrategy.cs" />
+    <Compile Include="Services\ComponentSearchServiceStrategy\EntitiesSearchStrategy.cs" />
+    <Compile Include="Services\ComponentSearchServiceStrategy\IComponentSearchStrategy.cs" />
     <Compile Include="SolutionReplicatorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -46,18 +46,6 @@ namespace Emmetienne.SolutionReplicator
         {
             ShowInfoNotification("Visit my GitHub", new Uri("https://github.com/emmetienne"));
 
-            // Loads or creates the settings for the plugin
-            if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
-            {
-                mySettings = new Settings();
-
-                logService.LogDebug("Settings not found => a new settings file has been created!");
-            }
-            else
-            {
-                logService.LogInfo("Settings found and loaded");
-            }
-
             this.solutionRetrieverService = new SolutionRetrieverService(logService, this);
             this.solutionComponentRetrieverService = new SolutionComponentRetrieverService(logService, Service, this);
             this.solutionReplicatorValidationService = new SolutionReplicatorValidationService(logService, this);
@@ -97,7 +85,7 @@ namespace Emmetienne.SolutionReplicator
                 ComponentTypeCache.Instance.InvalidateDynamicCache();
             }
 
-            logService.LogDebug($"Source environment connection has changed to: {this.ConnectionDetail.WebApplicationUrl}");
+            logService.LogWarning($"Source environment connection has changed to: {this.ConnectionDetail.WebApplicationUrl}");
         }
 
         private void replicateSolutionButton_Click(object sender, EventArgs e)
@@ -115,7 +103,7 @@ namespace Emmetienne.SolutionReplicator
 
             var secondService = this.AdditionalConnectionDetails[0].GetCrmServiceClient();
 
-            this.solutionReplicatorService = new SolutionReplicatorService(logService, Service, secondService, null, this);
+            this.solutionReplicatorService = new SolutionReplicatorService(logService, Service, secondService, this);
 
             solutionReplicatorService.ReplicateSolution(this.solutionComponentsGridViewComponent.SolutionComponents, targetSolutionSettings);
         }
@@ -144,7 +132,7 @@ namespace Emmetienne.SolutionReplicator
             ComponentTypeCache.Instance.HandleComponentCache(this.Service, this.AdditionalConnectionDetails[0].GetCrmServiceClient());
             EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(false);
 
-            logService.LogDebug($"Target environment connection has changed to: {this.AdditionalConnectionDetails[0].WebApplicationUrl}");
+            logService.LogWarning($"Target environment connection has changed to: {this.AdditionalConnectionDetails[0].WebApplicationUrl}");
         }
     }
 }

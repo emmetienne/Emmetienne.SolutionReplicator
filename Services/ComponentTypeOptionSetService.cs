@@ -30,6 +30,9 @@ namespace Emmetienne.SolutionReplicator.Services
 
             var solutionComponentTypeOptionSet = solutionComponentTypesRepository.GetComponentTypesFromEnvironment();
 
+            if (solutionComponentTypeOptionSet == null)
+                return componentTypeNameDictionary;
+
             foreach (var option in solutionComponentTypeOptionSet.Options)
             {
                 var tmpComponentTypeString = option.Label?.LocalizedLabels?.FirstOrDefault().Label;

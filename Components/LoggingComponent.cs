@@ -38,7 +38,7 @@ namespace Emmetienne.SolutionReplicator.Components
 
         private void WriteInternal(LogModel log)
         {
-            string[] row = new string[] { log.Timestamp.ToString(), log.Message, log.LogLevel.ToString() };
+            string[] row = new string[] { log.Timestamp.ToString(), log.Message, !string.IsNullOrWhiteSpace(log.Exception) ? log.Exception : string.Empty, log.LogLevel.ToString() };
 
             this.loggingComponentDataGridView.ClearSelection();
             this.loggingComponentDataGridView.Rows.Add(row);
@@ -46,6 +46,5 @@ namespace Emmetienne.SolutionReplicator.Components
 
             this.loggingComponentDataGridView.Rows[this.loggingComponentDataGridView.Rows.Count - 1].DefaultCellStyle.ForeColor = log.Color;
         }
-
     }
 }
