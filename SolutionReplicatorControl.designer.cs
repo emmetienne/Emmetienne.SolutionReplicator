@@ -54,6 +54,7 @@ namespace Emmetienne.SolutionReplicator
             this.logDataGridView = new System.Windows.Forms.DataGridView();
             this.timestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.message = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.exception = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -364,6 +365,7 @@ namespace Emmetienne.SolutionReplicator
             this.logDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.timestamp,
             this.message,
+            this.exception,
             this.severity});
             this.logDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logDataGridView.GridColor = System.Drawing.Color.White;
@@ -378,9 +380,11 @@ namespace Emmetienne.SolutionReplicator
             // 
             // timestamp
             // 
+            this.timestamp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.timestamp.HeaderText = "Timestamp";
             this.timestamp.Name = "timestamp";
             this.timestamp.ReadOnly = true;
+            this.timestamp.Width = 120;
             // 
             // message
             // 
@@ -388,11 +392,19 @@ namespace Emmetienne.SolutionReplicator
             this.message.Name = "message";
             this.message.ReadOnly = true;
             // 
+            // exception
+            // 
+            this.exception.HeaderText = "Exception";
+            this.exception.Name = "exception";
+            this.exception.ReadOnly = true;
+            // 
             // severity
             // 
+            this.severity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.severity.HeaderText = "Severity";
             this.severity.Name = "severity";
             this.severity.ReadOnly = true;
+            this.severity.Width = 70;
             // 
             // SolutionReplicatorControl
             // 
@@ -454,12 +466,13 @@ namespace Emmetienne.SolutionReplicator
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.TextBox versionTextBox;
         private System.Windows.Forms.DataGridView logDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp;
-        private System.Windows.Forms.DataGridViewTextBoxColumn message;
-        private System.Windows.Forms.DataGridViewTextBoxColumn severity;
         private System.Windows.Forms.CheckBox pruneComponentcheckBox;
         private System.Windows.Forms.Button replicateSolutionButton;
         private System.Windows.Forms.ComboBox publisherComboBox;
         private System.Windows.Forms.ToolStripButton tsbSecondEnvinronment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn message;
+        private System.Windows.Forms.DataGridViewTextBoxColumn exception;
+        private System.Windows.Forms.DataGridViewTextBoxColumn severity;
     }
 }

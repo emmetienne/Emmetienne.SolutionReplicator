@@ -1,6 +1,4 @@
 ﻿using Emmetienne.SolutionReplicator.Model;
-using Emmetienne.SolutionReplicator.Repository;
-using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -9,7 +9,7 @@ namespace Emmetienne.SolutionReplicator.Services
 
         }
 
-        public void LogInfo(string message)
+        public void LogInfo(string message, string exception = null)
         {
             var tmpLog = new LogModel();
             tmpLog.Message = message;
@@ -19,7 +19,17 @@ namespace Emmetienne.SolutionReplicator.Services
             WriteLog(tmpLog);
         }
 
-        public void LogDebug(string message)
+        public void LogWarning(string message, string exception = null)
+        {
+            var tmpLog = new LogModel();
+            tmpLog.Message = message;
+            tmpLog.Color = System.Drawing.Color.Goldenrod;
+            tmpLog.LogLevel = LogLevel.warning;
+
+            WriteLog(tmpLog);
+        }
+
+        public void LogDebug(string message, string exception = null)
         {
             var tmpLog = new LogModel();
             tmpLog.Message = message;
@@ -29,12 +39,15 @@ namespace Emmetienne.SolutionReplicator.Services
             WriteLog(tmpLog);
         }
 
-        public void LogError(string message)
+        public void LogError(string message, string exception = null)
         {
             var tmpLog = new LogModel();
             tmpLog.Message = message;
             tmpLog.Color = System.Drawing.Color.Red;
             tmpLog.LogLevel = LogLevel.error;
+
+            if (!string.IsNullOrWhiteSpace(exception))
+                tmpLog.Exception = exception;
 
             WriteLog(tmpLog);
         }

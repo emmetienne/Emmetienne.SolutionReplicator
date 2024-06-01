@@ -18,6 +18,9 @@ namespace Emmetienne.SolutionReplicator.Repository
 
         public OptionSetMetadata GetComponentTypesFromEnvironment()
         {
+            if (organizationService == null)
+                return null;
+
             logger.LogInfo("Retrieving solution components from environment");
             var componentTypeOptionSetQuery = new RetrieveOptionSetRequest { Name = "componenttype" };
 
