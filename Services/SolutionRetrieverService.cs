@@ -1,6 +1,7 @@
 ﻿using Emmetienne.SolutionReplicator.Model;
 using Emmetienne.SolutionReplicator.Repository;
 using Microsoft.Xrm.Sdk;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using XrmToolBox.Extensibility;
@@ -13,6 +14,7 @@ namespace Emmetienne.SolutionReplicator.Services
         private readonly PluginControlBase pluginControlBase;
         private SolutionRepository solutionRepository;
         public List<SolutionWrapper> Solutions { get; private set; } = new List<SolutionWrapper>();
+        public List<SolutionWrapper> FilteredSolutions { get; private set; } = new List<SolutionWrapper>();
 
         public SolutionRetrieverService(LogService logService, PluginControlBase pluginBase)
         {
@@ -22,6 +24,7 @@ namespace Emmetienne.SolutionReplicator.Services
             this.solutionRepository = new SolutionRepository(pluginControlBase.Service, logService);
 
             EventBus.EventBusSingleton.Instance.changeSourceOrganizationService += ChangeMainConnection;
+            EventBus.EventBusSingleton.Instance.filterSolutionComponent += FilterSolutions;
         }
 
         public void GetSolutions()
@@ -49,6 +52,23 @@ namespace Emmetienne.SolutionReplicator.Services
                     EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(false);
                 }
             });
+        }
+
+        public void FilterSolutions(string solutionFilter)
+        {
+            if (Solutions == null || Solutions.Count == 0)
+                return;
+
+            if (string.IsNullOrWhiteSpace(solutionFilter))
+            {
+                EventBus.EventBusSingleton.Instance.fillSolutionsView?.Invoke(Solutions);
+                EventBus.EventBusSingleton.Instance.clearSolutionComponentView?.Invoke();
+                return;
+            }
+
+            FilteredSolutions = Solutions.Where(x => x.UniqueName.IndexOf(solutionFilter, StringComparison.OrdinalIgnoreCase) > -1 || x.FriendlyName.IndexOf(solutionFilter, StringComparison.OrdinalIgnoreCase) > -1).ToList();
+            EventBus.EventBusSingleton.Instance.fillSolutionsView?.Invoke(FilteredSolutions);
+            EventBus.EventBusSingleton.Instance.clearSolutionComponentView?.Invoke();
         }
 
         public override void ChangeMainConnection(IOrganizationService service)

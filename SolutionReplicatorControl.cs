@@ -24,6 +24,7 @@ namespace Emmetienne.SolutionReplicator
         private SourceEnvirontmentLabelView sourceEnvirontmentLabelView;
         private TargetEnvirontmentLabelView targetEnvirontmentLabelView;
         private ReplicateSolutionButtonView replicateSolutionButtonView;
+
         private ILoggingComponent loggingComponent;
 
 
@@ -96,7 +97,7 @@ namespace Emmetienne.SolutionReplicator
                 return;
 
             var targetSolutionSettings = new TargetSolutionSettings(this.solutionNameTextBox.Text, (Guid?)this.publisherComboBox.SelectedValue,
-                                                                    this.pruneComponentcheckBox.Checked, this.versionTextBox.Text);
+                                                                    this.versionTextBox.Text);
 
             if (!solutionReplicatorValidationService.Validate(targetSolutionSettings))
                 return;
@@ -133,6 +134,16 @@ namespace Emmetienne.SolutionReplicator
             EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(false);
 
             logService.LogWarning($"Target environment connection has changed to: {this.AdditionalConnectionDetails[0].WebApplicationUrl}");
+        }
+
+        private void OnFilterSolutionTextBoxFilter(object sender, EventArgs e)
+        {
+            EventBus.EventBusSingleton.Instance.filterSolutionComponent?.Invoke(this.solutionFilterTextBox.Text);
+        }
+
+        private void solutionTableLayout_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+
         }
     }
 }
