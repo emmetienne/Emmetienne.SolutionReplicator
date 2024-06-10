@@ -52,7 +52,7 @@ namespace Emmetienne.SolutionReplicator.Services
                     if (componentTypeDictionary == null)
                         componentTypeDictionary = MetadataServiceSingleton.GetComponentTypeDictionary(organizationService, logService);
 
-                    var wrappedResults = results.Select(x => SolutionComponentWrapper.ToSolutionComponentWrapper(x, componentTypeDictionary)).ToList();
+                    var wrappedResults = results.Select(x => SolutionComponentWrapper.ToSolutionComponentWrapper(x, componentTypeDictionary)).OrderBy(x=>x.ComponentType).ToList();
                     args.Result = wrappedResults;
 
                     logService.LogInfo($"Found {wrappedResults.Count} component in solution");

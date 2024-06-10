@@ -184,6 +184,7 @@
     <Compile Include="Components\TargetEnvirontmentLabelView.cs" />
     <Compile Include="EventBus\EventBusSingleton.cs" />
     <Compile Include="Model\AdditionalComponentFieldForComparison.cs" />
+    <Compile Include="Model\SolutionComponentSearchResult.cs" />
     <Compile Include="Model\ComponentType.cs" />
     <Compile Include="Model\ComponentTypeCache.cs" />
     <Compile Include="Model\Entities\Publisher.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Repository\SolutionComponentsRepository.cs" />
     <Compile Include="Repository\SolutionComponentTypesRepository.cs" />
     <Compile Include="Repository\SolutionRepository.cs" />
+    <Compile Include="Services\ComponentSearchServiceStrategy\NotYetImplementedSearchStrategy.cs" />
     <Compile Include="Services\ComponentSearchServiceStrategy\GenericComponentSearchStrategy.cs" />
     <Compile Include="Services\ComponentTypeOptionSetService.cs" />
     <Compile Include="Services\LogService.cs" />

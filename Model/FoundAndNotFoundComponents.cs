@@ -2,7 +2,7 @@
 
 namespace Emmetienne.SolutionReplicator.Model
 {
-    internal class FoundAndNotFoundComponents
+    public class FoundAndNotFoundComponents
     {
         public List<SolutionComponentWrapper> FoundComponents { get; set; }
         public List<SolutionComponentWrapper> NotFoundComponents { get; set; }

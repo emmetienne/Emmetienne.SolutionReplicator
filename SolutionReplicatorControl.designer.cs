@@ -36,10 +36,12 @@ namespace Emmetienne.SolutionReplicator
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbSecondEnvinronment = new System.Windows.Forms.ToolStripButton();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.sourceSolutionGroupBox = new System.Windows.Forms.GroupBox();
             this.solutionTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.solutionGridView = new System.Windows.Forms.DataGridView();
             this.solutionFilterTextBox = new System.Windows.Forms.TextBox();
             this.componentsAndOptionsSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.sourceSolutionComponentsGroupBox = new System.Windows.Forms.GroupBox();
             this.solutionComponentDataGridView = new System.Windows.Forms.DataGridView();
             this.targetSolutionGroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -57,19 +59,19 @@ namespace Emmetienne.SolutionReplicator
             this.message = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.exception = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sourceSolutionComponentsGroupBox = new System.Windows.Forms.GroupBox();
-            this.sourceSolutionGroupBox = new System.Windows.Forms.GroupBox();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
+            this.sourceSolutionGroupBox.SuspendLayout();
             this.solutionTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.solutionGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.componentsAndOptionsSplitContainer)).BeginInit();
             this.componentsAndOptionsSplitContainer.Panel1.SuspendLayout();
             this.componentsAndOptionsSplitContainer.Panel2.SuspendLayout();
             this.componentsAndOptionsSplitContainer.SuspendLayout();
+            this.sourceSolutionComponentsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.solutionComponentDataGridView)).BeginInit();
             this.targetSolutionGroupBox.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -79,8 +81,6 @@ namespace Emmetienne.SolutionReplicator
             this.splitContainerLayout.SuspendLayout();
             this.logGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logDataGridView)).BeginInit();
-            this.sourceSolutionComponentsGroupBox.SuspendLayout();
-            this.sourceSolutionGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenu
@@ -138,6 +138,18 @@ namespace Emmetienne.SolutionReplicator
             this.splitContainer.SplitterDistance = 422;
             this.splitContainer.SplitterWidth = 5;
             this.splitContainer.TabIndex = 5;
+            // 
+            // sourceSolutionGroupBox
+            // 
+            this.sourceSolutionGroupBox.BackColor = System.Drawing.Color.White;
+            this.sourceSolutionGroupBox.Controls.Add(this.solutionTableLayout);
+            this.sourceSolutionGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sourceSolutionGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.sourceSolutionGroupBox.Name = "sourceSolutionGroupBox";
+            this.sourceSolutionGroupBox.Size = new System.Drawing.Size(422, 502);
+            this.sourceSolutionGroupBox.TabIndex = 2;
+            this.sourceSolutionGroupBox.TabStop = false;
+            this.sourceSolutionGroupBox.Text = "Source solution";
             // 
             // solutionTableLayout
             // 
@@ -208,6 +220,17 @@ namespace Emmetienne.SolutionReplicator
             this.componentsAndOptionsSplitContainer.SplitterDistance = 336;
             this.componentsAndOptionsSplitContainer.TabIndex = 1;
             // 
+            // sourceSolutionComponentsGroupBox
+            // 
+            this.sourceSolutionComponentsGroupBox.Controls.Add(this.solutionComponentDataGridView);
+            this.sourceSolutionComponentsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sourceSolutionComponentsGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.sourceSolutionComponentsGroupBox.Name = "sourceSolutionComponentsGroupBox";
+            this.sourceSolutionComponentsGroupBox.Size = new System.Drawing.Size(336, 502);
+            this.sourceSolutionComponentsGroupBox.TabIndex = 1;
+            this.sourceSolutionComponentsGroupBox.TabStop = false;
+            this.sourceSolutionComponentsGroupBox.Text = "Source solution components";
+            // 
             // solutionComponentDataGridView
             // 
             this.solutionComponentDataGridView.AllowUserToAddRows = false;
@@ -228,6 +251,7 @@ namespace Emmetienne.SolutionReplicator
             this.solutionComponentDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.solutionComponentDataGridView.Size = new System.Drawing.Size(330, 483);
             this.solutionComponentDataGridView.TabIndex = 0;
+            this.solutionComponentDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.solutionComponentDataGridView_CellContentClick);
             // 
             // targetSolutionGroupBox
             // 
@@ -426,29 +450,6 @@ namespace Emmetienne.SolutionReplicator
             this.severity.ReadOnly = true;
             this.severity.Width = 70;
             // 
-            // sourceSolutionComponentsGroupBox
-            // 
-            this.sourceSolutionComponentsGroupBox.Controls.Add(this.solutionComponentDataGridView);
-            this.sourceSolutionComponentsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sourceSolutionComponentsGroupBox.Location = new System.Drawing.Point(0, 0);
-            this.sourceSolutionComponentsGroupBox.Name = "sourceSolutionComponentsGroupBox";
-            this.sourceSolutionComponentsGroupBox.Size = new System.Drawing.Size(336, 502);
-            this.sourceSolutionComponentsGroupBox.TabIndex = 1;
-            this.sourceSolutionComponentsGroupBox.TabStop = false;
-            this.sourceSolutionComponentsGroupBox.Text = "Source solution components";
-            // 
-            // sourceSolutionGroupBox
-            // 
-            this.sourceSolutionGroupBox.BackColor = System.Drawing.Color.White;
-            this.sourceSolutionGroupBox.Controls.Add(this.solutionTableLayout);
-            this.sourceSolutionGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sourceSolutionGroupBox.Location = new System.Drawing.Point(0, 0);
-            this.sourceSolutionGroupBox.Name = "sourceSolutionGroupBox";
-            this.sourceSolutionGroupBox.Size = new System.Drawing.Size(422, 502);
-            this.sourceSolutionGroupBox.TabIndex = 2;
-            this.sourceSolutionGroupBox.TabStop = false;
-            this.sourceSolutionGroupBox.Text = "Source solution";
-            // 
             // SolutionReplicatorControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -464,6 +465,7 @@ namespace Emmetienne.SolutionReplicator
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
+            this.sourceSolutionGroupBox.ResumeLayout(false);
             this.solutionTableLayout.ResumeLayout(false);
             this.solutionTableLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.solutionGridView)).EndInit();
@@ -471,6 +473,7 @@ namespace Emmetienne.SolutionReplicator
             this.componentsAndOptionsSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.componentsAndOptionsSplitContainer)).EndInit();
             this.componentsAndOptionsSplitContainer.ResumeLayout(false);
+            this.sourceSolutionComponentsGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.solutionComponentDataGridView)).EndInit();
             this.targetSolutionGroupBox.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -482,8 +485,6 @@ namespace Emmetienne.SolutionReplicator
             this.splitContainerLayout.ResumeLayout(false);
             this.logGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.logDataGridView)).EndInit();
-            this.sourceSolutionComponentsGroupBox.ResumeLayout(false);
-            this.sourceSolutionGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

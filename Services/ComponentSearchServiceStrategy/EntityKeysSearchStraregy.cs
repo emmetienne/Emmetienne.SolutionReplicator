@@ -39,6 +39,7 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
 
                 if (sourceRetrieveResponse.EntityKeyMetadata == null)
                 {
+                    component.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
                     foundAndNotFoundComponents.NotFoundComponents.Add(component);
                     continue;
                 }
@@ -47,6 +48,8 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
                 tmpTargetComponentWrapper.TargetEnvironmentObjectId = targetRetrieveResponse.EntityKeyMetadata.MetadataId.Value;
                 tmpTargetComponentWrapper.ObjectId = component.ObjectId;
                 tmpTargetComponentWrapper.ComponentType = 14;
+                tmpTargetComponentWrapper.ComponentSearchResult =   ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.foundOnTargetEnvironment];
+
                 foundAndNotFoundComponents.FoundComponents.Add(tmpTargetComponentWrapper);
             }
 

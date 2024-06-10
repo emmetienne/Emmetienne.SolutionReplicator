@@ -24,7 +24,7 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
             }
 
             if (!ComponentTypeCache.Instance.ContainsKey(componentTypeCode))
-                return null;
+                return new NotYetImplementedSearchStrategy();
 
             return new GenericComponentSearchStrategy();
         }

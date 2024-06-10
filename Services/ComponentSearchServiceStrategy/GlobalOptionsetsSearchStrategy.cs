@@ -11,7 +11,7 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
     {
         public FoundAndNotFoundComponents Handle(IEnumerable<SolutionComponentWrapper> componentToSearchList, IOrganizationService sourceEnvironmentService, IOrganizationService targetEnvironmentService, LogService logService)
         {
-            var goodAndBadComponents = new FoundAndNotFoundComponents();
+            var foundAndNotFoundComponents = new FoundAndNotFoundComponents();
 
             foreach (var component in componentToSearchList)
             {
@@ -24,7 +24,7 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
 
                 if (sourceRetrieveResponse.OptionSetMetadata == null)
                 {
-                    goodAndBadComponents.NotFoundComponents.Add(component);
+                    foundAndNotFoundComponents.NotFoundComponents.Add(component);
                     continue;
                 }
 
@@ -41,7 +41,8 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
 
                     if (sourceRetrieveResponse.OptionSetMetadata == null)
                     {
-                        goodAndBadComponents.NotFoundComponents.Add(component);
+                        component.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
+                        foundAndNotFoundComponents.NotFoundComponents.Add(component);
                         continue;
                     }
 
@@ -49,15 +50,19 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
                     tmpTargetComponentWrapper.TargetEnvironmentObjectId = targetRetrieveResponse.OptionSetMetadata.MetadataId.Value;
                     tmpTargetComponentWrapper.ObjectId = component.ObjectId;
                     tmpTargetComponentWrapper.ComponentType = 9;
-                    goodAndBadComponents.FoundComponents.Add(tmpTargetComponentWrapper);
+                    tmpTargetComponentWrapper.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
+
+                    foundAndNotFoundComponents.FoundComponents.Add(tmpTargetComponentWrapper);
                 }
                 catch (Exception ex)
                 {
                     logService.LogError($"Error while retrieving optionset {optionSetLogicalName}", ex.Message);
+                    component.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
+                    foundAndNotFoundComponents.NotFoundComponents.Add(component);
                 }
             }
 
-            return goodAndBadComponents;
+            return foundAndNotFoundComponents;
         }
     }
 }

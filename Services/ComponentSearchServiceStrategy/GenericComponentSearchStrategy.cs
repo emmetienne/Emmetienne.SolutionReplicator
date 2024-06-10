@@ -100,6 +100,7 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
 
                 if (targetResults.Entities.Count == 0)
                 {
+                    component.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
                     foundAndNotFoundComponents.NotFoundComponents.Add(component);
                     
                     logService.LogWarning($"Component of type {component.ComponentTypeName} with source environment id <{component.ObjectId}> not found on target environment");
@@ -112,9 +113,13 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
                 foreach (var result in targetResults.Entities)
                 {
                     var tmpTargetComponentWrapper = new SolutionComponentWrapper();
-                    tmpTargetComponentWrapper.ObjectId = result.Id;
+                    tmpTargetComponentWrapper.TargetEnvironmentObjectId = result.Id;
+                    tmpTargetComponentWrapper.ObjectId = component.ObjectId;
 
                     tmpTargetComponentWrapper.ComponentType = componentTypeContent.TargetComponentTypeCode.HasValue ? componentTypeContent.TargetComponentTypeCode.Value : componentType;
+
+                    tmpTargetComponentWrapper.ComponentSearchResult = targetResults.Entities.Count > 1 ? ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.foundMultipleOnTargetEnvironment] : ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.foundOnTargetEnvironment];
+
                     foundAndNotFoundComponents.FoundComponents.Add(tmpTargetComponentWrapper);
                 }
             }
