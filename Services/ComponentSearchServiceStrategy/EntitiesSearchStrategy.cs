@@ -2,7 +2,6 @@
 using Emmetienne.SolutionReplicator.Services;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using System;
 using System.Collections.Generic;
 
 namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
@@ -39,13 +38,17 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
 
                 if (targetResults.Entities.Count == 0)
                 {
+                    component.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
                     foundAndNotFoundComponents.NotFoundComponents.Add(component);
                     continue;
                 }
 
                 var tmpTargetComponentWrapper = new SolutionComponentWrapper();
-                tmpTargetComponentWrapper.ObjectId = targetResults.Entities[0].Id;
+                tmpTargetComponentWrapper.ObjectId = component.ObjectId;
+                tmpTargetComponentWrapper.TargetEnvironmentObjectId = targetResults.Entities[0].Id;
                 tmpTargetComponentWrapper.ComponentType = 1;
+                tmpTargetComponentWrapper.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.foundOnTargetEnvironment];
+
                 foundAndNotFoundComponents.FoundComponents.Add(tmpTargetComponentWrapper);
             }
 

@@ -145,5 +145,10 @@ namespace Emmetienne.SolutionReplicator
         {
 
         }
+
+        private void solutionComponentDataGridView_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

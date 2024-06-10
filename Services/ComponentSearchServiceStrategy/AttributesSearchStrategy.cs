@@ -24,6 +24,7 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
 
                 if (sourceRetrieveResponse.AttributeMetadata == null)
                 {
+                    component.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
                     foundAndNotFoundComponents.NotFoundComponents.Add(component);
                     continue;
                 }
@@ -43,6 +44,7 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
 
                     if (targetRetrieveResponse.AttributeMetadata == null)
                     {
+                        component.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
                         foundAndNotFoundComponents.NotFoundComponents.Add(component);
                         continue;
                     }
@@ -51,11 +53,15 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
                     tmpTargetComponentWrapper.TargetEnvironmentObjectId = targetRetrieveResponse.AttributeMetadata.MetadataId.Value;
                     tmpTargetComponentWrapper.ObjectId = component.ObjectId;
                     tmpTargetComponentWrapper.ComponentType = 2;
+                    tmpTargetComponentWrapper.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.foundOnTargetEnvironment];
                     foundAndNotFoundComponents.FoundComponents.Add(tmpTargetComponentWrapper);
                 }
                 catch (Exception ex)
                 {
                     logService.LogError($"Error while retrieving attribute {attributeSchemaName} for entity {entityLogicalName}", ex.Message);
+                    component.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
+                    foundAndNotFoundComponents.NotFoundComponents.Add(component);
+                    continue;
                 }
             }
 

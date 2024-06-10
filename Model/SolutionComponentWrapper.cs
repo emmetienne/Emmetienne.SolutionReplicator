@@ -13,6 +13,7 @@ namespace Emmetienne.SolutionReplicator.Model
         public Guid? TargetEnvironmentObjectId { get; set; }
         public string ComponentState { get; set; }
         public int? RootComponentBehaviour { get; set; }
+        public ComponentSearchResult ComponentSearchResult { get; set; }
 
         public static SolutionComponentWrapper ToSolutionComponentWrapper(Entity entityRecord, Dictionary<int, string> componentTypeDictionary)
         {
@@ -35,6 +36,7 @@ namespace Emmetienne.SolutionReplicator.Model
             }
 
             tmpSolutionComponent.ObjectId = entityRecord.GetAttributeValue<Guid>(solutioncomponent.objectid);
+            tmpSolutionComponent.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notYetSearched];
 
             return tmpSolutionComponent;
         }

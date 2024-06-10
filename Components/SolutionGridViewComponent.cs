@@ -85,6 +85,9 @@ namespace Emmetienne.SolutionReplicator.Components
         {
             var row = this.solutionGridViewComponent.Rows[rowIndex];
             var solutionId = (Guid)row.Cells["Solution Id"]?.Value;
+
+            EventBus.EventBusSingleton.Instance.emitSolutionId?.Invoke(solutionId);
+
             return solutionId;
         }
 

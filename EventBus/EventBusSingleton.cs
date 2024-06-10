@@ -10,9 +10,11 @@ namespace Emmetienne.SolutionReplicator.EventBus
     {
         #region Actions
         public Action<List<SolutionWrapper>> fillSolutionsView;
+        public Action<Guid?> emitSolutionId;
         public Action<Guid> retrieveSolutionComponents;
         public Action<string> filterSolutionComponent;
         public Action<List<SolutionComponentWrapper>> fillSolutionComponentView;
+        public Action<FoundAndNotFoundComponents> colorSolutionComponentInView;
         public Action<List<PublisherWrapper>> fillPublisherComboBox;
         public Action<string> setSourceEnvironmentName;
         public Action<string> setTargetEnvironmentName;

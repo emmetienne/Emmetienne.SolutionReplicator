@@ -19,6 +19,7 @@ namespace Emmetienne.SolutionReplicator.Services
         private readonly SolutionComponentsRepository solutionComponentRepository;
         private readonly SolutionRepository solutionRepository;
 
+       
         public SolutionReplicatorService(LogService logService, IOrganizationService sourceEnvironmentService, IOrganizationService targetEnvironmentService, PluginControlBase pluginControlBase)
         {
             this.logService = logService;
@@ -40,6 +41,8 @@ namespace Emmetienne.SolutionReplicator.Services
                     EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(true);
 
                     var foundAndNotFoundComponents = GetComponentsToAdd(solutionComponents);
+
+                    EventBus.EventBusSingleton.Instance.colorSolutionComponentInView?.Invoke(foundAndNotFoundComponents);
 
                     worker.ReportProgress(0, $"Creating solution on target environment");
 
@@ -77,11 +80,7 @@ namespace Emmetienne.SolutionReplicator.Services
 
                 var componentTypeSearchStrategy = ComponentSearchStrategyFactory.GetComponentSearchStrategy(group.Key);
 
-                if (componentTypeSearchStrategy == null)
-                {
-                    logService.LogError($"Component type {group.Key} currently not handled by this plugin");
-                    continue;
-                }
+              
 
                 foundAndNotFoundComponents.AddComponentsToFoundAndNotFoundList(componentTypeSearchStrategy.Handle(group, sourceEnnvironmentService, targetEnvironmentService, logService));
             }
