@@ -168,6 +168,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\BrowseExportSolutionPathButtonView.cs" />
+    <Compile Include="Components\ExportSolutionPathView.cs" />
     <Compile Include="Components\IComboBoxComponent.cs" />
     <Compile Include="Components\IGridViewComponent.cs" />
     <Compile Include="Components\ILoggingComponent.cs" />
@@ -179,11 +181,14 @@
     <Compile Include="Components\SolutionGridViewComponent.cs" />
     <Compile Include="Components\SolutionComponentViewBase.cs" />
     <Compile Include="Components\SolutionViewBase.cs" />
+    <Compile Include="Components\TargetExportSolutionButtonView.cs" />
+    <Compile Include="Components\SourceExportSolutionButtonView.cs" />
     <Compile Include="Components\SourceEnvirontmentLabelView.cs" />
     <Compile Include="Components\ReplicateSolutionButtonView.cs" />
     <Compile Include="Components\TargetEnvirontmentLabelView.cs" />
     <Compile Include="EventBus\EventBusSingleton.cs" />
     <Compile Include="Model\AdditionalComponentFieldForComparison.cs" />
+    <Compile Include="Model\ExportSolutionSettings.cs" />
     <Compile Include="Model\SolutionComponentSearchResult.cs" />
     <Compile Include="Model\ComponentType.cs" />
     <Compile Include="Model\ComponentTypeCache.cs" />
@@ -206,10 +211,12 @@
     <Compile Include="Services\ComponentSearchServiceStrategy\NotYetImplementedSearchStrategy.cs" />
     <Compile Include="Services\ComponentSearchServiceStrategy\GenericComponentSearchStrategy.cs" />
     <Compile Include="Services\ComponentTypeOptionSetService.cs" />
+    <Compile Include="Services\ExportSolutionService.cs" />
     <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\MetadataServiceSingleton.cs" />
     <Compile Include="Services\PublisherRetrieverService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
+    <Compile Include="Services\SettingManagerService.cs" />
     <Compile Include="Services\SolutionComponentRetrieverService.cs" />
     <Compile Include="Services\SolutionReplicatorService.cs" />
     <Compile Include="Services\SolutionReplicatorValidationService.cs" />

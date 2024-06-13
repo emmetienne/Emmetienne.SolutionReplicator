@@ -16,8 +16,7 @@ namespace Emmetienne.SolutionReplicator.Services
         private readonly IOrganizationService sourceEnnvironmentService;
         private readonly IOrganizationService targetEnvironmentService;
         private readonly PluginControlBase pluginControlBase;
-        private readonly SolutionComponentsRepository solutionComponentRepository;
-        private readonly SolutionRepository solutionRepository;
+        private readonly SolutionRepository targetSolutionRepository;
 
        
         public SolutionReplicatorService(LogService logService, IOrganizationService sourceEnvironmentService, IOrganizationService targetEnvironmentService, PluginControlBase pluginControlBase)
@@ -27,8 +26,7 @@ namespace Emmetienne.SolutionReplicator.Services
             this.targetEnvironmentService = targetEnvironmentService;
             this.pluginControlBase = pluginControlBase;
 
-            this.solutionComponentRepository = new SolutionComponentsRepository(targetEnvironmentService, logService);
-            this.solutionRepository = new SolutionRepository(targetEnvironmentService, logService);
+            this.targetSolutionRepository = new SolutionRepository(targetEnvironmentService, logService);
         }
 
         public void ReplicateSolution(List<SolutionComponentWrapper> solutionComponents, TargetSolutionSettings targetSolutionSettings)
@@ -46,7 +44,9 @@ namespace Emmetienne.SolutionReplicator.Services
 
                     worker.ReportProgress(0, $"Creating solution on target environment");
 
-                    var createdSolutionData = solutionRepository.CreateSolution(targetSolutionSettings);
+                    var createdSolutionData = targetSolutionRepository.CreateSolution(targetSolutionSettings);
+
+                    EventBus.EventBusSingleton.Instance.emitTargetSolutionUniqueName?.Invoke(createdSolutionData.UniqueName);
 
                     AddComponentToSolution(foundAndNotFoundComponents, createdSolutionData, worker);
 
@@ -97,11 +97,11 @@ namespace Emmetienne.SolutionReplicator.Services
 
                 if (component.TargetEnvironmentObjectId.HasValue)
                 {
-                    solutionRepository.AddComponentToSolution(component.TargetEnvironmentObjectId.Value, component.ComponentType, createdSolutionData.UniqueName, component.RootComponentBehaviour);
+                    targetSolutionRepository.AddComponentToSolution(component.TargetEnvironmentObjectId.Value, component.ComponentType, createdSolutionData.UniqueName, component.RootComponentBehaviour);
                     continue;
                 }
 
-                solutionRepository.AddComponentToSolution(component.ObjectId, component.ComponentType, createdSolutionData.UniqueName, component.RootComponentBehaviour);
+                targetSolutionRepository.AddComponentToSolution(component.ObjectId, component.ComponentType, createdSolutionData.UniqueName, component.RootComponentBehaviour);
             }
         }
     }

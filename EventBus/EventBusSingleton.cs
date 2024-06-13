@@ -16,8 +16,13 @@ namespace Emmetienne.SolutionReplicator.EventBus
         public Action<List<SolutionComponentWrapper>> fillSolutionComponentView;
         public Action<FoundAndNotFoundComponents> colorSolutionComponentInView;
         public Action<List<PublisherWrapper>> fillPublisherComboBox;
+        public Action<string> emitSourceSolutionUniqueName;
+        public Action<string> emitTargetSolutionUniqueName;
+        public Action<string> emitExportSolutionPath;
+        public Action<string> emitExportSolutionPathFromFolderBrowser;
         public Action<string> setSourceEnvironmentName;
         public Action<string> setTargetEnvironmentName;
+        public Action<Settings> saveSettings;
         public Action clearTargetEnvironmentName;
         public Action<bool> disableUiElements;
         public Action<IOrganizationService> changeSourceOrganizationService;
