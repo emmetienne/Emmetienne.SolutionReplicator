@@ -170,12 +170,14 @@
   <ItemGroup>
     <Compile Include="Components\BrowseExportSolutionPathButtonView.cs" />
     <Compile Include="Components\ExportSolutionPathView.cs" />
+    <Compile Include="Components\GenericTextBoxComponentDisableView.cs" />
     <Compile Include="Components\IComboBoxComponent.cs" />
     <Compile Include="Components\IGridViewComponent.cs" />
     <Compile Include="Components\ILoggingComponent.cs" />
     <Compile Include="Components\ISolutionComponentGridViewComponent.cs" />
     <Compile Include="Components\ISolutionGridViewComponent.cs" />
     <Compile Include="Components\LoggingComponent.cs" />
+    <Compile Include="Components\GenericButtonComponentDisableView.cs" />
     <Compile Include="Components\PublisherComboBoxView.cs" />
     <Compile Include="Components\SolutionComponentsGridView.cs" />
     <Compile Include="Components\SolutionGridViewComponent.cs" />

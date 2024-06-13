@@ -1,5 +1,6 @@
 ﻿using Emmetienne.SolutionReplicator.Model;
 using Emmetienne.SolutionReplicator.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,8 +18,9 @@ namespace Emmetienne.SolutionReplicator.Components
             this.logService = logService;
 
             EventBus.EventBusSingleton.Instance.fillPublisherComboBox += FillComboBox;
+            EventBus.EventBusSingleton.Instance.disableUiElements += DisableComponent;
         }
-     
+
         public void FillComboBox(List<PublisherWrapper> list)
         {
             var publisherDictionary = list.ToDictionary(x=>x.PublisherId, x => $"({x.CustomizationPrefix}) {x.FriendlyName}");
@@ -26,6 +28,20 @@ namespace Emmetienne.SolutionReplicator.Components
             publisherComboBox.DataSource = new BindingSource(publisherDictionary, null);
             publisherComboBox.DisplayMember = "Value";
             publisherComboBox.ValueMember = "Key";
+        }
+
+        public void DisableComponent(bool isDisabled)
+        {
+            if (this.publisherComboBox.InvokeRequired)
+            {
+                Action setDisableComponentSafe = delegate { DisableComponent(isDisabled); };
+
+                this.publisherComboBox.Invoke(setDisableComponentSafe);
+            }
+            else
+            {
+                this.publisherComboBox.Enabled = !isDisabled;
+            }
         }
     }
 }

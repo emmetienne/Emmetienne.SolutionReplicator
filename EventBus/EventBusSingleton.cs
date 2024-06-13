@@ -22,6 +22,7 @@ namespace Emmetienne.SolutionReplicator.EventBus
         public Action<string> emitExportSolutionPathFromFolderBrowser;
         public Action<string> setSourceEnvironmentName;
         public Action<string> setTargetEnvironmentName;
+        public Action<bool> disableTargetSolutionExport;
         public Action<Settings> saveSettings;
         public Action clearTargetEnvironmentName;
         public Action<bool> disableUiElements;

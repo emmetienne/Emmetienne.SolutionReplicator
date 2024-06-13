@@ -31,6 +31,10 @@ namespace Emmetienne.SolutionReplicator
         private TargetExportSolutionButtonView targetExportSolutionButtonView;
         private ExportSolutionPathView exportSolutionPathView;
 
+        private GenericButtonComponentDisableView selectExportFolderButtonView;
+        private GenericTextBoxComponentDisableView solutionNameTextBoxView;
+        private GenericTextBoxComponentDisableView versionTextBoxView;
+
         private ILoggingComponent loggingComponent;
 
 
@@ -51,7 +55,10 @@ namespace Emmetienne.SolutionReplicator
             this.targetExportSolutionButtonView = new TargetExportSolutionButtonView(this.exportTargetSolutionButton, logService);
             this.exportSolutionPathView = new ExportSolutionPathView(this.exportPathTextBox, logService);
 
-
+            this.selectExportFolderButtonView = new GenericButtonComponentDisableView(this.openFolderSelectionButton, logService);
+            this.solutionNameTextBoxView = new GenericTextBoxComponentDisableView(this.solutionNameTextBox, logService);
+            this.versionTextBoxView = new GenericTextBoxComponentDisableView(this.versionTextBox, logService);
+                
         }
 
         private void MyPluginControl_Load(object sender, EventArgs e)
