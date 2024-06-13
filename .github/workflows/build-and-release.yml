@@ -30,21 +30,21 @@ jobs:
         name: release-artifact
         path: Release.zip
 
-    - name: Extract AssemblyVersion
-      id: assembly_version
-      run: |
-        $assemblyInfoPath = "Properties/AssemblyInfo.cs"
-        $versionLine = Get-Content $assemblyInfoPath | Select-String -Pattern '\[assembly: AssemblyVersion\("(.*)"\)\]'
-        $version = $versionLine.Matches.Groups[1].Value
-        echo "AssemblyVersion=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
-      shell: pwsh
-
   release:
     needs: build
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-
+    
+    - name: Extract AssemblyVersion    
+      id: assembly_version    
+      run: |    
+        $assemblyInfoPath = "Properties/AssemblyInfo.cs"    
+        $versionLine = Get-Content $assemblyInfoPath | Select-String -Pattern '\[assembly: AssemblyVersion\("(.*)"\)\]'    
+        $version = $versionLine.Matches.Groups[1].Value    
+        echo "AssemblyVersion=$version" | Out-File -FilePath $env:GITHUB_ENV -Append    
+      shell: pwsh    
+    
     - name: Download artifact
       uses: actions/download-artifact@v2
       with:
