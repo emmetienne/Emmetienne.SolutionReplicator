@@ -1,0 +1,73 @@
+name: .NET Framework Build and Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup MSBuild path
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Restore NuGet packages
+      run: nuget restore YourSolution.sln
+
+    - name: Build solution
+      run: msbuild YourSolution.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+    - name: Zip artifacts
+      run: Compress-Archive -Path YourProject\bin\Release\* -DestinationPath Release.zip
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: release-artifact
+        path: Release.zip
+
+    - name: Extract AssemblyVersion
+      id: assembly_version
+      run: |
+        $assemblyInfoPath = "Properties/AssemblyInfo.cs"
+        $versionLine = Get-Content $assemblyInfoPath | Select-String -Pattern '\[assembly: AssemblyVersion\("(.*)"\)\]'
+        $version = $versionLine.Matches.Groups[1].Value
+        echo "AssemblyVersion=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+      shell: pwsh
+
+  release:
+    needs: build
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: release-artifact
+        path: .
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.AssemblyVersion }}
+        release_name: Release ${{ env.AssemblyVersion }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Release.zip
+        asset_name: Release.zip
+        asset_content_type: application/zip	
