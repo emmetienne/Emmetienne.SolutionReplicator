@@ -17,6 +17,7 @@ namespace Emmetienne.SolutionReplicator.Components
             this.exportTargetSolutionButton = (Button)exportTargetSolutionButton;
             this.logService = logService;
             EventBus.EventBusSingleton.Instance.emitTargetSolutionUniqueName += SetButtonLabel;
+            EventBus.EventBusSingleton.Instance.disableUiElements += DisableComponent;
         }
 
         private void SetButtonLabel(string label)
@@ -38,6 +39,20 @@ namespace Emmetienne.SolutionReplicator.Components
                 this.exportTargetSolutionButton.Text = exportSolutionMessage;
             else
                 this.exportTargetSolutionButton.Text = $"{exportSolutionMessage} ({label})";
+        }
+
+        public void DisableComponent(bool isDisabled)
+        {
+            if (this.exportTargetSolutionButton.InvokeRequired)
+            {
+                Action setDisableComponentSafe = delegate { DisableComponent(isDisabled); };
+
+                this.exportTargetSolutionButton.Invoke(setDisableComponentSafe);
+            }
+            else
+            {
+                this.exportTargetSolutionButton.Enabled = !isDisabled;
+            }
         }
     }
 }

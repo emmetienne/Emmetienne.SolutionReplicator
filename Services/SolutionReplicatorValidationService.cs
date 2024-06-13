@@ -43,7 +43,7 @@ namespace Emmetienne.SolutionReplicator.Services
             if (errorList.Count > 0)
             {
                 MessageBox.Show($"- {string.Join($"{Environment.NewLine}- ", errorList)}", "Valdation errors", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                logService.LogError(string.Join($" - ", errorList));
                 return false;
             }
 

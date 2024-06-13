@@ -1,5 +1,6 @@
 ﻿using Emmetienne.SolutionReplicator.Repository;
 using Microsoft.Xrm.Sdk;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -88,31 +89,38 @@ namespace Emmetienne.SolutionReplicator.Services
                 Message = spinnerMessage,
                 Work = (worker, args) =>
                 {
-                    logService.LogInfo($"Exporting solution {sourceSolutionUniqueName} from source environment");
-                    EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(true);
-
-                    var solutionNameToUse = exportFromSourceEnironment ? sourceSolutionUniqueName : targetSolutionUniqueName;
-
-                    if (string.IsNullOrEmpty(solutionNameToUse))
+                    try
                     {
-                        logService.LogError("Solution name is empty");
-                        return;
+                        var environmentMessage = exportFromSourceEnironment ? "source" : "target";
+
+                        logService.LogInfo($"Exporting solution {sourceSolutionUniqueName} from {environmentMessage} environment");
+                        EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(true);
+
+                        var solutionNameToUse = exportFromSourceEnironment ? sourceSolutionUniqueName : targetSolutionUniqueName;
+
+
+                        if (string.IsNullOrEmpty(solutionNameToUse))
+                        {
+                            logService.LogError($"No solution has been selected for {environmentMessage} environment");
+                            return;
+                        }
+
+                        byte[] solutionByteData = exportFromSourceEnironment ? sourceSolutionRepository.ExportSoluton(sourceSolutionUniqueName) : targetSolutionRepository.ExportSoluton(targetSolutionUniqueName);
+
+
+                        if (!Directory.Exists(exportSolutionPath))
+                            Directory.CreateDirectory(exportSolutionPath);
+
+                        File.WriteAllBytes($"{exportSolutionPath}\\{solutionNameToUse}.zip", solutionByteData);
+
+                        Process.Start("explorer.exe", exportSolutionPath);
+
+                        logService.LogInfo($"Solution {sourceSolutionUniqueName} from {environmentMessage} environment exported succesfully");
                     }
-
-                    byte[] solutionByteData = exportFromSourceEnironment ? sourceSolutionRepository.ExportSoluton(sourceSolutionUniqueName) : targetSolutionRepository.ExportSoluton(targetSolutionUniqueName);
-
-                    if (solutionByteData == null)
+                    catch (Exception ex)
                     {
-                        logService.LogError("Error exporting solution");
-                        return;
+                        logService.LogError("Error exporting solution", ex.Message);
                     }
-
-                    if (!Directory.Exists(exportSolutionPath))
-                        Directory.CreateDirectory(exportSolutionPath);
-
-                    File.WriteAllBytes($"{exportSolutionPath}\\{solutionNameToUse}.zip", solutionByteData);
-
-                    Process.Start("explorer.exe", exportSolutionPath);
                 },
                 PostWorkCallBack = (args) =>
                 {
