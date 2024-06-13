@@ -8,6 +8,6 @@
     /// </remarks>
     public class Settings
     {
-        public string SolutionExportPath { get; set; }
+        public string SolutionExportPath { get; set; } 
     }
 }
