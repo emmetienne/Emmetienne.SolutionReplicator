@@ -1,4 +1,4 @@
-name: .NET Framework Build and Release
+name: Build and Release
 
 on:
   push:
@@ -16,10 +16,10 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Restore NuGet packages
-      run: nuget restore YourSolution.sln
+      run: nuget restore Emmetienne.SolutionReplicator.sln
 
     - name: Build solution
-      run: msbuild YourSolution.sln /p:Configuration=Release /p:Platform="Any CPU"
+      run: msbuild Emmetienne.SolutionReplicator.sln /p:Configuration=Release /p:Platform="Any CPU"
 
     - name: Zip artifacts
       run: Compress-Archive -Path YourProject\bin\Release\* -DestinationPath Release.zip
