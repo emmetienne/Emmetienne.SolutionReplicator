@@ -42,6 +42,8 @@ namespace Emmetienne.SolutionReplicator.Services
             EventBus.EventBusSingleton.Instance.emitExportSolutionPath += ChangeExportSolutionPath;
             EventBus.EventBusSingleton.Instance.changeSourceOrganizationService += ChangeMainConnection;
             EventBus.EventBusSingleton.Instance.changeTargetOrganizationService += ChangeTargetConnection;
+            EventBus.EventBusSingleton.Instance.clearAllViews += ClearExportButtonsLabels;
+            EventBus.EventBusSingleton.Instance.clearSolutionComponentView += ClearTargetExportButtonsLabels;
 
             this.settings = settings;
 
@@ -68,6 +70,17 @@ namespace Emmetienne.SolutionReplicator.Services
             settings.SolutionExportPath = exportSolutionPath;
 
             SettingsManager.Instance.Save(typeof(SolutionReplicatorControl), settings);
+        }
+
+        private void ClearExportButtonsLabels()
+        {
+            EventBus.EventBusSingleton.Instance.emitSourceSolutionUniqueName?.Invoke(string.Empty);
+            EventBus.EventBusSingleton.Instance.emitTargetSolutionUniqueName?.Invoke(string.Empty);
+        }
+
+        private void ClearTargetExportButtonsLabels()
+        {
+            EventBus.EventBusSingleton.Instance.emitTargetSolutionUniqueName?.Invoke(string.Empty);
         }
 
         public void ChangeSourceSolutionUniqueName(string solutionUniqueName)
