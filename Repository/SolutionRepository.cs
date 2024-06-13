@@ -67,5 +67,18 @@ namespace Emmetienne.SolutionReplicator.Repository
 
             return SolutionWrapper.ToSolutionWrapper(targetSolution);
         }
+
+        public byte[] ExportSoluton(string solutionUniqueName)
+        {
+            ExportSolutionRequest exportSolutionRequest = new ExportSolutionRequest
+            {
+                SolutionName = solutionUniqueName,
+                Managed = false
+            };
+
+            var exportSolutionResponse = (ExportSolutionResponse)organizationService.Execute(exportSolutionRequest);
+
+            return exportSolutionResponse.ExportSolutionFile;
+        }
     }
 }

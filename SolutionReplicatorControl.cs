@@ -2,28 +2,34 @@
 using Emmetienne.SolutionReplicator.Model;
 using Emmetienne.SolutionReplicator.Services;
 using McTools.Xrm.Connection;
+using McTools.Xrm.Connection.WinForms.AppCode;
 using Microsoft.Xrm.Sdk;
 using System;
+using System.Windows.Forms;
 using XrmToolBox.Extensibility;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Emmetienne.SolutionReplicator
 {
     public partial class SolutionReplicatorControl : MultipleConnectionsPluginControlBase
     {
-        private Settings mySettings;
+        private Settings settings;
         private LogService logService;
         private SolutionRetrieverService solutionRetrieverService;
         private SolutionComponentRetrieverService solutionComponentRetrieverService;
         private SolutionReplicatorService solutionReplicatorService;
         private PublisherRetrieverService publisherRetrieverService;
         private SolutionReplicatorValidationService solutionReplicatorValidationService;
+        private ExportSolutionService exportSolutionService;
+
         private SolutionViewBase solutionGridViewComponent;
         private SolutionComponentViewBase solutionComponentsGridViewComponent;
         private PublisherComboBoxView publisherComboBoxViewComponent;
         private SourceEnvirontmentLabelView sourceEnvirontmentLabelView;
         private TargetEnvirontmentLabelView targetEnvirontmentLabelView;
         private ReplicateSolutionButtonView replicateSolutionButtonView;
+        private SourceExportSolutionButtonView sourceExportSolutionButtonView;
+        private TargetExportSolutionButtonView targetExportSolutionButtonView;
+        private ExportSolutionPathView exportSolutionPathView;
 
         private ILoggingComponent loggingComponent;
 
@@ -41,15 +47,37 @@ namespace Emmetienne.SolutionReplicator
             this.sourceEnvirontmentLabelView = new SourceEnvirontmentLabelView(this.tsbLoadSolution, logService);
             this.targetEnvirontmentLabelView = new TargetEnvirontmentLabelView(this.tsbSecondEnvinronment, logService);
             this.replicateSolutionButtonView = new ReplicateSolutionButtonView(this.replicateSolutionButton, logService);
+            this.sourceExportSolutionButtonView = new SourceExportSolutionButtonView(this.exportSourceSolutionButton, logService);
+            this.targetExportSolutionButtonView = new TargetExportSolutionButtonView(this.exportTargetSolutionButton, logService);
+            this.exportSolutionPathView = new ExportSolutionPathView(this.exportPathTextBox, logService);
+
+
         }
 
         private void MyPluginControl_Load(object sender, EventArgs e)
         {
             ShowInfoNotification("Visit my GitHub", new Uri("https://github.com/emmetienne"));
 
+            LoadSettings();
+
             this.solutionRetrieverService = new SolutionRetrieverService(logService, this);
             this.solutionComponentRetrieverService = new SolutionComponentRetrieverService(logService, Service, this);
+            this.exportSolutionService = new ExportSolutionService(logService, Service, this, settings);
             this.solutionReplicatorValidationService = new SolutionReplicatorValidationService(logService, this);
+        }
+
+        private void LoadSettings()
+        {
+            if (SettingsManager.Instance.TryLoad(typeof(SolutionReplicatorControl), out settings))
+            {
+                logService.LogDebug($"Settings has been loaded");
+                EventBus.EventBusSingleton.Instance.emitExportSolutionPathFromFolderBrowser?.Invoke(settings.SolutionExportPath);
+            }
+            else
+            {
+                settings = new Settings();
+                logService.LogDebug($"Settings has been created");
+            }
         }
 
         private void tsbLoadSolution_Click(object sender, EventArgs e)
@@ -125,6 +153,7 @@ namespace Emmetienne.SolutionReplicator
                 this.RemoveAdditionalOrganization(this.AdditionalConnectionDetails[0]);
 
             EventBus.EventBusSingleton.Instance.setTargetEnvironmentName?.Invoke(this.AdditionalConnectionDetails[0].ConnectionName);
+            EventBus.EventBusSingleton.Instance.changeTargetOrganizationService?.Invoke(this.AdditionalConnectionDetails[0].GetCrmServiceClient());
 
             this.publisherRetrieverService = new PublisherRetrieverService(logService, this.AdditionalConnectionDetails[0].GetCrmServiceClient(), this);
             this.publisherRetrieverService.GetPublishers();
@@ -149,6 +178,26 @@ namespace Emmetienne.SolutionReplicator
         private void solutionComponentDataGridView_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void exportSourceSolutionButton_Click(object sender, EventArgs e)
+        {
+            this.exportSolutionService.ExportSolution(true);
+        }
+
+        private void exportTargetSolutionButton_Click(object sender, EventArgs e)
+        {
+            this.exportSolutionService.ExportSolution(false);
+        }
+
+        private void exportPathTextBox_TextChanged(object sender, EventArgs e)
+        {
+            this.exportSolutionPathView.OnTextChange(sender, e);
+        }
+
+        private void openFolderSelectionButton_Click(object sender, EventArgs e)
+        {
+            this.exportSolutionService.OpenSelectionFolderDialog();
         }
     }
 }
