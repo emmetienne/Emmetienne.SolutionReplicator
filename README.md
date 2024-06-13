@@ -1,0 +1,1 @@
+[![Build and Release](https://github.com/emmetienne/Emmetienne.SolutionReplicator/actions/workflows/build-and-release.yml/badge.svg?branch=main)](https://github.com/emmetienne/Emmetienne.SolutionReplicator/actions/workflows/build-and-release.yml)
