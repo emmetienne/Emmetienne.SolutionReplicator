@@ -10,7 +10,8 @@ namespace Emmetienne.SolutionReplicator.EventBus
     {
         #region Actions
         public Action<List<SolutionWrapper>> fillSolutionsView;
-        public Action<Guid?> emitSolutionId;
+        public Action<Guid?> emitSourceSolutionId;
+        public Action<Guid?> emitTargetSolutionId;
         public Action<Guid> retrieveSolutionComponents;
         public Action<string> filterSolutionComponent;
         public Action<List<SolutionComponentWrapper>> fillSolutionComponentView;
@@ -28,6 +29,7 @@ namespace Emmetienne.SolutionReplicator.EventBus
         public Action<bool> disableUiElements;
         public Action<IOrganizationService> changeSourceOrganizationService;
         public Action<IOrganizationService> changeTargetOrganizationService;
+        public Action<bool, Guid?> emitSolutionIdToOpenBrowser;
         #endregion
 
         #region Logging

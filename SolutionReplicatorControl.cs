@@ -20,18 +20,20 @@ namespace Emmetienne.SolutionReplicator
         private PublisherRetrieverService publisherRetrieverService;
         private SolutionReplicatorValidationService solutionReplicatorValidationService;
         private ExportSolutionService exportSolutionService;
+        private OpenSolutionInEnvironmentService openSolutionInEnvironmentService;
 
         private SolutionViewBase solutionGridViewComponent;
         private SolutionComponentViewBase solutionComponentsGridViewComponent;
         private PublisherComboBoxView publisherComboBoxViewComponent;
-        private SourceEnvirontmentLabelView sourceEnvirontmentLabelView;
-        private TargetEnvirontmentLabelView targetEnvirontmentLabelView;
+        private SourceEnvironmentLabelView sourceEnvirontmentLabelView;
+        private TargetEnvironmentLabelView targetEnvirontmentLabelView;
         private ReplicateSolutionButtonView replicateSolutionButtonView;
         private SourceExportSolutionButtonView sourceExportSolutionButtonView;
         private TargetExportSolutionButtonView targetExportSolutionButtonView;
         private ExportSolutionPathView exportSolutionPathView;
 
         private GenericButtonComponentDisableView selectExportFolderButtonView;
+        private GenericButtonComponentDisableView openTargetSolutionButtonView;
         private GenericTextBoxComponentDisableView solutionNameTextBoxView;
         private GenericTextBoxComponentDisableView versionTextBoxView;
 
@@ -48,17 +50,17 @@ namespace Emmetienne.SolutionReplicator
             this.solutionGridViewComponent = new SolutionGridViewComponent(this.solutionGridView, logService);
             this.solutionComponentsGridViewComponent = new SolutionComponentsGridView(this.solutionComponentDataGridView, logService);
             this.publisherComboBoxViewComponent = new PublisherComboBoxView(this.publisherComboBox, logService);
-            this.sourceEnvirontmentLabelView = new SourceEnvirontmentLabelView(this.tsbLoadSolution, logService);
-            this.targetEnvirontmentLabelView = new TargetEnvirontmentLabelView(this.tsbSecondEnvinronment, logService);
+            this.sourceEnvirontmentLabelView = new SourceEnvironmentLabelView(this.tsbLoadSolution, logService);
+            this.targetEnvirontmentLabelView = new TargetEnvironmentLabelView(this.tsbSecondEnvinronment, logService);
             this.replicateSolutionButtonView = new ReplicateSolutionButtonView(this.replicateSolutionButton, logService);
             this.sourceExportSolutionButtonView = new SourceExportSolutionButtonView(this.exportSourceSolutionButton, logService);
             this.targetExportSolutionButtonView = new TargetExportSolutionButtonView(this.exportTargetSolutionButton, logService);
             this.exportSolutionPathView = new ExportSolutionPathView(this.exportPathTextBox, logService);
 
             this.selectExportFolderButtonView = new GenericButtonComponentDisableView(this.openFolderSelectionButton, logService);
+            this.openTargetSolutionButtonView = new GenericButtonComponentDisableView(this.openTargetSolutionButton, logService);
             this.solutionNameTextBoxView = new GenericTextBoxComponentDisableView(this.solutionNameTextBox, logService);
             this.versionTextBoxView = new GenericTextBoxComponentDisableView(this.versionTextBox, logService);
-                
         }
 
         private void MyPluginControl_Load(object sender, EventArgs e)
@@ -71,6 +73,7 @@ namespace Emmetienne.SolutionReplicator
             this.solutionComponentRetrieverService = new SolutionComponentRetrieverService(logService, Service, this);
             this.exportSolutionService = new ExportSolutionService(logService, Service, this, settings);
             this.solutionReplicatorValidationService = new SolutionReplicatorValidationService(logService, this);
+            this.openSolutionInEnvironmentService = new OpenSolutionInEnvironmentService(logService, this);
         }
 
         private void LoadSettings()
@@ -205,6 +208,16 @@ namespace Emmetienne.SolutionReplicator
         private void openFolderSelectionButton_Click(object sender, EventArgs e)
         {
             this.exportSolutionService.OpenSelectionFolderDialog();
+        }
+
+        private void exportTableLayout_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void openTargetSolutionButton_Click(object sender, EventArgs e)
+        {
+            EventBus.EventBusSingleton.Instance.emitSolutionIdToOpenBrowser?.Invoke(false, null);
         }
     }
 }

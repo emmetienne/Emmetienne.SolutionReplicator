@@ -21,7 +21,7 @@ namespace Emmetienne.SolutionReplicator.Components
             EventBus.EventBusSingleton.Instance.fillSolutionComponentView += FillGrid;
             EventBus.EventBusSingleton.Instance.colorSolutionComponentInView += ColorComponentsInGrid;
             EventBus.EventBusSingleton.Instance.disableUiElements += DisableComponent;
-            EventBus.EventBusSingleton.Instance.emitSolutionId += setCurrentSelectedSolutionId;
+            EventBus.EventBusSingleton.Instance.emitSourceSolutionId += setCurrentSelectedSolutionId;
         }
 
         public virtual void setCurrentSelectedSolutionId(Guid? solutionId)

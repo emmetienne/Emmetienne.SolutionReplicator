@@ -21,9 +21,8 @@ namespace Emmetienne.SolutionReplicator.Components
             this.logService = logService;
 
             this.solutionGridViewComponent.CellClick += OnCellSelection;
+            this.solutionGridViewComponent.CellDoubleClick += OnRowDoubleClick;
             this.solutionGridViewComponent.Sorted += OnSort;
-
-            EventBus.EventBusSingleton.Instance.disableUiElements += DisableComponent;
         }
 
         public override void ClearGrid()
@@ -74,11 +73,17 @@ namespace Emmetienne.SolutionReplicator.Components
 
         public override void OnCellSelection(object sender, EventArgs e)
         {
-            var tmpDataGridView = (DataGridView)sender;
-            var solutionId = RetrieveSolutionIdFromDataTable(this.solutionGridViewComponent.SelectedRows[0].Index);
+            var solutionId = GetSolutionIdFromDataTable(sender);
 
             EventBus.EventBusSingleton.Instance.retrieveSolutionComponents?.Invoke(solutionId);
             this.selectedSolutionId = solutionId;
+        }
+
+        private Guid GetSolutionIdFromDataTable(object sender)
+        {
+            var tmpDataGridView = (DataGridView)sender;
+            var solutionId = RetrieveSolutionIdFromDataTable(this.solutionGridViewComponent.SelectedRows[0].Index);
+            return solutionId;
         }
 
         private Guid RetrieveSolutionIdFromDataTable(int rowIndex)
@@ -87,7 +92,7 @@ namespace Emmetienne.SolutionReplicator.Components
             var solutionId = (Guid)row.Cells["Solution Id"]?.Value;
             var solutionName = (string)row.Cells["Unique name"]?.Value;
 
-            EventBus.EventBusSingleton.Instance.emitSolutionId?.Invoke(solutionId);
+            EventBus.EventBusSingleton.Instance.emitSourceSolutionId?.Invoke(solutionId);
             EventBus.EventBusSingleton.Instance.emitSourceSolutionUniqueName?.Invoke(solutionName);
 
             return solutionId;
@@ -99,7 +104,7 @@ namespace Emmetienne.SolutionReplicator.Components
             if (!selectedSolutionId.HasValue)
                 return;
 
-            
+
             foreach (DataGridViewRow row in this.solutionGridViewComponent.Rows)
             {
                 var rowSolutionId = RetrieveSolutionIdFromDataTable(row.Index);
@@ -113,6 +118,13 @@ namespace Emmetienne.SolutionReplicator.Components
 
             this.solutionGridViewComponent.Rows[selectedRowIndex].Selected = true;
             this.solutionGridViewComponent.FirstDisplayedScrollingRowIndex = selectedRowIndex;
+        }
+
+        public override void OnRowDoubleClick(object sender, EventArgs e)
+        {
+            var solutionId = GetSolutionIdFromDataTable(sender);
+
+            EventBus.EventBusSingleton.Instance.emitSolutionIdToOpenBrowser?.Invoke(true, solutionId);
         }
     }
 }

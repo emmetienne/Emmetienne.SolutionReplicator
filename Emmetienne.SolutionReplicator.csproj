@@ -185,9 +185,9 @@
     <Compile Include="Components\SolutionViewBase.cs" />
     <Compile Include="Components\TargetExportSolutionButtonView.cs" />
     <Compile Include="Components\SourceExportSolutionButtonView.cs" />
-    <Compile Include="Components\SourceEnvirontmentLabelView.cs" />
+    <Compile Include="Components\SourceEnvironmentLabelView.cs" />
     <Compile Include="Components\ReplicateSolutionButtonView.cs" />
-    <Compile Include="Components\TargetEnvirontmentLabelView.cs" />
+    <Compile Include="Components\TargetEnvironmentLabelView.cs" />
     <Compile Include="EventBus\EventBusSingleton.cs" />
     <Compile Include="Model\AdditionalComponentFieldForComparison.cs" />
     <Compile Include="Model\ExportSolutionSettings.cs" />
@@ -216,6 +216,7 @@
     <Compile Include="Services\ExportSolutionService.cs" />
     <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\MetadataServiceSingleton.cs" />
+    <Compile Include="Services\OpenSolutionInEnvironmentService.cs" />
     <Compile Include="Services\PublisherRetrieverService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
     <Compile Include="Services\SettingManagerService.cs" />
