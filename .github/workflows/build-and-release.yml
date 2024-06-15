@@ -22,7 +22,7 @@ jobs:
       run: msbuild Emmetienne.SolutionReplicator.sln /p:Configuration=Release /p:Platform="Any CPU"
 
     - name: Zip artifacts
-      run: Compress-Archive -Path .\bin\Release\* -DestinationPath Release.zip
+      run: Compress-Archive -Path .\bin\Release\Emmetienne.SolutionReplicator.dll -DestinationPath Release.zip
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
