@@ -47,7 +47,7 @@ namespace Emmetienne.SolutionReplicator.Services
 
             var urlToOpen = $"https://make.powerapps.com/environments/{envinronmentId}/solutions/{calculatedSolutionId.ToString()}";
 
-            Process.Start(new ProcessStartInfo(urlToOpen) { UseShellExecute = true });
+            //Process.Start(new ProcessStartInfo(urlToOpen) { UseShellExecute = true });
         }
 
         private void ClearTargetSolutionId()
