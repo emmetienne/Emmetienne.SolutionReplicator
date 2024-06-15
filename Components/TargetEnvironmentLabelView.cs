@@ -4,14 +4,14 @@ using System.Windows.Forms;
 
 namespace Emmetienne.SolutionReplicator.Components
 {
-    internal class TargetEnvirontmentLabelView
+    internal class TargetEnvironmentLabelView
     {
         private readonly ToolStripButton targetEnvironmentButton;
         private readonly LogService logService;
 
         private readonly string noTargetConnectionText = "Connect to target environment";
 
-        public TargetEnvirontmentLabelView(Component targetEnvirontmentButton, LogService logService)
+        public TargetEnvironmentLabelView(Component targetEnvirontmentButton, LogService logService)
         {
             this.targetEnvironmentButton = (ToolStripButton)targetEnvirontmentButton;
             this.logService = logService;

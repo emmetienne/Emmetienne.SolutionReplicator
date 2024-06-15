@@ -43,9 +43,9 @@ namespace Emmetienne.SolutionReplicator
             this.componentsAndOptionsSplitContainer = new System.Windows.Forms.SplitContainer();
             this.sourceSolutionComponentsGroupBox = new System.Windows.Forms.GroupBox();
             this.solutionComponentDataGridView = new System.Windows.Forms.DataGridView();
-            this.targetSolutionGroupBox = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.targetSolutionGroupBox = new System.Windows.Forms.GroupBox();
+            this.targetSolutionSettingsTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.solutionNameTextBox = new System.Windows.Forms.TextBox();
             this.solutionNameLabel = new System.Windows.Forms.Label();
             this.publisherLabel = new System.Windows.Forms.Label();
@@ -53,6 +53,8 @@ namespace Emmetienne.SolutionReplicator
             this.versionLabel = new System.Windows.Forms.Label();
             this.versionTextBox = new System.Windows.Forms.TextBox();
             this.replicateSolutionButton = new System.Windows.Forms.Button();
+            this.solutionExportGroupBox = new System.Windows.Forms.GroupBox();
+            this.exportTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.exportFolderLabel = new System.Windows.Forms.Label();
             this.exportSourceSolutionButton = new System.Windows.Forms.Button();
             this.exportTargetSolutionButton = new System.Windows.Forms.Button();
@@ -66,8 +68,8 @@ namespace Emmetienne.SolutionReplicator
             this.message = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.exception = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.exportTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.solutionExportGroupBox = new System.Windows.Forms.GroupBox();
+            this.targetSolutionExportAndOpenTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.openTargetSolutionButton = new System.Windows.Forms.Button();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -82,12 +84,14 @@ namespace Emmetienne.SolutionReplicator
             this.componentsAndOptionsSplitContainer.SuspendLayout();
             this.sourceSolutionComponentsGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.solutionComponentDataGridView)).BeginInit();
-            this.targetSolutionGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.targetSolutionGroupBox.SuspendLayout();
+            this.targetSolutionSettingsTableLayout.SuspendLayout();
+            this.solutionExportGroupBox.SuspendLayout();
+            this.exportTableLayout.SuspendLayout();
             this.exportPathTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerLayout)).BeginInit();
             this.splitContainerLayout.Panel1.SuspendLayout();
@@ -95,8 +99,7 @@ namespace Emmetienne.SolutionReplicator
             this.splitContainerLayout.SuspendLayout();
             this.logGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logDataGridView)).BeginInit();
-            this.exportTableLayout.SuspendLayout();
-            this.solutionExportGroupBox.SuspendLayout();
+            this.targetSolutionExportAndOpenTableLayout.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenu
@@ -269,17 +272,6 @@ namespace Emmetienne.SolutionReplicator
             this.solutionComponentDataGridView.TabIndex = 0;
             this.solutionComponentDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.solutionComponentDataGridView_CellContentClick);
             // 
-            // targetSolutionGroupBox
-            // 
-            this.targetSolutionGroupBox.Controls.Add(this.tableLayoutPanel1);
-            this.targetSolutionGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.targetSolutionGroupBox.Location = new System.Drawing.Point(0, 0);
-            this.targetSolutionGroupBox.Name = "targetSolutionGroupBox";
-            this.targetSolutionGroupBox.Size = new System.Drawing.Size(258, 192);
-            this.targetSolutionGroupBox.TabIndex = 0;
-            this.targetSolutionGroupBox.TabStop = false;
-            this.targetSolutionGroupBox.Text = "Target solution settings";
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -298,45 +290,56 @@ namespace Emmetienne.SolutionReplicator
             this.splitContainer1.SplitterDistance = 192;
             this.splitContainer1.TabIndex = 1;
             // 
-            // tableLayoutPanel1
+            // targetSolutionGroupBox
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 252F));
-            this.tableLayoutPanel1.Controls.Add(this.solutionNameTextBox, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.solutionNameLabel, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.publisherLabel, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.publisherComboBox, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.versionLabel, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.versionTextBox, 0, 10);
-            this.tableLayoutPanel1.Controls.Add(this.replicateSolutionButton, 0, 12);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 22;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(252, 173);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.targetSolutionGroupBox.Controls.Add(this.targetSolutionSettingsTableLayout);
+            this.targetSolutionGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.targetSolutionGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.targetSolutionGroupBox.Name = "targetSolutionGroupBox";
+            this.targetSolutionGroupBox.Size = new System.Drawing.Size(258, 192);
+            this.targetSolutionGroupBox.TabIndex = 0;
+            this.targetSolutionGroupBox.TabStop = false;
+            this.targetSolutionGroupBox.Text = "Target solution settings";
+            // 
+            // targetSolutionSettingsTableLayout
+            // 
+            this.targetSolutionSettingsTableLayout.ColumnCount = 1;
+            this.targetSolutionSettingsTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 252F));
+            this.targetSolutionSettingsTableLayout.Controls.Add(this.solutionNameTextBox, 0, 1);
+            this.targetSolutionSettingsTableLayout.Controls.Add(this.solutionNameLabel, 0, 0);
+            this.targetSolutionSettingsTableLayout.Controls.Add(this.publisherLabel, 0, 2);
+            this.targetSolutionSettingsTableLayout.Controls.Add(this.publisherComboBox, 0, 8);
+            this.targetSolutionSettingsTableLayout.Controls.Add(this.versionLabel, 0, 9);
+            this.targetSolutionSettingsTableLayout.Controls.Add(this.versionTextBox, 0, 10);
+            this.targetSolutionSettingsTableLayout.Controls.Add(this.replicateSolutionButton, 0, 12);
+            this.targetSolutionSettingsTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.targetSolutionSettingsTableLayout.Location = new System.Drawing.Point(3, 16);
+            this.targetSolutionSettingsTableLayout.Name = "targetSolutionSettingsTableLayout";
+            this.targetSolutionSettingsTableLayout.RowCount = 22;
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.targetSolutionSettingsTableLayout.Size = new System.Drawing.Size(252, 173);
+            this.targetSolutionSettingsTableLayout.TabIndex = 0;
             // 
             // solutionNameTextBox
             // 
@@ -404,6 +407,38 @@ namespace Emmetienne.SolutionReplicator
             this.replicateSolutionButton.UseVisualStyleBackColor = true;
             this.replicateSolutionButton.Click += new System.EventHandler(this.replicateSolutionButton_Click);
             // 
+            // solutionExportGroupBox
+            // 
+            this.solutionExportGroupBox.Controls.Add(this.exportTableLayout);
+            this.solutionExportGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.solutionExportGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.solutionExportGroupBox.Name = "solutionExportGroupBox";
+            this.solutionExportGroupBox.Size = new System.Drawing.Size(258, 306);
+            this.solutionExportGroupBox.TabIndex = 1;
+            this.solutionExportGroupBox.TabStop = false;
+            this.solutionExportGroupBox.Text = "Solution export settings";
+            // 
+            // exportTableLayout
+            // 
+            this.exportTableLayout.ColumnCount = 1;
+            this.exportTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.exportTableLayout.Controls.Add(this.exportFolderLabel, 0, 0);
+            this.exportTableLayout.Controls.Add(this.exportSourceSolutionButton, 0, 2);
+            this.exportTableLayout.Controls.Add(this.exportPathTableLayoutPanel, 0, 1);
+            this.exportTableLayout.Controls.Add(this.targetSolutionExportAndOpenTableLayout, 0, 3);
+            this.exportTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.exportTableLayout.Location = new System.Drawing.Point(3, 16);
+            this.exportTableLayout.Name = "exportTableLayout";
+            this.exportTableLayout.RowCount = 5;
+            this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.exportTableLayout.Size = new System.Drawing.Size(252, 287);
+            this.exportTableLayout.TabIndex = 0;
+            this.exportTableLayout.Paint += new System.Windows.Forms.PaintEventHandler(this.exportTableLayout_Paint);
+            // 
             // exportFolderLabel
             // 
             this.exportFolderLabel.AutoSize = true;
@@ -428,9 +463,9 @@ namespace Emmetienne.SolutionReplicator
             // exportTargetSolutionButton
             // 
             this.exportTargetSolutionButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.exportTargetSolutionButton.Location = new System.Drawing.Point(3, 85);
+            this.exportTargetSolutionButton.Location = new System.Drawing.Point(3, 3);
             this.exportTargetSolutionButton.Name = "exportTargetSolutionButton";
-            this.exportTargetSolutionButton.Size = new System.Drawing.Size(246, 29);
+            this.exportTargetSolutionButton.Size = new System.Drawing.Size(166, 33);
             this.exportTargetSolutionButton.TabIndex = 10;
             this.exportTargetSolutionButton.Text = "Download target solution";
             this.exportTargetSolutionButton.UseVisualStyleBackColor = true;
@@ -559,36 +594,31 @@ namespace Emmetienne.SolutionReplicator
             this.severity.ReadOnly = true;
             this.severity.Width = 70;
             // 
-            // exportTableLayout
+            // targetSolutionExportAndOpenTableLayout
             // 
-            this.exportTableLayout.ColumnCount = 1;
-            this.exportTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.exportTableLayout.Controls.Add(this.exportFolderLabel, 0, 0);
-            this.exportTableLayout.Controls.Add(this.exportSourceSolutionButton, 0, 2);
-            this.exportTableLayout.Controls.Add(this.exportTargetSolutionButton, 0, 3);
-            this.exportTableLayout.Controls.Add(this.exportPathTableLayoutPanel, 0, 1);
-            this.exportTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.exportTableLayout.Location = new System.Drawing.Point(3, 16);
-            this.exportTableLayout.Name = "exportTableLayout";
-            this.exportTableLayout.RowCount = 5;
-            this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.exportTableLayout.Size = new System.Drawing.Size(252, 287);
-            this.exportTableLayout.TabIndex = 0;
+            this.targetSolutionExportAndOpenTableLayout.ColumnCount = 2;
+            this.targetSolutionExportAndOpenTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.targetSolutionExportAndOpenTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.targetSolutionExportAndOpenTableLayout.Controls.Add(this.openTargetSolutionButton, 1, 0);
+            this.targetSolutionExportAndOpenTableLayout.Controls.Add(this.exportTargetSolutionButton, 0, 0);
+            this.targetSolutionExportAndOpenTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.targetSolutionExportAndOpenTableLayout.Location = new System.Drawing.Point(3, 85);
+            this.targetSolutionExportAndOpenTableLayout.Name = "targetSolutionExportAndOpenTableLayout";
+            this.targetSolutionExportAndOpenTableLayout.RowCount = 1;
+            this.targetSolutionExportAndOpenTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.targetSolutionExportAndOpenTableLayout.Size = new System.Drawing.Size(246, 39);
+            this.targetSolutionExportAndOpenTableLayout.TabIndex = 12;
             // 
-            // solutionExportGroupBox
+            // openTargetSolutionButton
             // 
-            this.solutionExportGroupBox.Controls.Add(this.exportTableLayout);
-            this.solutionExportGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.solutionExportGroupBox.Location = new System.Drawing.Point(0, 0);
-            this.solutionExportGroupBox.Name = "solutionExportGroupBox";
-            this.solutionExportGroupBox.Size = new System.Drawing.Size(258, 306);
-            this.solutionExportGroupBox.TabIndex = 1;
-            this.solutionExportGroupBox.TabStop = false;
-            this.solutionExportGroupBox.Text = "Solution export settings";
+            this.openTargetSolutionButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openTargetSolutionButton.Location = new System.Drawing.Point(175, 3);
+            this.openTargetSolutionButton.Name = "openTargetSolutionButton";
+            this.openTargetSolutionButton.Size = new System.Drawing.Size(68, 33);
+            this.openTargetSolutionButton.TabIndex = 11;
+            this.openTargetSolutionButton.Text = "Open target solution";
+            this.openTargetSolutionButton.UseVisualStyleBackColor = true;
+            this.openTargetSolutionButton.Click += new System.EventHandler(this.openTargetSolutionButton_Click);
             // 
             // SolutionReplicatorControl
             // 
@@ -615,13 +645,16 @@ namespace Emmetienne.SolutionReplicator
             this.componentsAndOptionsSplitContainer.ResumeLayout(false);
             this.sourceSolutionComponentsGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.solutionComponentDataGridView)).EndInit();
-            this.targetSolutionGroupBox.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            this.targetSolutionGroupBox.ResumeLayout(false);
+            this.targetSolutionSettingsTableLayout.ResumeLayout(false);
+            this.targetSolutionSettingsTableLayout.PerformLayout();
+            this.solutionExportGroupBox.ResumeLayout(false);
+            this.exportTableLayout.ResumeLayout(false);
+            this.exportTableLayout.PerformLayout();
             this.exportPathTableLayoutPanel.ResumeLayout(false);
             this.exportPathTableLayoutPanel.PerformLayout();
             this.splitContainerLayout.Panel1.ResumeLayout(false);
@@ -631,9 +664,7 @@ namespace Emmetienne.SolutionReplicator
             this.splitContainerLayout.ResumeLayout(false);
             this.logGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.logDataGridView)).EndInit();
-            this.exportTableLayout.ResumeLayout(false);
-            this.exportTableLayout.PerformLayout();
-            this.solutionExportGroupBox.ResumeLayout(false);
+            this.targetSolutionExportAndOpenTableLayout.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -656,7 +687,7 @@ namespace Emmetienne.SolutionReplicator
         private System.Windows.Forms.DataGridView solutionComponentDataGridView;
         private System.Windows.Forms.SplitContainer componentsAndOptionsSplitContainer;
         private System.Windows.Forms.GroupBox targetSolutionGroupBox;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel targetSolutionSettingsTableLayout;
         private System.Windows.Forms.Label solutionNameLabel;
         private System.Windows.Forms.TextBox solutionNameTextBox;
         private System.Windows.Forms.Label publisherLabel;
@@ -683,5 +714,7 @@ namespace Emmetienne.SolutionReplicator
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox solutionExportGroupBox;
         private System.Windows.Forms.TableLayoutPanel exportTableLayout;
+        private System.Windows.Forms.TableLayoutPanel targetSolutionExportAndOpenTableLayout;
+        private System.Windows.Forms.Button openTargetSolutionButton;
     }
 }

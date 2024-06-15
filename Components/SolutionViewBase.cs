@@ -9,6 +9,7 @@ namespace Emmetienne.SolutionReplicator.Components
         public abstract void ClearGrid();
         public abstract void FillGrid(List<SolutionWrapper> list);
         public abstract void OnCellSelection(object sender, EventArgs e);
+        public abstract void OnRowDoubleClick(object sender, EventArgs e);
         public abstract void DisableComponent(bool isDisabled);
 
         protected SolutionViewBase()
@@ -16,6 +17,7 @@ namespace Emmetienne.SolutionReplicator.Components
             EventBus.EventBusSingleton.Instance.clearAllViews += ClearGrid;
             EventBus.EventBusSingleton.Instance.clearSolutionView += ClearGrid;
             EventBus.EventBusSingleton.Instance.fillSolutionsView += FillGrid;
+            EventBus.EventBusSingleton.Instance.disableUiElements += DisableComponent;
         }
     }
 }

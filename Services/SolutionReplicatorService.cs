@@ -47,6 +47,7 @@ namespace Emmetienne.SolutionReplicator.Services
                     var createdSolutionData = targetSolutionRepository.CreateSolution(targetSolutionSettings);
 
                     EventBus.EventBusSingleton.Instance.emitTargetSolutionUniqueName?.Invoke(createdSolutionData.UniqueName);
+                    EventBus.EventBusSingleton.Instance.emitTargetSolutionId?.Invoke(createdSolutionData.SolutionId);
 
                     AddComponentToSolution(foundAndNotFoundComponents, createdSolutionData, worker);
 
