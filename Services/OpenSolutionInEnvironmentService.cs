@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using XrmToolBox.Extensibility;
 
 namespace Emmetienne.SolutionReplicator.Services
 {
     internal class OpenSolutionInEnvironmentService
     {
+        [DllImport("shell32.dll")]
+        public static extern IntPtr ShellExecute(IntPtr hwnd, string lpOperation, string lpFile, string lpParameters, string lpDirectory, int nShowCmd);
+
         private readonly LogService logService;
         private readonly MultipleConnectionsPluginControlBase multiplePluginControlBase;
         private Guid? targetSolutionId;
@@ -47,7 +51,7 @@ namespace Emmetienne.SolutionReplicator.Services
 
             var urlToOpen = $"https://make.powerapps.com/environments/{envinronmentId}/solutions/{calculatedSolutionId.ToString()}";
 
-            //Process.Start(new ProcessStartInfo(urlToOpen) { UseShellExecute = true });
+            ShellExecute(IntPtr.Zero, "open", urlToOpen, null, null, 1);
         }
 
         private void ClearTargetSolutionId()
