@@ -183,6 +183,7 @@
     <Compile Include="Components\SolutionGridViewComponent.cs" />
     <Compile Include="Components\SolutionComponentViewBase.cs" />
     <Compile Include="Components\SolutionViewBase.cs" />
+    <Compile Include="Components\OpenTargetSolutionButtonView.cs" />
     <Compile Include="Components\TargetExportSolutionButtonView.cs" />
     <Compile Include="Components\SourceExportSolutionButtonView.cs" />
     <Compile Include="Components\SourceEnvironmentLabelView.cs" />

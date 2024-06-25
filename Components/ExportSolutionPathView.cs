@@ -16,6 +16,7 @@ namespace Emmetienne.SolutionReplicator.Components
             this.solutionExportPathTextBox = (TextBox)solutionGridViewComponent;
             this.logService = logService;
 
+            this.solutionExportPathTextBox.TextChanged += OnTextChange;
             EventBus.EventBusSingleton.Instance.disableUiElements += DisableComponent;
             EventBus.EventBusSingleton.Instance.emitExportSolutionPathFromFolderBrowser += ChangeText;
         }

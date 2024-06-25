@@ -67,6 +67,15 @@ namespace Emmetienne.SolutionReplicator.Components
             this.solutionComponents = list;
 
             this.solutionComponentGridViewComponent.ClearSelection();
+            SetColumnsAsNonSortable();
+        }
+
+        private void SetColumnsAsNonSortable()
+        {
+            solutionComponentGridViewComponent.Columns["Component type"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            solutionComponentGridViewComponent.Columns["Component type name"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            solutionComponentGridViewComponent.Columns["Object id"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            solutionComponentGridViewComponent.Columns["Replication status"].SortMode = DataGridViewColumnSortMode.NotSortable;
         }
 
         public override void ColorComponentsInGrid(FoundAndNotFoundComponents list)

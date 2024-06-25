@@ -57,10 +57,12 @@ namespace Emmetienne.SolutionReplicator
             this.exportTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.exportFolderLabel = new System.Windows.Forms.Label();
             this.exportSourceSolutionButton = new System.Windows.Forms.Button();
-            this.exportTargetSolutionButton = new System.Windows.Forms.Button();
             this.exportPathTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.exportPathTextBox = new System.Windows.Forms.TextBox();
             this.openFolderSelectionButton = new System.Windows.Forms.Button();
+            this.targetSolutionExportAndOpenTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.openTargetSolutionButton = new System.Windows.Forms.Button();
+            this.exportTargetSolutionButton = new System.Windows.Forms.Button();
             this.splitContainerLayout = new System.Windows.Forms.SplitContainer();
             this.logGroupBox = new System.Windows.Forms.GroupBox();
             this.logDataGridView = new System.Windows.Forms.DataGridView();
@@ -68,8 +70,6 @@ namespace Emmetienne.SolutionReplicator
             this.message = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.exception = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.targetSolutionExportAndOpenTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.openTargetSolutionButton = new System.Windows.Forms.Button();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -93,13 +93,13 @@ namespace Emmetienne.SolutionReplicator
             this.solutionExportGroupBox.SuspendLayout();
             this.exportTableLayout.SuspendLayout();
             this.exportPathTableLayoutPanel.SuspendLayout();
+            this.targetSolutionExportAndOpenTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerLayout)).BeginInit();
             this.splitContainerLayout.Panel1.SuspendLayout();
             this.splitContainerLayout.Panel2.SuspendLayout();
             this.splitContainerLayout.SuspendLayout();
             this.logGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logDataGridView)).BeginInit();
-            this.targetSolutionExportAndOpenTableLayout.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenu
@@ -184,7 +184,6 @@ namespace Emmetienne.SolutionReplicator
             this.solutionTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.solutionTableLayout.Size = new System.Drawing.Size(416, 483);
             this.solutionTableLayout.TabIndex = 1;
-            this.solutionTableLayout.Paint += new System.Windows.Forms.PaintEventHandler(this.solutionTableLayout_Paint);
             // 
             // solutionGridView
             // 
@@ -270,7 +269,6 @@ namespace Emmetienne.SolutionReplicator
             this.solutionComponentDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.solutionComponentDataGridView.Size = new System.Drawing.Size(330, 483);
             this.solutionComponentDataGridView.TabIndex = 0;
-            this.solutionComponentDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.solutionComponentDataGridView_CellContentClick);
             // 
             // splitContainer1
             // 
@@ -437,7 +435,6 @@ namespace Emmetienne.SolutionReplicator
             this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.exportTableLayout.Size = new System.Drawing.Size(252, 287);
             this.exportTableLayout.TabIndex = 0;
-            this.exportTableLayout.Paint += new System.Windows.Forms.PaintEventHandler(this.exportTableLayout_Paint);
             // 
             // exportFolderLabel
             // 
@@ -458,18 +455,6 @@ namespace Emmetienne.SolutionReplicator
             this.exportSourceSolutionButton.TabIndex = 9;
             this.exportSourceSolutionButton.Text = "Download source solution";
             this.exportSourceSolutionButton.UseVisualStyleBackColor = true;
-            this.exportSourceSolutionButton.Click += new System.EventHandler(this.exportSourceSolutionButton_Click);
-            // 
-            // exportTargetSolutionButton
-            // 
-            this.exportTargetSolutionButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.exportTargetSolutionButton.Location = new System.Drawing.Point(3, 3);
-            this.exportTargetSolutionButton.Name = "exportTargetSolutionButton";
-            this.exportTargetSolutionButton.Size = new System.Drawing.Size(166, 33);
-            this.exportTargetSolutionButton.TabIndex = 10;
-            this.exportTargetSolutionButton.Text = "Download target solution";
-            this.exportTargetSolutionButton.UseVisualStyleBackColor = true;
-            this.exportTargetSolutionButton.Click += new System.EventHandler(this.exportTargetSolutionButton_Click);
             // 
             // exportPathTableLayoutPanel
             // 
@@ -494,7 +479,6 @@ namespace Emmetienne.SolutionReplicator
             this.exportPathTextBox.Name = "exportPathTextBox";
             this.exportPathTextBox.Size = new System.Drawing.Size(174, 20);
             this.exportPathTextBox.TabIndex = 0;
-            this.exportPathTextBox.TextChanged += new System.EventHandler(this.exportPathTextBox_TextChanged);
             // 
             // openFolderSelectionButton
             // 
@@ -506,6 +490,41 @@ namespace Emmetienne.SolutionReplicator
             this.openFolderSelectionButton.Text = "...";
             this.openFolderSelectionButton.UseVisualStyleBackColor = true;
             this.openFolderSelectionButton.Click += new System.EventHandler(this.openFolderSelectionButton_Click);
+            // 
+            // targetSolutionExportAndOpenTableLayout
+            // 
+            this.targetSolutionExportAndOpenTableLayout.ColumnCount = 2;
+            this.targetSolutionExportAndOpenTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.targetSolutionExportAndOpenTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.targetSolutionExportAndOpenTableLayout.Controls.Add(this.openTargetSolutionButton, 1, 0);
+            this.targetSolutionExportAndOpenTableLayout.Controls.Add(this.exportTargetSolutionButton, 0, 0);
+            this.targetSolutionExportAndOpenTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.targetSolutionExportAndOpenTableLayout.Location = new System.Drawing.Point(3, 85);
+            this.targetSolutionExportAndOpenTableLayout.Name = "targetSolutionExportAndOpenTableLayout";
+            this.targetSolutionExportAndOpenTableLayout.RowCount = 1;
+            this.targetSolutionExportAndOpenTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.targetSolutionExportAndOpenTableLayout.Size = new System.Drawing.Size(246, 39);
+            this.targetSolutionExportAndOpenTableLayout.TabIndex = 12;
+            // 
+            // openTargetSolutionButton
+            // 
+            this.openTargetSolutionButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openTargetSolutionButton.Location = new System.Drawing.Point(175, 3);
+            this.openTargetSolutionButton.Name = "openTargetSolutionButton";
+            this.openTargetSolutionButton.Size = new System.Drawing.Size(68, 33);
+            this.openTargetSolutionButton.TabIndex = 11;
+            this.openTargetSolutionButton.Text = "Open target solution";
+            this.openTargetSolutionButton.UseVisualStyleBackColor = true;
+            // 
+            // exportTargetSolutionButton
+            // 
+            this.exportTargetSolutionButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.exportTargetSolutionButton.Location = new System.Drawing.Point(3, 3);
+            this.exportTargetSolutionButton.Name = "exportTargetSolutionButton";
+            this.exportTargetSolutionButton.Size = new System.Drawing.Size(166, 33);
+            this.exportTargetSolutionButton.TabIndex = 10;
+            this.exportTargetSolutionButton.Text = "Download target solution";
+            this.exportTargetSolutionButton.UseVisualStyleBackColor = true;
             // 
             // splitContainerLayout
             // 
@@ -594,32 +613,6 @@ namespace Emmetienne.SolutionReplicator
             this.severity.ReadOnly = true;
             this.severity.Width = 70;
             // 
-            // targetSolutionExportAndOpenTableLayout
-            // 
-            this.targetSolutionExportAndOpenTableLayout.ColumnCount = 2;
-            this.targetSolutionExportAndOpenTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.targetSolutionExportAndOpenTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.targetSolutionExportAndOpenTableLayout.Controls.Add(this.openTargetSolutionButton, 1, 0);
-            this.targetSolutionExportAndOpenTableLayout.Controls.Add(this.exportTargetSolutionButton, 0, 0);
-            this.targetSolutionExportAndOpenTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.targetSolutionExportAndOpenTableLayout.Location = new System.Drawing.Point(3, 85);
-            this.targetSolutionExportAndOpenTableLayout.Name = "targetSolutionExportAndOpenTableLayout";
-            this.targetSolutionExportAndOpenTableLayout.RowCount = 1;
-            this.targetSolutionExportAndOpenTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.targetSolutionExportAndOpenTableLayout.Size = new System.Drawing.Size(246, 39);
-            this.targetSolutionExportAndOpenTableLayout.TabIndex = 12;
-            // 
-            // openTargetSolutionButton
-            // 
-            this.openTargetSolutionButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openTargetSolutionButton.Location = new System.Drawing.Point(175, 3);
-            this.openTargetSolutionButton.Name = "openTargetSolutionButton";
-            this.openTargetSolutionButton.Size = new System.Drawing.Size(68, 33);
-            this.openTargetSolutionButton.TabIndex = 11;
-            this.openTargetSolutionButton.Text = "Open target solution";
-            this.openTargetSolutionButton.UseVisualStyleBackColor = true;
-            this.openTargetSolutionButton.Click += new System.EventHandler(this.openTargetSolutionButton_Click);
-            // 
             // SolutionReplicatorControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -657,6 +650,7 @@ namespace Emmetienne.SolutionReplicator
             this.exportTableLayout.PerformLayout();
             this.exportPathTableLayoutPanel.ResumeLayout(false);
             this.exportPathTableLayoutPanel.PerformLayout();
+            this.targetSolutionExportAndOpenTableLayout.ResumeLayout(false);
             this.splitContainerLayout.Panel1.ResumeLayout(false);
             this.splitContainerLayout.Panel2.ResumeLayout(false);
             this.splitContainerLayout.Panel2.PerformLayout();
@@ -664,7 +658,6 @@ namespace Emmetienne.SolutionReplicator
             this.splitContainerLayout.ResumeLayout(false);
             this.logGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.logDataGridView)).EndInit();
-            this.targetSolutionExportAndOpenTableLayout.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
