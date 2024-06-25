@@ -16,8 +16,16 @@ namespace Emmetienne.SolutionReplicator.Components
         {
             this.exportTargetSolutionButton = (Button)exportTargetSolutionButton;
             this.logService = logService;
+
+            this.exportTargetSolutionButton.Click += InitTargetolutionExport;
+
             EventBus.EventBusSingleton.Instance.emitTargetSolutionUniqueName += SetButtonLabel;
             EventBus.EventBusSingleton.Instance.disableUiElements += DisableComponent;
+        }
+
+        private void InitTargetolutionExport(object sender, EventArgs e)
+        {
+            EventBus.EventBusSingleton.Instance.startExportSolution?.Invoke(false);
         }
 
         private void SetButtonLabel(string label)

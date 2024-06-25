@@ -2,10 +2,8 @@
 using Emmetienne.SolutionReplicator.Model;
 using Emmetienne.SolutionReplicator.Services;
 using McTools.Xrm.Connection;
-using McTools.Xrm.Connection.WinForms.AppCode;
 using Microsoft.Xrm.Sdk;
 using System;
-using System.Windows.Forms;
 using XrmToolBox.Extensibility;
 
 namespace Emmetienne.SolutionReplicator
@@ -31,9 +29,9 @@ namespace Emmetienne.SolutionReplicator
         private SourceExportSolutionButtonView sourceExportSolutionButtonView;
         private TargetExportSolutionButtonView targetExportSolutionButtonView;
         private ExportSolutionPathView exportSolutionPathView;
+        private OpenTargetSolutionButtonView openTargetSolutionButtonView;
 
         private GenericButtonComponentDisableView selectExportFolderButtonView;
-        private GenericButtonComponentDisableView openTargetSolutionButtonView;
         private GenericTextBoxComponentDisableView solutionNameTextBoxView;
         private GenericTextBoxComponentDisableView versionTextBoxView;
 
@@ -56,9 +54,9 @@ namespace Emmetienne.SolutionReplicator
             this.sourceExportSolutionButtonView = new SourceExportSolutionButtonView(this.exportSourceSolutionButton, logService);
             this.targetExportSolutionButtonView = new TargetExportSolutionButtonView(this.exportTargetSolutionButton, logService);
             this.exportSolutionPathView = new ExportSolutionPathView(this.exportPathTextBox, logService);
+            this.openTargetSolutionButtonView = new OpenTargetSolutionButtonView(this.openTargetSolutionButton, logService);
 
             this.selectExportFolderButtonView = new GenericButtonComponentDisableView(this.openFolderSelectionButton, logService);
-            this.openTargetSolutionButtonView = new GenericButtonComponentDisableView(this.openTargetSolutionButton, logService);
             this.solutionNameTextBoxView = new GenericTextBoxComponentDisableView(this.solutionNameTextBox, logService);
             this.versionTextBoxView = new GenericTextBoxComponentDisableView(this.versionTextBox, logService);
         }
@@ -80,13 +78,13 @@ namespace Emmetienne.SolutionReplicator
         {
             if (SettingsManager.Instance.TryLoad(typeof(SolutionReplicatorControl), out settings))
             {
-                logService.LogDebug($"Settings has been loaded");
+                logService.LogDebug($"Settings has been retrieved and loaded");
                 EventBus.EventBusSingleton.Instance.emitExportSolutionPathFromFolderBrowser?.Invoke(settings.SolutionExportPath);
             }
             else
             {
                 settings = new Settings();
-                logService.LogDebug($"Settings has been created");
+                logService.LogDebug($"New settings has been created");
             }
         }
 
@@ -139,7 +137,7 @@ namespace Emmetienne.SolutionReplicator
 
             if (!solutionReplicatorValidationService.Validate(targetSolutionSettings))
                 return;
-
+            
             var secondService = this.AdditionalConnectionDetails[0].GetCrmServiceClient();
 
             this.solutionReplicatorService = new SolutionReplicatorService(logService, Service, secondService, this);
@@ -180,44 +178,9 @@ namespace Emmetienne.SolutionReplicator
             EventBus.EventBusSingleton.Instance.filterSolutionComponent?.Invoke(this.solutionFilterTextBox.Text);
         }
 
-        private void solutionTableLayout_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-        {
-
-        }
-
-        private void solutionComponentDataGridView_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void exportSourceSolutionButton_Click(object sender, EventArgs e)
-        {
-            this.exportSolutionService.ExportSolution(true);
-        }
-
-        private void exportTargetSolutionButton_Click(object sender, EventArgs e)
-        {
-            this.exportSolutionService.ExportSolution(false);
-        }
-
-        private void exportPathTextBox_TextChanged(object sender, EventArgs e)
-        {
-            this.exportSolutionPathView.OnTextChange(sender, e);
-        }
-
         private void openFolderSelectionButton_Click(object sender, EventArgs e)
         {
             this.exportSolutionService.OpenSelectionFolderDialog();
-        }
-
-        private void exportTableLayout_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void openTargetSolutionButton_Click(object sender, EventArgs e)
-        {
-            EventBus.EventBusSingleton.Instance.emitSolutionIdToOpenBrowser?.Invoke(false, null);
         }
     }
 }

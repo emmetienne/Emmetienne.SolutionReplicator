@@ -30,6 +30,7 @@ namespace Emmetienne.SolutionReplicator.EventBus
         public Action<IOrganizationService> changeSourceOrganizationService;
         public Action<IOrganizationService> changeTargetOrganizationService;
         public Action<bool, Guid?> emitSolutionIdToOpenBrowser;
+        public Action<bool> startExportSolution;
         #endregion
 
         #region Logging

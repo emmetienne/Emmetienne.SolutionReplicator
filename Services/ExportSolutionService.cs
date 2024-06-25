@@ -44,6 +44,7 @@ namespace Emmetienne.SolutionReplicator.Services
             EventBus.EventBusSingleton.Instance.changeTargetOrganizationService += ChangeTargetConnection;
             EventBus.EventBusSingleton.Instance.clearAllViews += ClearExportButtonsLabels;
             EventBus.EventBusSingleton.Instance.clearSolutionComponentView += ClearTargetExportButtonsLabels;
+            EventBus.EventBusSingleton.Instance.startExportSolution += ExportSolution;
 
             this.settings = settings;
 
