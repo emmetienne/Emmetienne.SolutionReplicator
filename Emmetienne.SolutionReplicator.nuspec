@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <!-- <icon>icon.png</icon> -->
+    <projectUrl>https://github.com/emmetienne/Emmetienne.SolutionReplicator/</projectUrl>
+	<icon>icons/icon_128.png</icon>
+	<readme>docs\README.md</readme>
+    <description>$description$</description>
+    <releaseNotes>First nuget release of the tool</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>XrmToolBox</tags>
+	<dependencies>
+      <dependency id="XrmToolBox" version="1.2023.10.67" />
+    </dependencies>
+  </metadata>
+	<files>
+		<file src="bin\Release\Emmetienne.SolutionReplicator.dll" target="lib\net48\Plugins" />
+		<file src="./Icons/icon_128.png" target="icons" />
+		<file src="./Readme.md" target="docs" />
+	</files>
+</package>

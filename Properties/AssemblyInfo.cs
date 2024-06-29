@@ -1,12 +1,11 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Emmetienne.SolutionReplicator")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("This tool allows to replicate a solution from a Dynamics 365 environment to another")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Martino Spreafico")]
 [assembly: AssemblyProduct("Emmetienne.SolutionReplicator")]
@@ -32,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.8")]
-[assembly: AssemblyFileVersion("1.0.0.8")]
+[assembly: AssemblyVersion("1.2024.6.1")]
+[assembly: AssemblyFileVersion("1.2024.6.1")]
