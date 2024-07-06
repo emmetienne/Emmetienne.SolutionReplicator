@@ -136,7 +136,7 @@ namespace Emmetienne.SolutionReplicator
             this.tsbSecondEnvinronment.Name = "tsbSecondEnvinronment";
             this.tsbSecondEnvinronment.Size = new System.Drawing.Size(175, 22);
             this.tsbSecondEnvinronment.Text = "Connect to target environment";
-            this.tsbSecondEnvinronment.Click += new System.EventHandler(this.tsbSecondEnvinronment_Click);
+            this.tsbSecondEnvinronment.Click += new System.EventHandler(this.OnSecondEnvironmentButtonClick);
             // 
             // splitContainer
             // 
@@ -219,7 +219,6 @@ namespace Emmetienne.SolutionReplicator
             this.solutionFilterTextBox.Name = "solutionFilterTextBox";
             this.solutionFilterTextBox.Size = new System.Drawing.Size(410, 20);
             this.solutionFilterTextBox.TabIndex = 1;
-            this.solutionFilterTextBox.TextChanged += new System.EventHandler(this.OnFilterSolutionTextBoxFilter);
             // 
             // componentsAndOptionsSplitContainer
             // 
@@ -403,7 +402,7 @@ namespace Emmetienne.SolutionReplicator
             this.replicateSolutionButton.TabIndex = 6;
             this.replicateSolutionButton.Text = "Replicate solution";
             this.replicateSolutionButton.UseVisualStyleBackColor = true;
-            this.replicateSolutionButton.Click += new System.EventHandler(this.replicateSolutionButton_Click);
+            this.replicateSolutionButton.Click += new System.EventHandler(this.OnReplicateSolutionButtonClick);
             // 
             // solutionExportGroupBox
             // 
@@ -489,7 +488,6 @@ namespace Emmetienne.SolutionReplicator
             this.openFolderSelectionButton.TabIndex = 1;
             this.openFolderSelectionButton.Text = "...";
             this.openFolderSelectionButton.UseVisualStyleBackColor = true;
-            this.openFolderSelectionButton.Click += new System.EventHandler(this.openFolderSelectionButton_Click);
             // 
             // targetSolutionExportAndOpenTableLayout
             // 

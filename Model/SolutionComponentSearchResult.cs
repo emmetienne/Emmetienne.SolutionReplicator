@@ -12,11 +12,11 @@ namespace Emmetienne.SolutionReplicator.Model
                public static readonly Dictionary<SolutionComponentSearchResult, ComponentSearchResult> searchResultOptionDictionary
                                     = new Dictionary<SolutionComponentSearchResult, ComponentSearchResult>()
                                     {
-                                            { SolutionComponentSearchResult.notYetSearched, new ComponentSearchResult { Message = "Not yet searched", ForeGroundColor = Color.Blue  } },
+                                            { SolutionComponentSearchResult.notYetSearched, new ComponentSearchResult { Message = "Not yet searched", ForeGroundColor = Color.Black  } },
                                             { SolutionComponentSearchResult.foundOnTargetEnvironment, new ComponentSearchResult { Message = "Found on target environment", ForeGroundColor = Color.Green } },
                                             { SolutionComponentSearchResult.notFoundOnTargetEnvironment, new ComponentSearchResult { Message = "Not found on target environment", ForeGroundColor = Color.Red } },
                                             { SolutionComponentSearchResult.foundMultipleOnTargetEnvironment, new ComponentSearchResult { Message = "Found multiple on target environment", ForeGroundColor = Color.Orange } },
-                                            { SolutionComponentSearchResult.notYetHandled, new ComponentSearchResult { Message = "Component not yet handled by the tool", ForeGroundColor = Color.Purple } }
+                                            { SolutionComponentSearchResult.notYetHandled, new ComponentSearchResult { Message = "Component type not yet handled by the tool", ForeGroundColor = Color.Purple } }
                                     };
     }
 

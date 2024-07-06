@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\BrowseExportSolutionPathButtonView.cs" />
+    <Compile Include="Components\FilterSolutionTextBoxView.cs" />
     <Compile Include="Components\ExportSolutionPathView.cs" />
     <Compile Include="Components\GenericTextBoxComponentDisableView.cs" />
     <Compile Include="Components\IComboBoxComponent.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Components\ISolutionGridViewComponent.cs" />
     <Compile Include="Components\LoggingComponent.cs" />
     <Compile Include="Components\GenericButtonComponentDisableView.cs" />
+    <Compile Include="Components\OpenExportSolutionFolderPathView.cs" />
     <Compile Include="Components\PublisherComboBoxView.cs" />
     <Compile Include="Components\SolutionComponentsGridView.cs" />
     <Compile Include="Components\SolutionGridViewComponent.cs" />
@@ -246,6 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="LICENSE" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>

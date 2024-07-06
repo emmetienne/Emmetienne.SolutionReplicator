@@ -30,13 +30,14 @@ namespace Emmetienne.SolutionReplicator
         private TargetExportSolutionButtonView targetExportSolutionButtonView;
         private ExportSolutionPathView exportSolutionPathView;
         private OpenTargetSolutionButtonView openTargetSolutionButtonView;
+        private OpenExportSolutionFolderPathView openExportSolutionFolderPathView;
+        private FilterSolutionTextBoxView filterSolutionTextBoxView;
 
         private GenericButtonComponentDisableView selectExportFolderButtonView;
         private GenericTextBoxComponentDisableView solutionNameTextBoxView;
         private GenericTextBoxComponentDisableView versionTextBoxView;
 
         private ILoggingComponent loggingComponent;
-
 
         public SolutionReplicatorControl()
         {
@@ -55,6 +56,9 @@ namespace Emmetienne.SolutionReplicator
             this.targetExportSolutionButtonView = new TargetExportSolutionButtonView(this.exportTargetSolutionButton, logService);
             this.exportSolutionPathView = new ExportSolutionPathView(this.exportPathTextBox, logService);
             this.openTargetSolutionButtonView = new OpenTargetSolutionButtonView(this.openTargetSolutionButton, logService);
+            this.openExportSolutionFolderPathView = new OpenExportSolutionFolderPathView(this.openFolderSelectionButton, logService);
+            this.filterSolutionTextBoxView = new FilterSolutionTextBoxView(this.solutionFilterTextBox, logService);
+
 
             this.selectExportFolderButtonView = new GenericButtonComponentDisableView(this.openFolderSelectionButton, logService);
             this.solutionNameTextBoxView = new GenericTextBoxComponentDisableView(this.solutionNameTextBox, logService);
@@ -125,7 +129,7 @@ namespace Emmetienne.SolutionReplicator
             logService.LogWarning($"Source environment connection has changed to: {this.ConnectionDetail.WebApplicationUrl}");
         }
 
-        private void replicateSolutionButton_Click(object sender, EventArgs e)
+        private void OnReplicateSolutionButtonClick(object sender, EventArgs e)
         {
             var dataBinded = solutionComponentDataGridView.Rows;
 
@@ -145,7 +149,7 @@ namespace Emmetienne.SolutionReplicator
             solutionReplicatorService.ReplicateSolution(this.solutionComponentsGridViewComponent.SolutionComponents, targetSolutionSettings);
         }
 
-        private void tsbSecondEnvinronment_Click(object sender, EventArgs e)
+        private void OnSecondEnvironmentButtonClick(object sender, EventArgs e)
         {
             EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(true);
 
@@ -176,11 +180,6 @@ namespace Emmetienne.SolutionReplicator
         private void OnFilterSolutionTextBoxFilter(object sender, EventArgs e)
         {
             EventBus.EventBusSingleton.Instance.filterSolutionComponent?.Invoke(this.solutionFilterTextBox.Text);
-        }
-
-        private void openFolderSelectionButton_Click(object sender, EventArgs e)
-        {
-            this.exportSolutionService.OpenSelectionFolderDialog();
         }
     }
 }
