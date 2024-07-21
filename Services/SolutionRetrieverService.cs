@@ -24,12 +24,11 @@ namespace Emmetienne.SolutionReplicator.Services
             this.solutionRepository = new SolutionRepository(pluginControlBase.Service, logService);
 
             EventBus.EventBusSingleton.Instance.changeSourceOrganizationService += ChangeMainConnection;
-            EventBus.EventBusSingleton.Instance.filterSolutionComponent += FilterSolutions;
+            EventBus.EventBusSingleton.Instance.filterSolutions += FilterSolutions;
         }
 
         public void GetSolutions()
         {
-
             pluginControlBase.WorkAsync(new WorkAsyncInfo
             {
                 Message = "Retrieving solutions",
@@ -49,24 +48,29 @@ namespace Emmetienne.SolutionReplicator.Services
                 PostWorkCallBack = (args) =>
                 {
                     EventBus.EventBusSingleton.Instance.fillSolutionsView?.Invoke((List<SolutionWrapper>)args.Result);
+                    EventBus.EventBusSingleton.Instance.initFilterSolutions?.Invoke();
                     EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(false);
                 }
             });
         }
 
-        public void FilterSolutions(string solutionFilter)
+        public void FilterSolutions(SolutionFilteringSettings solutionFilters)
         {
             if (Solutions == null || Solutions.Count == 0)
                 return;
 
-            if (string.IsNullOrWhiteSpace(solutionFilter))
+            if (solutionFilters == null)
             {
                 EventBus.EventBusSingleton.Instance.fillSolutionsView?.Invoke(Solutions);
                 EventBus.EventBusSingleton.Instance.clearSolutionComponentView?.Invoke();
                 return;
             }
 
-            FilteredSolutions = Solutions.Where(x => x.UniqueName.IndexOf(solutionFilter, StringComparison.OrdinalIgnoreCase) > -1 || x.FriendlyName.IndexOf(solutionFilter, StringComparison.OrdinalIgnoreCase) > -1).ToList();
+            FilteredSolutions = solutionFilters.ShowManaged ? Solutions : Solutions.Where(x => x.IsManaged == solutionFilters.ShowManaged).ToList();
+
+            if (!string.IsNullOrWhiteSpace(solutionFilters.SolutionName))
+                FilteredSolutions = Solutions.Where(x => x.UniqueName.IndexOf(solutionFilters.SolutionName, StringComparison.OrdinalIgnoreCase) > -1 || x.FriendlyName.IndexOf(solutionFilters.SolutionName, StringComparison.OrdinalIgnoreCase) > -1).ToList();
+
             EventBus.EventBusSingleton.Instance.fillSolutionsView?.Invoke(FilteredSolutions);
             EventBus.EventBusSingleton.Instance.clearSolutionComponentView?.Invoke();
         }

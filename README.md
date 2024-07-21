@@ -1,9 +1,12 @@
+[![Build and Release](https://github.com/emmetienne/Emmetienne.SolutionReplicator/actions/workflows/build-and-release.yml/badge.svg?branch=main)](https://github.com/emmetienne/Emmetienne.SolutionReplicator/actions/workflows/build-and-release.yml)
+
 ## Emmetienne.SolutionReplicator
 Solution Replicator is a plugin for [XrmToolbox](https://www.xrmtoolbox.com) that allows you to replicate a solution between environments. It is useful, for example, when you need to compare the customization.xml file between two environments.
 
 ## Features
  - Replicate the solution between environments
- - Filter the solution by name
+ - Filter the solution by name          
+ - Filter out managed solutions (the default behaviour is to not show managed solutions) 
  - Export the source solution and the target solution
  - Open the source and the target solution
 
@@ -23,6 +26,7 @@ The "Replication status" column can have five states:
  - Not found on target environment -> The component has not been found on the target environment and thus it's not replicated in the target solution
  - Found multiple on target environment -> Multiple components have been found and each one has been added to the solution
  - Component type not yet handled by the tool -> The component type is not handled by the current version of the tool. If you find a component not handled, please open an issue 
+ - Error -> An error has occoured and therefore the component will not be replicated, the exception will be logged. If you find an error, please open an issue 
 
 ## How this tool works
 This tool works by retrieving the data of the components of the selected solution from the source environment. This data is then used to search for the same component in the target environment. If found, the component will be added to the target solution.

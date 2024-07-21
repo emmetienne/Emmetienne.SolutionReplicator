@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\BrowseExportSolutionPathButtonView.cs" />
+    <Compile Include="Components\FilterManagedSolutionCheckBoxView.cs" />
     <Compile Include="Components\FilterSolutionTextBoxView.cs" />
     <Compile Include="Components\ExportSolutionPathView.cs" />
     <Compile Include="Components\GenericTextBoxComponentDisableView.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Model\PublisherWrapper.cs" />
     <Compile Include="Model\Singleton.cs" />
     <Compile Include="Model\SolutionComponentWrapper.cs" />
+    <Compile Include="Model\SolutionFilteringSettings.cs" />
     <Compile Include="Model\SolutionWrapper.cs" />
     <Compile Include="Model\TargetSolutionSettings.cs" />
     <Compile Include="MyPlugin.cs" />
@@ -220,6 +222,7 @@
     <Compile Include="Services\ComponentSearchServiceStrategy\GenericComponentSearchStrategy.cs" />
     <Compile Include="Services\ComponentTypeOptionSetService.cs" />
     <Compile Include="Services\ExportSolutionService.cs" />
+    <Compile Include="Services\FilterSolutionManagerService.cs" />
     <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\MetadataServiceSingleton.cs" />
     <Compile Include="Services\OpenSolutionInEnvironmentService.cs" />

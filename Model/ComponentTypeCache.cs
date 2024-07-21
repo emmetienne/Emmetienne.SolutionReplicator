@@ -87,7 +87,7 @@ namespace Emmetienne.SolutionReplicator.Model
             // cannot retrieve with retrieve multiple request
             {64, new ComponentType { ComponentTypeName="Complex Control"                      , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                      }},
             {65, new ComponentType { ComponentTypeName="Hierarchy Rule"                       , ComponentEntityLogicalName = "hierarchyrule", ComponentPrimaryFieldLogicalName ="name"                     }},
-            {66, new ComponentType { ComponentTypeName="Custom Control"                       , ComponentEntityLogicalName = "customcontrol", ComponentPrimaryFieldLogicalName =""                     }},
+            {66, new ComponentType { ComponentTypeName="Custom Control"                       , ComponentEntityLogicalName = "customcontrol", ComponentPrimaryFieldLogicalName ="name"                     }},
             {68, new ComponentType { ComponentTypeName="Custom Control Default Config"        , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                                    }},
             {70, new ComponentType { ComponentTypeName="Field Security Profile"               , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                             }},
             {71, new ComponentType { ComponentTypeName="Field Permission"                     , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                       }},
@@ -135,6 +135,8 @@ namespace Emmetienne.SolutionReplicator.Model
             {"msdyn_sessiontemplate",new ComponentType { ComponentTypeName="Session template"                           , ComponentEntityLogicalName = "msdyn_sessiontemplate", ComponentPrimaryFieldLogicalName ="msdyn_uniquename", DoNotAddToSolution = false                    } },
             {"msdyn_templateparameter",new ComponentType { ComponentTypeName="Template parameter"                           , ComponentEntityLogicalName = "msdyn_templateparameter", ComponentPrimaryFieldLogicalName ="msdyn_uniquename", DoNotAddToSolution = false                    } },
             {"msdyn_sessiontemplate_applicationtab",new ComponentType { ComponentTypeName="Template parameter"                           , ComponentEntityLogicalName = "msdyn_sessiontemplate_applicationtab", ComponentPrimaryFieldLogicalName ="componentidunique", DoNotAddToSolution = false                    }
+            },
+            {"canvasapp",new ComponentType { ComponentTypeName="Canvas App"                           , ComponentEntityLogicalName = "canvasapp", ComponentPrimaryFieldLogicalName ="name", DoNotAddToSolution = false                    }
             }
        };
 

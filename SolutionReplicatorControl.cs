@@ -12,6 +12,8 @@ namespace Emmetienne.SolutionReplicator
     {
         private Settings settings;
         private LogService logService;
+
+        private FilterSolutionManagerService filterSolutionManagerService;
         private SolutionRetrieverService solutionRetrieverService;
         private SolutionComponentRetrieverService solutionComponentRetrieverService;
         private SolutionReplicatorService solutionReplicatorService;
@@ -32,6 +34,7 @@ namespace Emmetienne.SolutionReplicator
         private OpenTargetSolutionButtonView openTargetSolutionButtonView;
         private OpenExportSolutionFolderPathView openExportSolutionFolderPathView;
         private FilterSolutionTextBoxView filterSolutionTextBoxView;
+        private FilterManagedSolutionCheckBoxView filterManagedSolutionCheckBoxView;
 
         private GenericButtonComponentDisableView selectExportFolderButtonView;
         private GenericTextBoxComponentDisableView solutionNameTextBoxView;
@@ -58,6 +61,7 @@ namespace Emmetienne.SolutionReplicator
             this.openTargetSolutionButtonView = new OpenTargetSolutionButtonView(this.openTargetSolutionButton, logService);
             this.openExportSolutionFolderPathView = new OpenExportSolutionFolderPathView(this.openFolderSelectionButton, logService);
             this.filterSolutionTextBoxView = new FilterSolutionTextBoxView(this.solutionFilterTextBox, logService);
+            this.filterManagedSolutionCheckBoxView = new FilterManagedSolutionCheckBoxView(this.showManagedCheckBox, logService);
 
 
             this.selectExportFolderButtonView = new GenericButtonComponentDisableView(this.openFolderSelectionButton, logService);
@@ -71,6 +75,7 @@ namespace Emmetienne.SolutionReplicator
 
             LoadSettings();
 
+            this.filterSolutionManagerService = new FilterSolutionManagerService();
             this.solutionRetrieverService = new SolutionRetrieverService(logService, this);
             this.solutionComponentRetrieverService = new SolutionComponentRetrieverService(logService, Service, this);
             this.exportSolutionService = new ExportSolutionService(logService, Service, this, settings);
@@ -149,7 +154,7 @@ namespace Emmetienne.SolutionReplicator
             solutionReplicatorService.ReplicateSolution(this.solutionComponentsGridViewComponent.SolutionComponents, targetSolutionSettings);
         }
 
-        private void OnSecondEnvironmentButtonClick(object sender, EventArgs e)
+        private void tsbSecondEnvinronment_Click(object sender, EventArgs e)
         {
             EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(true);
 
@@ -175,11 +180,6 @@ namespace Emmetienne.SolutionReplicator
             EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(false);
 
             logService.LogWarning($"Target environment connection has changed to: {this.AdditionalConnectionDetails[0].WebApplicationUrl}");
-        }
-
-        private void OnFilterSolutionTextBoxFilter(object sender, EventArgs e)
-        {
-            EventBus.EventBusSingleton.Instance.filterSolutionComponent?.Invoke(this.solutionFilterTextBox.Text);
         }
     }
 }

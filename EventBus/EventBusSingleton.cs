@@ -13,7 +13,10 @@ namespace Emmetienne.SolutionReplicator.EventBus
         public Action<Guid?> emitSourceSolutionId;
         public Action<Guid?> emitTargetSolutionId;
         public Action<Guid> retrieveSolutionComponents;
-        public Action<string> filterSolutionComponent;
+        public Action<string> setSolutionNameFilter;
+        public Action<bool> setManagedSolutionFilter;
+        public Action<SolutionFilteringSettings> filterSolutions;
+        public Action initFilterSolutions;
         public Action<List<SolutionComponentWrapper>> fillSolutionComponentView;
         public Action<FoundAndNotFoundComponents> colorSolutionComponentInView;
         public Action<List<PublisherWrapper>> fillPublisherComboBox;

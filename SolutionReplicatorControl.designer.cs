@@ -39,6 +39,7 @@ namespace Emmetienne.SolutionReplicator
             this.sourceSolutionGroupBox = new System.Windows.Forms.GroupBox();
             this.solutionTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.solutionGridView = new System.Windows.Forms.DataGridView();
+            this.solutionFilterTableLayou = new System.Windows.Forms.TableLayoutPanel();
             this.solutionFilterTextBox = new System.Windows.Forms.TextBox();
             this.componentsAndOptionsSplitContainer = new System.Windows.Forms.SplitContainer();
             this.sourceSolutionComponentsGroupBox = new System.Windows.Forms.GroupBox();
@@ -70,6 +71,8 @@ namespace Emmetienne.SolutionReplicator
             this.message = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.exception = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.showManagedCheckBox = new System.Windows.Forms.CheckBox();
+            this.filterNameSolution = new System.Windows.Forms.Label();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -78,6 +81,7 @@ namespace Emmetienne.SolutionReplicator
             this.sourceSolutionGroupBox.SuspendLayout();
             this.solutionTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.solutionGridView)).BeginInit();
+            this.solutionFilterTableLayou.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.componentsAndOptionsSplitContainer)).BeginInit();
             this.componentsAndOptionsSplitContainer.Panel1.SuspendLayout();
             this.componentsAndOptionsSplitContainer.Panel2.SuspendLayout();
@@ -136,7 +140,7 @@ namespace Emmetienne.SolutionReplicator
             this.tsbSecondEnvinronment.Name = "tsbSecondEnvinronment";
             this.tsbSecondEnvinronment.Size = new System.Drawing.Size(175, 22);
             this.tsbSecondEnvinronment.Text = "Connect to target environment";
-            this.tsbSecondEnvinronment.Click += new System.EventHandler(this.OnSecondEnvironmentButtonClick);
+            this.tsbSecondEnvinronment.Click += new System.EventHandler(this.tsbSecondEnvinronment_Click);
             // 
             // splitContainer
             // 
@@ -175,12 +179,12 @@ namespace Emmetienne.SolutionReplicator
             this.solutionTableLayout.ColumnCount = 1;
             this.solutionTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.solutionTableLayout.Controls.Add(this.solutionGridView, 0, 1);
-            this.solutionTableLayout.Controls.Add(this.solutionFilterTextBox, 0, 0);
+            this.solutionTableLayout.Controls.Add(this.solutionFilterTableLayou, 0, 0);
             this.solutionTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.solutionTableLayout.Location = new System.Drawing.Point(3, 16);
             this.solutionTableLayout.Name = "solutionTableLayout";
             this.solutionTableLayout.RowCount = 2;
-            this.solutionTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.solutionTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.solutionTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.solutionTableLayout.Size = new System.Drawing.Size(416, 483);
             this.solutionTableLayout.TabIndex = 1;
@@ -199,7 +203,7 @@ namespace Emmetienne.SolutionReplicator
             this.solutionGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.solutionGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.solutionGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.solutionGridView.Location = new System.Drawing.Point(3, 29);
+            this.solutionGridView.Location = new System.Drawing.Point(3, 33);
             this.solutionGridView.MultiSelect = false;
             this.solutionGridView.Name = "solutionGridView";
             this.solutionGridView.ReadOnly = true;
@@ -209,15 +213,32 @@ namespace Emmetienne.SolutionReplicator
             this.solutionGridView.ShowCellToolTips = false;
             this.solutionGridView.ShowEditingIcon = false;
             this.solutionGridView.ShowRowErrors = false;
-            this.solutionGridView.Size = new System.Drawing.Size(410, 451);
+            this.solutionGridView.Size = new System.Drawing.Size(410, 457);
             this.solutionGridView.TabIndex = 0;
+            // 
+            // solutionFilterTableLayou
+            // 
+            this.solutionFilterTableLayou.ColumnCount = 3;
+            this.solutionFilterTableLayou.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.solutionFilterTableLayou.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.solutionFilterTableLayou.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 115F));
+            this.solutionFilterTableLayou.Controls.Add(this.solutionFilterTextBox, 1, 0);
+            this.solutionFilterTableLayou.Controls.Add(this.showManagedCheckBox, 2, 0);
+            this.solutionFilterTableLayou.Controls.Add(this.filterNameSolution, 0, 0);
+            this.solutionFilterTableLayou.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.solutionFilterTableLayou.Location = new System.Drawing.Point(3, 3);
+            this.solutionFilterTableLayou.Name = "solutionFilterTableLayou";
+            this.solutionFilterTableLayou.RowCount = 1;
+            this.solutionFilterTableLayou.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.solutionFilterTableLayou.Size = new System.Drawing.Size(410, 24);
+            this.solutionFilterTableLayou.TabIndex = 2;
             // 
             // solutionFilterTextBox
             // 
             this.solutionFilterTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.solutionFilterTextBox.Location = new System.Drawing.Point(3, 3);
+            this.solutionFilterTextBox.Location = new System.Drawing.Point(43, 3);
             this.solutionFilterTextBox.Name = "solutionFilterTextBox";
-            this.solutionFilterTextBox.Size = new System.Drawing.Size(410, 20);
+            this.solutionFilterTextBox.Size = new System.Drawing.Size(249, 20);
             this.solutionFilterTextBox.TabIndex = 1;
             // 
             // componentsAndOptionsSplitContainer
@@ -611,6 +632,28 @@ namespace Emmetienne.SolutionReplicator
             this.severity.ReadOnly = true;
             this.severity.Width = 70;
             // 
+            // showManagedCheckBox
+            // 
+            this.showManagedCheckBox.AutoSize = true;
+            this.showManagedCheckBox.Location = new System.Drawing.Point(298, 3);
+            this.showManagedCheckBox.Name = "showManagedCheckBox";
+            this.showManagedCheckBox.Size = new System.Drawing.Size(106, 17);
+            this.showManagedCheckBox.TabIndex = 2;
+            this.showManagedCheckBox.Text = "Show managed?";
+            this.showManagedCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.showManagedCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // filterNameSolution
+            // 
+            this.filterNameSolution.AutoSize = true;
+            this.filterNameSolution.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.filterNameSolution.Location = new System.Drawing.Point(3, 0);
+            this.filterNameSolution.Name = "filterNameSolution";
+            this.filterNameSolution.Size = new System.Drawing.Size(34, 24);
+            this.filterNameSolution.TabIndex = 3;
+            this.filterNameSolution.Text = "Filter:";
+            this.filterNameSolution.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // SolutionReplicatorControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -628,8 +671,9 @@ namespace Emmetienne.SolutionReplicator
             this.splitContainer.ResumeLayout(false);
             this.sourceSolutionGroupBox.ResumeLayout(false);
             this.solutionTableLayout.ResumeLayout(false);
-            this.solutionTableLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.solutionGridView)).EndInit();
+            this.solutionFilterTableLayou.ResumeLayout(false);
+            this.solutionFilterTableLayou.PerformLayout();
             this.componentsAndOptionsSplitContainer.Panel1.ResumeLayout(false);
             this.componentsAndOptionsSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.componentsAndOptionsSplitContainer)).EndInit();
@@ -707,5 +751,8 @@ namespace Emmetienne.SolutionReplicator
         private System.Windows.Forms.TableLayoutPanel exportTableLayout;
         private System.Windows.Forms.TableLayoutPanel targetSolutionExportAndOpenTableLayout;
         private System.Windows.Forms.Button openTargetSolutionButton;
+        private System.Windows.Forms.TableLayoutPanel solutionFilterTableLayou;
+        private System.Windows.Forms.CheckBox showManagedCheckBox;
+        private System.Windows.Forms.Label filterNameSolution;
     }
 }
