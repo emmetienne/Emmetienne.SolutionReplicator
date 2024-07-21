@@ -21,7 +21,7 @@ namespace Emmetienne.SolutionReplicator.Components
 
         public void OnTextChange(object sender, EventArgs e)
         {
-            EventBus.EventBusSingleton.Instance.filterSolutionComponent?.Invoke(this.solutionFilterTextBox.Text);
+            EventBus.EventBusSingleton.Instance.setSolutionNameFilter?.Invoke(this.solutionFilterTextBox.Text);
         }
 
         public void DisableComponent(bool isDisabled)

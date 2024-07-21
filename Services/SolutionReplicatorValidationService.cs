@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using XrmToolBox.Extensibility;
 
@@ -31,8 +32,17 @@ namespace Emmetienne.SolutionReplicator.Services
             if (pluginControlBase.Service == null)
                 errorList.Add("No source environment connection has been provided");
 
-            if (string.IsNullOrWhiteSpace(targetSolutionSettings.SolutionName))
+            if (!string.IsNullOrWhiteSpace(targetSolutionSettings.SolutionName))
+            {
+                var checkPattern = @"^[A-Za-z0-9_]+$";
+
+                if (!Regex.IsMatch(targetSolutionSettings.SolutionName, checkPattern))
+                    errorList.Add($"{targetSolutionSettings.SolutionName} is not a valid solution name, please use only letters (a-z, A-Z), digits (0-9) or underscores (_)");
+            }
+            else
+            {
                 errorList.Add("No solution name has been provided");
+            }
 
             if (string.IsNullOrWhiteSpace(targetSolutionSettings.Version))
                 errorList.Add("No version has been provided");
