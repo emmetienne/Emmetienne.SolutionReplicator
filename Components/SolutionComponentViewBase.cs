@@ -12,14 +12,14 @@ namespace Emmetienne.SolutionReplicator.Components
         public abstract void ClearGrid();
         public abstract void DisableComponent(bool isDisabled);
         public abstract void FillGrid(List<SolutionComponentWrapper> list);
-        public abstract void ColorComponentsInGrid(FoundAndNotFoundComponents list);
+        public abstract void SetComponentStateInView(FoundAndNotFoundComponents list);
 
         protected SolutionComponentViewBase()
         {
             EventBus.EventBusSingleton.Instance.clearAllViews += ClearGrid;
             EventBus.EventBusSingleton.Instance.clearSolutionComponentView += ClearGrid;
             EventBus.EventBusSingleton.Instance.fillSolutionComponentView += FillGrid;
-            EventBus.EventBusSingleton.Instance.colorSolutionComponentInView += ColorComponentsInGrid;
+            EventBus.EventBusSingleton.Instance.setSolutionComponentStatus += SetComponentStateInView;
             EventBus.EventBusSingleton.Instance.disableUiElements += DisableComponent;
             EventBus.EventBusSingleton.Instance.emitSourceSolutionId += setCurrentSelectedSolutionId;
         }

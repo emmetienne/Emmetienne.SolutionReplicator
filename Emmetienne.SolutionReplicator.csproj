@@ -183,6 +183,7 @@
     <Compile Include="Components\ISolutionGridViewComponent.cs" />
     <Compile Include="Components\LoggingComponent.cs" />
     <Compile Include="Components\GenericButtonComponentDisableView.cs" />
+    <Compile Include="Components\Model\ComponentConstants.cs" />
     <Compile Include="Components\OpenExportSolutionFolderPathView.cs" />
     <Compile Include="Components\PublisherComboBoxView.cs" />
     <Compile Include="Components\SolutionComponentsGridView.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Components\TargetEnvironmentLabelView.cs" />
     <Compile Include="EventBus\EventBusSingleton.cs" />
     <Compile Include="Model\AdditionalComponentFieldForComparison.cs" />
+    <Compile Include="Model\ReplicationStatus.cs" />
     <Compile Include="Model\ExportSolutionSettings.cs" />
     <Compile Include="Model\SolutionComponentSearchResult.cs" />
     <Compile Include="Model\ComponentType.cs" />

@@ -1,4 +1,5 @@
-﻿using Emmetienne.SolutionReplicator.Model;
+﻿using Emmetienne.SolutionReplicator.Components.Model;
+using Emmetienne.SolutionReplicator.Model;
 using Emmetienne.SolutionReplicator.Services;
 using System;
 using System.Collections.Generic;
@@ -56,12 +57,12 @@ namespace Emmetienne.SolutionReplicator.Components
         public override void FillGrid(List<SolutionWrapper> list)
         {
             var solutionDataTable = new DataTable();
-            solutionDataTable.Columns.Add("Display name", typeof(string));
-            solutionDataTable.Columns.Add("Unique name", typeof(string));
-            solutionDataTable.Columns.Add("Installed date", typeof(DateTime));
-            solutionDataTable.Columns.Add("Version", typeof(string));
-            solutionDataTable.Columns.Add("Managed", typeof(bool));
-            solutionDataTable.Columns.Add("Solution Id", typeof(Guid));
+            solutionDataTable.Columns.Add(ComponentConstants.SolutionGridViewConstants.DisplayName, typeof(string));
+            solutionDataTable.Columns.Add(ComponentConstants.SolutionGridViewConstants.UniqueName, typeof(string));
+            solutionDataTable.Columns.Add(ComponentConstants.SolutionGridViewConstants.InstalledDate, typeof(DateTime));
+            solutionDataTable.Columns.Add(ComponentConstants.SolutionGridViewConstants.Version, typeof(string));
+            solutionDataTable.Columns.Add(ComponentConstants.SolutionGridViewConstants.Managed, typeof(bool));
+            solutionDataTable.Columns.Add(ComponentConstants.SolutionGridViewConstants.SolutionId, typeof(Guid));
 
             foreach (var result in list)
             {
@@ -89,8 +90,8 @@ namespace Emmetienne.SolutionReplicator.Components
         private Guid RetrieveSolutionIdFromDataTable(int rowIndex)
         {
             var row = this.solutionGridViewComponent.Rows[rowIndex];
-            var solutionId = (Guid)row.Cells["Solution Id"]?.Value;
-            var solutionName = (string)row.Cells["Unique name"]?.Value;
+            var solutionId = (Guid)row.Cells[ComponentConstants.SolutionGridViewConstants.SolutionId]?.Value;
+            var solutionName = (string)row.Cells[ComponentConstants.SolutionGridViewConstants.UniqueName]?.Value;
 
             EventBus.EventBusSingleton.Instance.emitSourceSolutionId?.Invoke(solutionId);
             EventBus.EventBusSingleton.Instance.emitSourceSolutionUniqueName?.Invoke(solutionName);

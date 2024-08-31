@@ -33,7 +33,7 @@ namespace Emmetienne.SolutionReplicator.Repository
             return organizationService.RetrieveMultiple(querySolution).Entities.ToList();
         }
 
-        public void AddComponentToSolution(Guid objectId, int componenType, string solutionUniqueName, int? rootComponentBehaviour)
+        public void AddComponentToSolution(Guid objectId, int componenType, string solutionUniqueName, int? rootComponentBehaviour, out ReplicationStatus addToSolutionStatus)
         {
             var addSolutionComponentRequest = new AddSolutionComponentRequest();
 
@@ -50,7 +50,18 @@ namespace Emmetienne.SolutionReplicator.Repository
 
             logger.LogDebug($"Adding component {objectId} to solution {solutionUniqueName}");
 
-            organizationService.Execute(addSolutionComponentRequest);
+            try
+            {
+                organizationService.Execute(addSolutionComponentRequest);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Error on adding component with id {objectId} of type {componenType}", ex.Message);
+                addToSolutionStatus = ReplicationStatus.SetReplicationStatus(false, ex.Message);
+                return;
+            }
+
+            addToSolutionStatus = ReplicationStatus.SetReplicationStatus(true);
         }
 
         public SolutionWrapper CreateSolution(TargetSolutionSettings targetSolutionSettings)

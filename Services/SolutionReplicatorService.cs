@@ -18,7 +18,7 @@ namespace Emmetienne.SolutionReplicator.Services
         private readonly PluginControlBase pluginControlBase;
         private readonly SolutionRepository targetSolutionRepository;
 
-       
+
         public SolutionReplicatorService(LogService logService, IOrganizationService sourceEnvironmentService, IOrganizationService targetEnvironmentService, PluginControlBase pluginControlBase)
         {
             this.logService = logService;
@@ -40,7 +40,7 @@ namespace Emmetienne.SolutionReplicator.Services
 
                     var foundAndNotFoundComponents = GetComponentsToAdd(solutionComponents);
 
-                    EventBus.EventBusSingleton.Instance.colorSolutionComponentInView?.Invoke(foundAndNotFoundComponents);
+                    EventBus.EventBusSingleton.Instance.setSolutionComponentStatus?.Invoke(foundAndNotFoundComponents);
 
                     worker.ReportProgress(0, $"Creating solution on target environment");
 
@@ -50,6 +50,15 @@ namespace Emmetienne.SolutionReplicator.Services
                     EventBus.EventBusSingleton.Instance.emitTargetSolutionId?.Invoke(createdSolutionData.SolutionId);
 
                     AddComponentToSolution(foundAndNotFoundComponents, createdSolutionData, worker);
+
+                    EventBus.EventBusSingleton.Instance.setSolutionComponentStatus?.Invoke(foundAndNotFoundComponents);
+
+                    
+                    if (foundAndNotFoundComponents.FoundComponents.Count(x=>!x.ReplicationStatus.Replicated) > 0)
+                    {
+                        logService.LogWarning($"The solution was replicated in the target environment with errors. See the solution component pane for more information. Components that were not replicated will be highlighted.");
+                        return;
+                    }
 
                     logService.LogInfo($"Solution replicated on the target environment");
                 },
@@ -81,8 +90,6 @@ namespace Emmetienne.SolutionReplicator.Services
 
                 var componentTypeSearchStrategy = ComponentSearchStrategyFactory.GetComponentSearchStrategy(group.Key);
 
-              
-
                 foundAndNotFoundComponents.AddComponentsToFoundAndNotFoundList(componentTypeSearchStrategy.Handle(group, sourceEnnvironmentService, targetEnvironmentService, logService));
             }
 
@@ -96,13 +103,14 @@ namespace Emmetienne.SolutionReplicator.Services
             {
                 worker.ReportProgress(0, $"Adding component to target solution {Environment.NewLine} {componentCounter++}/{foundAndNotFoundComponents.FoundComponents.Count}");
 
-                if (component.TargetEnvironmentObjectId.HasValue)
-                {
-                    targetSolutionRepository.AddComponentToSolution(component.TargetEnvironmentObjectId.Value, component.ComponentType, createdSolutionData.UniqueName, component.RootComponentBehaviour);
-                    continue;
-                }
+                ReplicationStatus addToSolutionStatusResult = null;
 
-                targetSolutionRepository.AddComponentToSolution(component.ObjectId, component.ComponentType, createdSolutionData.UniqueName, component.RootComponentBehaviour);
+                if (component.TargetEnvironmentObjectId.HasValue)
+                    targetSolutionRepository.AddComponentToSolution(component.TargetEnvironmentObjectId.Value, component.ComponentType, createdSolutionData.UniqueName, component.RootComponentBehaviour, out addToSolutionStatusResult);
+                else
+                    targetSolutionRepository.AddComponentToSolution(component.ObjectId, component.ComponentType, createdSolutionData.UniqueName, component.RootComponentBehaviour, out addToSolutionStatusResult);
+
+                component.ReplicationStatus = addToSolutionStatusResult;
             }
         }
     }

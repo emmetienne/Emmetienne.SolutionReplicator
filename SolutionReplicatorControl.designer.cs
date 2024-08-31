@@ -41,6 +41,8 @@ namespace Emmetienne.SolutionReplicator
             this.solutionGridView = new System.Windows.Forms.DataGridView();
             this.solutionFilterTableLayou = new System.Windows.Forms.TableLayoutPanel();
             this.solutionFilterTextBox = new System.Windows.Forms.TextBox();
+            this.showManagedCheckBox = new System.Windows.Forms.CheckBox();
+            this.filterNameSolution = new System.Windows.Forms.Label();
             this.componentsAndOptionsSplitContainer = new System.Windows.Forms.SplitContainer();
             this.sourceSolutionComponentsGroupBox = new System.Windows.Forms.GroupBox();
             this.solutionComponentDataGridView = new System.Windows.Forms.DataGridView();
@@ -71,8 +73,6 @@ namespace Emmetienne.SolutionReplicator
             this.message = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.exception = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.severity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.showManagedCheckBox = new System.Windows.Forms.CheckBox();
-            this.filterNameSolution = new System.Windows.Forms.Label();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -240,6 +240,28 @@ namespace Emmetienne.SolutionReplicator
             this.solutionFilterTextBox.Name = "solutionFilterTextBox";
             this.solutionFilterTextBox.Size = new System.Drawing.Size(249, 20);
             this.solutionFilterTextBox.TabIndex = 1;
+            // 
+            // showManagedCheckBox
+            // 
+            this.showManagedCheckBox.AutoSize = true;
+            this.showManagedCheckBox.Location = new System.Drawing.Point(298, 3);
+            this.showManagedCheckBox.Name = "showManagedCheckBox";
+            this.showManagedCheckBox.Size = new System.Drawing.Size(106, 17);
+            this.showManagedCheckBox.TabIndex = 2;
+            this.showManagedCheckBox.Text = "Show managed?";
+            this.showManagedCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.showManagedCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // filterNameSolution
+            // 
+            this.filterNameSolution.AutoSize = true;
+            this.filterNameSolution.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.filterNameSolution.Location = new System.Drawing.Point(3, 0);
+            this.filterNameSolution.Name = "filterNameSolution";
+            this.filterNameSolution.Size = new System.Drawing.Size(34, 24);
+            this.filterNameSolution.TabIndex = 3;
+            this.filterNameSolution.Text = "Filter:";
+            this.filterNameSolution.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // componentsAndOptionsSplitContainer
             // 
@@ -631,28 +653,6 @@ namespace Emmetienne.SolutionReplicator
             this.severity.Name = "severity";
             this.severity.ReadOnly = true;
             this.severity.Width = 70;
-            // 
-            // showManagedCheckBox
-            // 
-            this.showManagedCheckBox.AutoSize = true;
-            this.showManagedCheckBox.Location = new System.Drawing.Point(298, 3);
-            this.showManagedCheckBox.Name = "showManagedCheckBox";
-            this.showManagedCheckBox.Size = new System.Drawing.Size(106, 17);
-            this.showManagedCheckBox.TabIndex = 2;
-            this.showManagedCheckBox.Text = "Show managed?";
-            this.showManagedCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.showManagedCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // filterNameSolution
-            // 
-            this.filterNameSolution.AutoSize = true;
-            this.filterNameSolution.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.filterNameSolution.Location = new System.Drawing.Point(3, 0);
-            this.filterNameSolution.Name = "filterNameSolution";
-            this.filterNameSolution.Size = new System.Drawing.Size(34, 24);
-            this.filterNameSolution.TabIndex = 3;
-            this.filterNameSolution.Text = "Filter:";
-            this.filterNameSolution.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SolutionReplicatorControl
             // 
