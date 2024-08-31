@@ -39,7 +39,7 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
                 {
                     var targetRetrieveResponse = (RetrieveOptionSetResponse)targetEnvironmentService.Execute(targetEnvironmentRetrieveAttributeRequest);
 
-                    if (sourceRetrieveResponse.OptionSetMetadata == null)
+                    if (targetRetrieveResponse.OptionSetMetadata == null)
                     {
                         component.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
                         foundAndNotFoundComponents.NotFoundComponents.Add(component);
@@ -50,7 +50,7 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
                     tmpTargetComponentWrapper.TargetEnvironmentObjectId = targetRetrieveResponse.OptionSetMetadata.MetadataId.Value;
                     tmpTargetComponentWrapper.ObjectId = component.ObjectId;
                     tmpTargetComponentWrapper.ComponentType = 9;
-                    tmpTargetComponentWrapper.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
+                    tmpTargetComponentWrapper.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.foundOnTargetEnvironment];
 
                     foundAndNotFoundComponents.FoundComponents.Add(tmpTargetComponentWrapper);
                 }

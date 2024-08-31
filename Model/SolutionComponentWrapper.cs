@@ -14,6 +14,7 @@ namespace Emmetienne.SolutionReplicator.Model
         public string ComponentState { get; set; }
         public int? RootComponentBehaviour { get; set; }
         public ComponentSearchResult ComponentSearchResult { get; set; }
+        public ReplicationStatus ReplicationStatus { get; set; }
 
         public static SolutionComponentWrapper ToSolutionComponentWrapper(Entity entityRecord, Dictionary<int, string> componentTypeDictionary)
         {

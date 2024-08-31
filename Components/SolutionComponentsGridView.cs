@@ -1,4 +1,5 @@
-﻿using Emmetienne.SolutionReplicator.Model;
+﻿using Emmetienne.SolutionReplicator.Components.Model;
+using Emmetienne.SolutionReplicator.Model;
 using Emmetienne.SolutionReplicator.Services;
 using System;
 using System.Collections.Generic;
@@ -53,10 +54,12 @@ namespace Emmetienne.SolutionReplicator.Components
         public override void FillGrid(List<SolutionComponentWrapper> list)
         {
             var solutionComponentsDataTable = new DataTable();
-            solutionComponentsDataTable.Columns.Add("Component type", typeof(string));
-            solutionComponentsDataTable.Columns.Add("Component type name", typeof(string));
-            solutionComponentsDataTable.Columns.Add("Object id", typeof(Guid));
-            solutionComponentsDataTable.Columns.Add("Replication status", typeof(string));
+            solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.ComponentType, typeof(string));
+            solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.ComponentTypeName, typeof(string));
+            solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.ObjectId, typeof(Guid));
+            solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.ComponentSearchStatus, typeof(string));
+            solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.Replicated, typeof(bool));
+            solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.ErrorMessage, typeof(string));
 
             foreach (var result in list)
             {
@@ -72,13 +75,15 @@ namespace Emmetienne.SolutionReplicator.Components
 
         private void SetColumnsAsNonSortable()
         {
-            solutionComponentGridViewComponent.Columns["Component type"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            solutionComponentGridViewComponent.Columns["Component type name"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            solutionComponentGridViewComponent.Columns["Object id"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            solutionComponentGridViewComponent.Columns["Replication status"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.ComponentType].SortMode = DataGridViewColumnSortMode.NotSortable;
+            solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.ComponentTypeName].SortMode = DataGridViewColumnSortMode.NotSortable;
+            solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.ObjectId].SortMode = DataGridViewColumnSortMode.NotSortable;
+            solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.ComponentSearchStatus].SortMode = DataGridViewColumnSortMode.NotSortable;
+            solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.Replicated].SortMode = DataGridViewColumnSortMode.NotSortable;
+            solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.ErrorMessage].SortMode = DataGridViewColumnSortMode.NotSortable;
         }
 
-        public override void ColorComponentsInGrid(FoundAndNotFoundComponents list)
+        public override void SetComponentStateInView(FoundAndNotFoundComponents list)
         {
             if (!currentSelectedSolutionId.HasValue)
                 return;
@@ -89,23 +94,37 @@ namespace Emmetienne.SolutionReplicator.Components
                 if (row.IsNewRow)
                     continue;
 
-                var componentObjectId = (Guid?) row.Cells["Object id"]?.Value;
+                var componentObjectId = (Guid?)row.Cells[ComponentConstants.SolutionComponentView.ObjectId]?.Value;
 
-                var isFoundComponent = list.FoundComponents.FirstOrDefault(x => x.ObjectId == componentObjectId);
-                var isNotFoundComponent = list.NotFoundComponents.FirstOrDefault(x=>x.ObjectId == componentObjectId);
+                var isFoundComponentList = list.FoundComponents.Where(x => x.ObjectId == componentObjectId).ToList();
+                var isNotFoundComponent = list.NotFoundComponents.FirstOrDefault(x => x.ObjectId == componentObjectId);
 
-                if (isFoundComponent != null)
+                if (isFoundComponentList.Count != 0)
                 {
-                    row.Cells["Replication status"].Value = isFoundComponent.ComponentSearchResult.Message;
-                    ColorRow(currentRow, isFoundComponent.ComponentSearchResult.ForeGroundColor);
-                    
+                    row.Cells[ComponentConstants.SolutionComponentView.ComponentSearchStatus].Value = isFoundComponentList[0].ComponentSearchResult.Message;
+                    ColorRow(currentRow, isFoundComponentList[0].ComponentSearchResult.ForeGroundColor);
+
+                    if (isFoundComponentList.Count(x => x.ReplicationStatus == null) == isFoundComponentList.Count)
+                    {
+                        currentRow++;
+                        continue;
+                    }
+
+                    var isComponentReplicated = isFoundComponentList.Count(x => x.ReplicationStatus.Replicated) == isFoundComponentList.Count;
+
+                    if (!isComponentReplicated)
+                        ColorRow(currentRow, Color.Black, true);
+
+                    row.Cells[ComponentConstants.SolutionComponentView.Replicated].Value = isComponentReplicated;
+                    row.Cells[ComponentConstants.SolutionComponentView.ErrorMessage].Value = string.Join("|", isFoundComponentList.Where(x => !string.IsNullOrWhiteSpace(x.ReplicationStatus.ErrorMessage)).Select(y => y.ReplicationStatus.ErrorMessage).ToList());
+
                     currentRow++;
                     continue;
                 }
 
                 if (isNotFoundComponent != null)
                 {
-                    row.Cells["Replication status"].Value = isNotFoundComponent.ComponentSearchResult.Message;
+                    row.Cells[ComponentConstants.SolutionComponentView.ComponentSearchStatus].Value = isNotFoundComponent.ComponentSearchResult.Message;
                     ColorRow(currentRow, isNotFoundComponent.ComponentSearchResult.ForeGroundColor);
                 }
 
@@ -113,9 +132,12 @@ namespace Emmetienne.SolutionReplicator.Components
             }
         }
 
-        private void ColorRow(int currentRow, Color color)
+        private void ColorRow(int currentRow, Color color, bool background = false)
         {
-            this.solutionComponentGridViewComponent.Rows[currentRow].DefaultCellStyle.ForeColor = color;
+            if (background)
+                this.solutionComponentGridViewComponent.Rows[currentRow].DefaultCellStyle.BackColor = color;
+            else
+                this.solutionComponentGridViewComponent.Rows[currentRow].DefaultCellStyle.ForeColor = color;
         }
     }
 }
