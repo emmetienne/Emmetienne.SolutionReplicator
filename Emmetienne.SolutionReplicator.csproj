@@ -265,7 +265,12 @@
   <ItemGroup>
     <None Include="bin\Release\Emmetienne.SolutionReplicator.dll" Pack="true" PackagePath="lib\net48\Plugins\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Emmetienne.Engine\Emmetienne.Engine.csproj">
+      <Project>{4205fc1a-e4be-401e-8974-c872b1e48fd8}</Project>
+      <Name>Emmetienne.Engine</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Icons\icon_128.png" />
   </ItemGroup>

@@ -48,10 +48,21 @@ namespace Emmetienne.SolutionReplicator
 
             this.logService = new LogService();
 
-            this.loggingComponent = new LoggingComponent(this.logDataGridView);
-            this.solutionGridViewComponent = new SolutionGridViewComponent(this.solutionGridView, logService);
-            this.solutionComponentsGridViewComponent = new SolutionComponentsGridView(this.solutionComponentDataGridView, logService);
-            this.publisherComboBoxViewComponent = new PublisherComboBoxView(this.publisherComboBox, logService);
+            ConfigureComponents();
+            ConfigureViews();
+        }
+
+
+        private void MyPluginControl_Load(object sender, EventArgs e)
+        {
+            ShowInfoNotification("Visit my GitHub", new Uri("https://github.com/emmetienne"));
+
+            LoadSettings();
+            ConfigureServices();
+        }
+
+        private void ConfigureViews()
+        {
             this.sourceEnvirontmentLabelView = new SourceEnvironmentLabelView(this.tsbLoadSolution, logService);
             this.targetEnvirontmentLabelView = new TargetEnvironmentLabelView(this.tsbSecondEnvinronment, logService);
             this.replicateSolutionButtonView = new ReplicateSolutionButtonView(this.replicateSolutionButton, logService);
@@ -69,12 +80,17 @@ namespace Emmetienne.SolutionReplicator
             this.versionTextBoxView = new GenericTextBoxComponentDisableView(this.versionTextBox, logService);
         }
 
-        private void MyPluginControl_Load(object sender, EventArgs e)
+        private void ConfigureComponents()
         {
-            ShowInfoNotification("Visit my GitHub", new Uri("https://github.com/emmetienne"));
+            this.loggingComponent = new LoggingComponent(this.logDataGridView);
+            this.solutionGridViewComponent = new SolutionGridViewComponent(this.solutionGridView, logService);
+            this.solutionComponentsGridViewComponent = new SolutionComponentsGridView(this.solutionComponentDataGridView, logService);
+            this.publisherComboBoxViewComponent = new PublisherComboBoxView(this.publisherComboBox, logService);
+        }
 
-            LoadSettings();
 
+        private void ConfigureServices()
+        {
             this.filterSolutionManagerService = new FilterSolutionManagerService();
             this.solutionRetrieverService = new SolutionRetrieverService(logService, this);
             this.solutionComponentRetrieverService = new SolutionComponentRetrieverService(logService, Service, this);

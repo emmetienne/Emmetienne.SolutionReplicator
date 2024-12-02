@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emmetienne.SolutionReplicator", "Emmetienne.SolutionReplicator.csproj", "{E41DDA18-AA98-44E3-B725-271A6495741B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emmetienne.Engine", "..\Emmetienne.Engine\Emmetienne.Engine.csproj", "{4205FC1A-E4BE-401E-8974-C872B1E48FD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E41DDA18-AA98-44E3-B725-271A6495741B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E41DDA18-AA98-44E3-B725-271A6495741B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E41DDA18-AA98-44E3-B725-271A6495741B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4205FC1A-E4BE-401E-8974-C872B1E48FD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4205FC1A-E4BE-401E-8974-C872B1E48FD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4205FC1A-E4BE-401E-8974-C872B1E48FD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4205FC1A-E4BE-401E-8974-C872B1E48FD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
