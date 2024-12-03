@@ -45,7 +45,7 @@ jobs:
       shell: pwsh    
       
     - name: Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: release-artifact
         path: .
@@ -69,4 +69,4 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./Release.zip
         asset_name: Release.zip
-        asset_content_type: application/zip	
+        asset_content_type: application/zip
