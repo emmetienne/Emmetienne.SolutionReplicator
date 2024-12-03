@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Emmetienne.SolutionReplicator</id>
-    <version>1.2024.12.1</version>
+    <version>1.2024.12.2</version>
     <title>Emmetienne.SolutionReplicator</title>
     <authors>Martino Spreafico</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -13,12 +13,13 @@
 	<readme>docs\README.md</readme>
     <description>This tool allows to replicate a solution from a Dynamics 365 environment to another</description>
     <releaseNotes>
+      1.2024.12.2 - Minor fix
       1.2024.12.1 - Fixed a bug that prevents the tool from loading after it has been previously closed
       1.2024.8.1  - Fixed some bugs and refactored some code, renamed the “Replication status” column in the solution components pane to “Component search result”, added “Replicated” and “Error message” columns to the solution components pane to show if the components have been successfully replicated
       1.2024.7.2  - Added a checkbox to show managed solutions in the solution pane (they're hidden by default), added handling for components of type Custom Control (66) and Canvas App (300), implemented solution name validation
       1.2024.7.1  - Minor refactoring
       1.2024.6.1  - First nuget release of the tool</releaseNotes>
-    <copyright>$copyright$</copyright>
+    <copyright>Martino Spreafico © 2024</copyright>
     <tags>XrmToolBox</tags>
 	<dependencies>
       <dependency id="XrmToolBox" version="1.2023.10.67" />
