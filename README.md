@@ -4,10 +4,11 @@
 Solution Replicator is a plugin for [XrmToolbox](https://www.xrmtoolbox.com) that allows you to replicate a solution between environments. It is useful, for example, when you need to compare the customization.xml file between two environments.
 
 ## Changelog
-1.2024.8.1 - Fixed some bugs and refactored some code, renamed the “Replication status” column in the solution components pane to “Component search result”, added “Replicated” and “Error message” columns to the solution components pane to show if the components have been successfully replicated
-1.2024.7.2 - Added a checkbox to show managed solutions in the solution pane (they're hidden by default), added handling for components of type Custom Control (66) and Canvas App (300), implemented solution name validation
-1.2024.7.1 - Minor refactoring
-1.2024.6.1 - First nuget release of the tool
+1.2024.12.1 - Fixed a bug that prevents the tool from loading after it has been previously closed
+1.2024.8.1  - Fixed some bugs and refactored some code, renamed the “Replication status” column in the solution components pane to “Component search result”, added “Replicated” and “Error message” columns to the solution components pane to show if the components have been successfully replicated
+1.2024.7.2  - Added a checkbox to show managed solutions in the solution pane (they're hidden by default), added handling for components of type Custom Control (66) and Canvas App (300), implemented solution name validation
+1.2024.7.1  - Minor refactoring
+1.2024.6.1  - First nuget release of the tool
 
 ## Features
  - Replicate the solution between environments

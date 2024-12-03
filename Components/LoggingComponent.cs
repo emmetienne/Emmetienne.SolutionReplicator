@@ -38,13 +38,43 @@ namespace Emmetienne.SolutionReplicator.Components
 
         private void WriteInternal(LogModel log)
         {
+            if (this.loggingComponentDataGridView.IsDisposed)
+                return;
+
+            if (this.loggingComponentDataGridView.Columns == null || this.loggingComponentDataGridView.Columns.Count == 0)
+                InitializeColumns();
+
             string[] row = new string[] { log.Timestamp.ToString(), log.Message, !string.IsNullOrWhiteSpace(log.Exception) ? log.Exception : string.Empty, log.LogLevel.ToString() };
 
             this.loggingComponentDataGridView.ClearSelection();
+
             this.loggingComponentDataGridView.Rows.Add(row);
             this.loggingComponentDataGridView.FirstDisplayedScrollingRowIndex = this.loggingComponentDataGridView.Rows.Count - 1;
 
             this.loggingComponentDataGridView.Rows[this.loggingComponentDataGridView.Rows.Count - 1].DefaultCellStyle.ForeColor = log.Color;
+        }
+
+        private void InitializeColumns()
+        {
+            var timeStampColumn = new DataGridViewTextBoxColumn();
+            timeStampColumn.Name = "Timestamp";
+            timeStampColumn.HeaderText = "Timestamp";
+            this.loggingComponentDataGridView.Columns.Add(timeStampColumn);
+
+            var messageColumn = new DataGridViewTextBoxColumn();
+            messageColumn.Name = "Message";
+            messageColumn.HeaderText = "Message";
+            this.loggingComponentDataGridView.Columns.Add(messageColumn);
+
+            var exceptionColumn = new DataGridViewTextBoxColumn();
+            exceptionColumn.Name = "Exception";
+            exceptionColumn.HeaderText = "Exception";
+            this.loggingComponentDataGridView.Columns.Add(exceptionColumn);
+
+            var severityColumn = new DataGridViewTextBoxColumn();
+            severityColumn.Name = "Severity";
+            severityColumn.HeaderText = "Severity";
+            this.loggingComponentDataGridView.Columns.Add(severityColumn);
         }
     }
 }
