@@ -45,7 +45,7 @@ jobs:
       shell: pwsh    
       
     - name: Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: release-artifact
         path: .
