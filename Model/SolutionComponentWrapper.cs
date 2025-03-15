@@ -15,6 +15,7 @@ namespace Emmetienne.SolutionReplicator.Model
         public int? RootComponentBehaviour { get; set; }
         public ComponentSearchResult ComponentSearchResult { get; set; }
         public ReplicationStatus ReplicationStatus { get; set; }
+        public string ComponentName { get; set; }
 
         public static SolutionComponentWrapper ToSolutionComponentWrapper(Entity entityRecord, Dictionary<int, string> componentTypeDictionary)
         {
@@ -36,6 +37,7 @@ namespace Emmetienne.SolutionReplicator.Model
                     tmpSolutionComponent.ComponentTypeName = "N/A";
             }
 
+            tmpSolutionComponent.ComponentName = " - ";
             tmpSolutionComponent.ObjectId = entityRecord.GetAttributeValue<Guid>(solutioncomponent.objectid);
             tmpSolutionComponent.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notYetSearched];
 

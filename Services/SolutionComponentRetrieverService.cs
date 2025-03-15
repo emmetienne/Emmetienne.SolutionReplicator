@@ -1,6 +1,8 @@
 ﻿using Emmetienne.SolutionReplicator.Model;
 using Emmetienne.SolutionReplicator.Repository;
+using Emmetienne.SolutionReplicator.Services.ComponentNameRetrieveStrategy;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace Emmetienne.SolutionReplicator.Services
         private readonly PluginControlBase pluginControlBase;
         private SolutionComponentsRepository solutionComponentRepository;
         private Dictionary<int, string> componentTypeDictionary;
+        private bool retrieveComponentsNames;
 
         public SolutionComponentRetrieverService(LogService logService, IOrganizationService organizationService, PluginControlBase pluginControlBase)
         {
@@ -25,17 +28,13 @@ namespace Emmetienne.SolutionReplicator.Services
             this.solutionComponentRepository = new SolutionComponentsRepository(organizationService, logService);
 
             EventBus.EventBusSingleton.Instance.retrieveSolutionComponents += GetSolutionComponents;
+            EventBus.EventBusSingleton.Instance.retrieveComponentsNames += SetRetrieveComponentsNamesBool;
             EventBus.EventBusSingleton.Instance.changeSourceOrganizationService += ChangeMainConnection;
         }
 
         public override void ChangeMainConnection(IOrganizationService service)
         {
             this.solutionComponentRepository = new SolutionComponentsRepository(service, logService);
-        }
-
-        public override void ChangeTargetConnection(IOrganizationService service)
-        {
-            throw new NotImplementedException();
         }
 
         public void GetSolutionComponents(Guid solutionId)
@@ -52,7 +51,11 @@ namespace Emmetienne.SolutionReplicator.Services
                     if (componentTypeDictionary == null)
                         componentTypeDictionary = MetadataServiceSingleton.GetComponentTypeDictionary(organizationService, logService);
 
-                    var wrappedResults = results.Select(x => SolutionComponentWrapper.ToSolutionComponentWrapper(x, componentTypeDictionary)).OrderBy(x=>x.ComponentType).ToList();
+                    var wrappedResults = results.Select(x => SolutionComponentWrapper.ToSolutionComponentWrapper(x, componentTypeDictionary)).OrderBy(x => x.ComponentType).ToList();
+
+                    if (retrieveComponentsNames)
+                        RetrieveComponentsNames(wrappedResults);
+
                     args.Result = wrappedResults;
 
                     logService.LogInfo($"Found {wrappedResults.Count} component in solution");
@@ -65,6 +68,24 @@ namespace Emmetienne.SolutionReplicator.Services
                     EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(false);
                 }
             });
+        }
+
+        private void SetRetrieveComponentsNamesBool(bool rerieveComponentsNames)
+        {
+            this.retrieveComponentsNames = rerieveComponentsNames;
+        }
+
+        private void RetrieveComponentsNames(List<SolutionComponentWrapper> wrappedResults)
+        {
+            foreach (var singleComponent in wrappedResults)
+            {
+                var componentRetrieveStrategy = ComponentNameRetrieveStrategyFactory.GetComponentNameRetrieveStrategy(singleComponent.ComponentType);
+
+                if (componentRetrieveStrategy == null)
+                    continue;
+
+               componentRetrieveStrategy.Handle(singleComponent, organizationService, logService);
+            }
         }
     }
 }

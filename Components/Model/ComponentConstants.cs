@@ -16,6 +16,7 @@
         {
             public const string ComponentType = "Component type";
             public const string ComponentTypeName = "Component type name";
+            public const string ComponentName = "Component name";
             public const string ObjectId = "Object id";
             public const string ComponentSearchStatus = "Component search status";
             public const string Replicated = "Replicated";

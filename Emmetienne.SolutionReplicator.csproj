@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -172,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\BrowseExportSolutionPathButtonView.cs" />
+    <Compile Include="Components\ShowSolutionComponentsNamesCheckBoxView.cs" />
     <Compile Include="Components\FilterManagedSolutionCheckBoxView.cs" />
     <Compile Include="Components\FilterSolutionTextBoxView.cs" />
     <Compile Include="Components\ExportSolutionPathView.cs" />
@@ -220,6 +222,13 @@
     <Compile Include="Repository\SolutionComponentsRepository.cs" />
     <Compile Include="Repository\SolutionComponentTypesRepository.cs" />
     <Compile Include="Repository\SolutionRepository.cs" />
+    <Compile Include="Services\ComponentNameRetrieveStrategy\ComponentNameRetrieveStrategyFactory.cs" />
+    <Compile Include="Services\ComponentNameRetrieveStrategy\RibbonCustomizationComponentsNameRetrieveStrategy.cs" />
+    <Compile Include="Services\ComponentNameRetrieveStrategy\GenericComponentsNameRetrieveStrategy.cs" />
+    <Compile Include="Services\ComponentNameRetrieveStrategy\GlobalOptionsetsNameRetrieveStrategy.cs" />
+    <Compile Include="Services\ComponentNameRetrieveStrategy\IComponentNameRetrieveStrategy.cs" />
+    <Compile Include="Services\ComponentNameRetrieveStrategy\NotYetImplementedSearchStrategy.cs" />
+    <Compile Include="Services\ComponentSearchServiceStrategy\CannotReplicateComponentStrategy.cs" />
     <Compile Include="Services\ComponentSearchServiceStrategy\NotYetImplementedSearchStrategy.cs" />
     <Compile Include="Services\ComponentSearchServiceStrategy\GenericComponentSearchStrategy.cs" />
     <Compile Include="Services\ComponentTypeOptionSetService.cs" />

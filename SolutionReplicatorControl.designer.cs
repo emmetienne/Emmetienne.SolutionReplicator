@@ -45,7 +45,9 @@ namespace Emmetienne.SolutionReplicator
             this.filterNameSolution = new System.Windows.Forms.Label();
             this.componentsAndOptionsSplitContainer = new System.Windows.Forms.SplitContainer();
             this.sourceSolutionComponentsGroupBox = new System.Windows.Forms.GroupBox();
+            this.solutionComponentsTable = new System.Windows.Forms.TableLayoutPanel();
             this.solutionComponentDataGridView = new System.Windows.Forms.DataGridView();
+            this.showComponentNameCheckBox = new System.Windows.Forms.CheckBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.targetSolutionGroupBox = new System.Windows.Forms.GroupBox();
             this.targetSolutionSettingsTableLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -87,6 +89,7 @@ namespace Emmetienne.SolutionReplicator
             this.componentsAndOptionsSplitContainer.Panel2.SuspendLayout();
             this.componentsAndOptionsSplitContainer.SuspendLayout();
             this.sourceSolutionComponentsGroupBox.SuspendLayout();
+            this.solutionComponentsTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.solutionComponentDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -277,19 +280,34 @@ namespace Emmetienne.SolutionReplicator
             // 
             this.componentsAndOptionsSplitContainer.Panel2.Controls.Add(this.splitContainer1);
             this.componentsAndOptionsSplitContainer.Size = new System.Drawing.Size(598, 502);
-            this.componentsAndOptionsSplitContainer.SplitterDistance = 336;
+            this.componentsAndOptionsSplitContainer.SplitterDistance = 389;
             this.componentsAndOptionsSplitContainer.TabIndex = 1;
             // 
             // sourceSolutionComponentsGroupBox
             // 
-            this.sourceSolutionComponentsGroupBox.Controls.Add(this.solutionComponentDataGridView);
+            this.sourceSolutionComponentsGroupBox.Controls.Add(this.solutionComponentsTable);
             this.sourceSolutionComponentsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sourceSolutionComponentsGroupBox.Location = new System.Drawing.Point(0, 0);
             this.sourceSolutionComponentsGroupBox.Name = "sourceSolutionComponentsGroupBox";
-            this.sourceSolutionComponentsGroupBox.Size = new System.Drawing.Size(336, 502);
+            this.sourceSolutionComponentsGroupBox.Size = new System.Drawing.Size(389, 502);
             this.sourceSolutionComponentsGroupBox.TabIndex = 1;
             this.sourceSolutionComponentsGroupBox.TabStop = false;
             this.sourceSolutionComponentsGroupBox.Text = "Source solution components";
+            // 
+            // solutionComponentsTable
+            // 
+            this.solutionComponentsTable.ColumnCount = 1;
+            this.solutionComponentsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.solutionComponentsTable.Controls.Add(this.solutionComponentDataGridView, 0, 1);
+            this.solutionComponentsTable.Controls.Add(this.showComponentNameCheckBox, 0, 0);
+            this.solutionComponentsTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.solutionComponentsTable.Location = new System.Drawing.Point(3, 16);
+            this.solutionComponentsTable.Name = "solutionComponentsTable";
+            this.solutionComponentsTable.RowCount = 2;
+            this.solutionComponentsTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.solutionComponentsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.solutionComponentsTable.Size = new System.Drawing.Size(383, 483);
+            this.solutionComponentsTable.TabIndex = 1;
             // 
             // solutionComponentDataGridView
             // 
@@ -303,14 +321,25 @@ namespace Emmetienne.SolutionReplicator
             this.solutionComponentDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.solutionComponentDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.solutionComponentDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.solutionComponentDataGridView.Location = new System.Drawing.Point(3, 16);
+            this.solutionComponentDataGridView.Location = new System.Drawing.Point(3, 33);
             this.solutionComponentDataGridView.Name = "solutionComponentDataGridView";
             this.solutionComponentDataGridView.ReadOnly = true;
             this.solutionComponentDataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.solutionComponentDataGridView.RowHeadersVisible = false;
             this.solutionComponentDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.solutionComponentDataGridView.Size = new System.Drawing.Size(330, 483);
+            this.solutionComponentDataGridView.Size = new System.Drawing.Size(377, 447);
             this.solutionComponentDataGridView.TabIndex = 0;
+            // 
+            // showComponentNameCheckBox
+            // 
+            this.showComponentNameCheckBox.AutoSize = true;
+            this.showComponentNameCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.showComponentNameCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.showComponentNameCheckBox.Name = "showComponentNameCheckBox";
+            this.showComponentNameCheckBox.Size = new System.Drawing.Size(377, 24);
+            this.showComponentNameCheckBox.TabIndex = 1;
+            this.showComponentNameCheckBox.Text = "Retrieve solution components\' names (it may take more time)";
+            this.showComponentNameCheckBox.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
             // 
@@ -326,7 +355,7 @@ namespace Emmetienne.SolutionReplicator
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.solutionExportGroupBox);
-            this.splitContainer1.Size = new System.Drawing.Size(258, 502);
+            this.splitContainer1.Size = new System.Drawing.Size(205, 502);
             this.splitContainer1.SplitterDistance = 192;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -336,7 +365,7 @@ namespace Emmetienne.SolutionReplicator
             this.targetSolutionGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.targetSolutionGroupBox.Location = new System.Drawing.Point(0, 0);
             this.targetSolutionGroupBox.Name = "targetSolutionGroupBox";
-            this.targetSolutionGroupBox.Size = new System.Drawing.Size(258, 192);
+            this.targetSolutionGroupBox.Size = new System.Drawing.Size(205, 192);
             this.targetSolutionGroupBox.TabIndex = 0;
             this.targetSolutionGroupBox.TabStop = false;
             this.targetSolutionGroupBox.Text = "Target solution settings";
@@ -378,7 +407,7 @@ namespace Emmetienne.SolutionReplicator
             this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.targetSolutionSettingsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.targetSolutionSettingsTableLayout.Size = new System.Drawing.Size(252, 173);
+            this.targetSolutionSettingsTableLayout.Size = new System.Drawing.Size(199, 173);
             this.targetSolutionSettingsTableLayout.TabIndex = 0;
             // 
             // solutionNameTextBox
@@ -453,7 +482,7 @@ namespace Emmetienne.SolutionReplicator
             this.solutionExportGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.solutionExportGroupBox.Location = new System.Drawing.Point(0, 0);
             this.solutionExportGroupBox.Name = "solutionExportGroupBox";
-            this.solutionExportGroupBox.Size = new System.Drawing.Size(258, 306);
+            this.solutionExportGroupBox.Size = new System.Drawing.Size(205, 306);
             this.solutionExportGroupBox.TabIndex = 1;
             this.solutionExportGroupBox.TabStop = false;
             this.solutionExportGroupBox.Text = "Solution export settings";
@@ -475,7 +504,7 @@ namespace Emmetienne.SolutionReplicator
             this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.exportTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.exportTableLayout.Size = new System.Drawing.Size(252, 287);
+            this.exportTableLayout.Size = new System.Drawing.Size(199, 287);
             this.exportTableLayout.TabIndex = 0;
             // 
             // exportFolderLabel
@@ -484,7 +513,7 @@ namespace Emmetienne.SolutionReplicator
             this.exportFolderLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.exportFolderLabel.Location = new System.Drawing.Point(3, 0);
             this.exportFolderLabel.Name = "exportFolderLabel";
-            this.exportFolderLabel.Size = new System.Drawing.Size(246, 20);
+            this.exportFolderLabel.Size = new System.Drawing.Size(193, 20);
             this.exportFolderLabel.TabIndex = 8;
             this.exportFolderLabel.Text = "Folder";
             // 
@@ -493,7 +522,7 @@ namespace Emmetienne.SolutionReplicator
             this.exportSourceSolutionButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.exportSourceSolutionButton.Location = new System.Drawing.Point(3, 50);
             this.exportSourceSolutionButton.Name = "exportSourceSolutionButton";
-            this.exportSourceSolutionButton.Size = new System.Drawing.Size(246, 29);
+            this.exportSourceSolutionButton.Size = new System.Drawing.Size(193, 29);
             this.exportSourceSolutionButton.TabIndex = 9;
             this.exportSourceSolutionButton.Text = "Download source solution";
             this.exportSourceSolutionButton.UseVisualStyleBackColor = true;
@@ -511,7 +540,7 @@ namespace Emmetienne.SolutionReplicator
             this.exportPathTableLayoutPanel.Name = "exportPathTableLayoutPanel";
             this.exportPathTableLayoutPanel.RowCount = 1;
             this.exportPathTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.exportPathTableLayoutPanel.Size = new System.Drawing.Size(252, 27);
+            this.exportPathTableLayoutPanel.Size = new System.Drawing.Size(199, 27);
             this.exportPathTableLayoutPanel.TabIndex = 11;
             // 
             // exportPathTextBox
@@ -519,15 +548,15 @@ namespace Emmetienne.SolutionReplicator
             this.exportPathTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.exportPathTextBox.Location = new System.Drawing.Point(3, 3);
             this.exportPathTextBox.Name = "exportPathTextBox";
-            this.exportPathTextBox.Size = new System.Drawing.Size(174, 20);
+            this.exportPathTextBox.Size = new System.Drawing.Size(136, 20);
             this.exportPathTextBox.TabIndex = 0;
             // 
             // openFolderSelectionButton
             // 
             this.openFolderSelectionButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openFolderSelectionButton.Location = new System.Drawing.Point(183, 3);
+            this.openFolderSelectionButton.Location = new System.Drawing.Point(145, 3);
             this.openFolderSelectionButton.Name = "openFolderSelectionButton";
-            this.openFolderSelectionButton.Size = new System.Drawing.Size(66, 21);
+            this.openFolderSelectionButton.Size = new System.Drawing.Size(51, 21);
             this.openFolderSelectionButton.TabIndex = 1;
             this.openFolderSelectionButton.Text = "...";
             this.openFolderSelectionButton.UseVisualStyleBackColor = true;
@@ -544,15 +573,15 @@ namespace Emmetienne.SolutionReplicator
             this.targetSolutionExportAndOpenTableLayout.Name = "targetSolutionExportAndOpenTableLayout";
             this.targetSolutionExportAndOpenTableLayout.RowCount = 1;
             this.targetSolutionExportAndOpenTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.targetSolutionExportAndOpenTableLayout.Size = new System.Drawing.Size(246, 39);
+            this.targetSolutionExportAndOpenTableLayout.Size = new System.Drawing.Size(193, 39);
             this.targetSolutionExportAndOpenTableLayout.TabIndex = 12;
             // 
             // openTargetSolutionButton
             // 
             this.openTargetSolutionButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openTargetSolutionButton.Location = new System.Drawing.Point(175, 3);
+            this.openTargetSolutionButton.Location = new System.Drawing.Point(138, 3);
             this.openTargetSolutionButton.Name = "openTargetSolutionButton";
-            this.openTargetSolutionButton.Size = new System.Drawing.Size(68, 33);
+            this.openTargetSolutionButton.Size = new System.Drawing.Size(52, 33);
             this.openTargetSolutionButton.TabIndex = 11;
             this.openTargetSolutionButton.Text = "Open target solution";
             this.openTargetSolutionButton.UseVisualStyleBackColor = true;
@@ -562,7 +591,7 @@ namespace Emmetienne.SolutionReplicator
             this.exportTargetSolutionButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.exportTargetSolutionButton.Location = new System.Drawing.Point(3, 3);
             this.exportTargetSolutionButton.Name = "exportTargetSolutionButton";
-            this.exportTargetSolutionButton.Size = new System.Drawing.Size(166, 33);
+            this.exportTargetSolutionButton.Size = new System.Drawing.Size(129, 33);
             this.exportTargetSolutionButton.TabIndex = 10;
             this.exportTargetSolutionButton.Text = "Download target solution";
             this.exportTargetSolutionButton.UseVisualStyleBackColor = true;
@@ -679,6 +708,8 @@ namespace Emmetienne.SolutionReplicator
             ((System.ComponentModel.ISupportInitialize)(this.componentsAndOptionsSplitContainer)).EndInit();
             this.componentsAndOptionsSplitContainer.ResumeLayout(false);
             this.sourceSolutionComponentsGroupBox.ResumeLayout(false);
+            this.solutionComponentsTable.ResumeLayout(false);
+            this.solutionComponentsTable.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.solutionComponentDataGridView)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -754,5 +785,7 @@ namespace Emmetienne.SolutionReplicator
         private System.Windows.Forms.TableLayoutPanel solutionFilterTableLayou;
         private System.Windows.Forms.CheckBox showManagedCheckBox;
         private System.Windows.Forms.Label filterNameSolution;
+        private System.Windows.Forms.TableLayoutPanel solutionComponentsTable;
+        private System.Windows.Forms.CheckBox showComponentNameCheckBox;
     }
 }

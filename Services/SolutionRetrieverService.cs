@@ -80,7 +80,7 @@ namespace Emmetienne.SolutionReplicator.Services
             this.solutionRepository = new SolutionRepository(pluginControlBase.Service, logService);
         }
 
-        public override void ChangeTargetConnection(IOrganizationService service)
+        public override void ChangeSecondaryConnection(IOrganizationService service)
         {
             throw new System.NotImplementedException();
         }

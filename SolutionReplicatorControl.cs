@@ -35,6 +35,7 @@ namespace Emmetienne.SolutionReplicator
         private OpenExportSolutionFolderPathView openExportSolutionFolderPathView;
         private FilterSolutionTextBoxView filterSolutionTextBoxView;
         private FilterManagedSolutionCheckBoxView filterManagedSolutionCheckBoxView;
+        private ShowSolutionComponentsNamesCheckBoxView showComponentNameCheckBoxView;
 
         private GenericButtonComponentDisableView selectExportFolderButtonView;
         private GenericTextBoxComponentDisableView solutionNameTextBoxView;
@@ -62,11 +63,13 @@ namespace Emmetienne.SolutionReplicator
             this.openExportSolutionFolderPathView = new OpenExportSolutionFolderPathView(this.openFolderSelectionButton, logService);
             this.filterSolutionTextBoxView = new FilterSolutionTextBoxView(this.solutionFilterTextBox, logService);
             this.filterManagedSolutionCheckBoxView = new FilterManagedSolutionCheckBoxView(this.showManagedCheckBox, logService);
+            this.showComponentNameCheckBoxView = new ShowSolutionComponentsNamesCheckBoxView(this.showComponentNameCheckBox, logService);
 
 
             this.selectExportFolderButtonView = new GenericButtonComponentDisableView(this.openFolderSelectionButton, logService);
             this.solutionNameTextBoxView = new GenericTextBoxComponentDisableView(this.solutionNameTextBox, logService);
             this.versionTextBoxView = new GenericTextBoxComponentDisableView(this.versionTextBox, logService);
+
         }
 
         private void MyPluginControl_Load(object sender, EventArgs e)
@@ -81,6 +84,9 @@ namespace Emmetienne.SolutionReplicator
             this.exportSolutionService = new ExportSolutionService(logService, Service, this, settings);
             this.solutionReplicatorValidationService = new SolutionReplicatorValidationService(logService, this);
             this.openSolutionInEnvironmentService = new OpenSolutionInEnvironmentService(logService, this);
+
+            if (this.Service != null)
+                ComponentTypeCache.Instance.HandleComponentCache(this.Service, null);
         }
 
         private void LoadSettings()
@@ -146,7 +152,7 @@ namespace Emmetienne.SolutionReplicator
 
             if (!solutionReplicatorValidationService.Validate(targetSolutionSettings))
                 return;
-            
+
             var secondService = this.AdditionalConnectionDetails[0].GetCrmServiceClient();
 
             this.solutionReplicatorService = new SolutionReplicatorService(logService, Service, secondService, this);
@@ -181,5 +187,6 @@ namespace Emmetienne.SolutionReplicator
 
             logService.LogWarning($"Target environment connection has changed to: {this.AdditionalConnectionDetails[0].WebApplicationUrl}");
         }
+
     }
 }

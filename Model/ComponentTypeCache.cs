@@ -12,8 +12,8 @@ namespace Emmetienne.SolutionReplicator.Model
     {
         private readonly Dictionary<int, ComponentType> FixedOptionSetComponentTypeNameDictionary = new Dictionary<int, ComponentType>()
        {
-            {1,  new ComponentType { ComponentTypeName="Entity"                               , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""             }},
-            {2,  new ComponentType { ComponentTypeName="Attribute"                            , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                }},
+            {1,  new ComponentType { ComponentTypeName="Entity"                               , ComponentEntityLogicalName = "entity", ComponentPrimaryFieldLogicalName ="name"             }},
+            {2,  new ComponentType { ComponentTypeName="Attribute"                            , ComponentEntityLogicalName = "attribute", ComponentPrimaryFieldLogicalName ="name"                }},
             {3,  new ComponentType { ComponentTypeName="Relationship"                         , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                   }},
             // dunno
             {4,  new ComponentType { ComponentTypeName="Attribute Picklist Value"             , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                               }},
@@ -25,15 +25,15 @@ namespace Emmetienne.SolutionReplicator.Model
             {7,  new ComponentType { ComponentTypeName="Localized Label"                      , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                      }},
             // dunno
             {8,  new ComponentType { ComponentTypeName="Relationship Extra Condition"         , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                                   }},
-            {9,  new ComponentType { ComponentTypeName="Option Set"                           , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                 }},
-            {10, new ComponentType { ComponentTypeName="Entity Relationship"                  , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                          }},
+            {9,  new ComponentType { ComponentTypeName="Option Set"                           , ComponentEntityLogicalName = "optionset", ComponentPrimaryFieldLogicalName ="name"                 }},
+            {10, new ComponentType { ComponentTypeName="Entity Relationship"                  , ComponentEntityLogicalName = "entityrelationship", ComponentPrimaryFieldLogicalName ="schemaname"                          }},
             // dunno
             {11, new ComponentType { ComponentTypeName="Entity Relationship Role"             , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                               }},
             // dunno
             {12, new ComponentType { ComponentTypeName="Entity Relationship Relationships"    , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                                        }},
 
             {13, new ComponentType { ComponentTypeName="Managed Property"                     , ComponentEntityLogicalName = "managedproperty", ComponentPrimaryFieldLogicalName ="name"                       }},
-            {14, new ComponentType { ComponentTypeName="Entity Key"                           , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                 }},
+            {14, new ComponentType { ComponentTypeName="Entity Key"                           , ComponentEntityLogicalName = "entitykey", ComponentPrimaryFieldLogicalName ="name"                 }},
             // find out if 16 and 17 needs a bespoke strategy
             {16, new ComponentType { ComponentTypeName="Privilege"                            , ComponentEntityLogicalName = "privilege", ComponentPrimaryFieldLogicalName ="name"                }},
             {17, new ComponentType { ComponentTypeName="PrivilegeObjectTypeCode"              , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                              }},
@@ -71,7 +71,7 @@ namespace Emmetienne.SolutionReplicator.Model
             // dunno
             {49, new ComponentType { ComponentTypeName="Ribbon Context Group"                 , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                           }},
             // dunno
-            {50, new ComponentType { ComponentTypeName="Ribbon Customization"                 , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                           }},
+            {50, new ComponentType { ComponentTypeName="Ribbon Customization"                 , ComponentEntityLogicalName = "ribboncustomization", ComponentPrimaryFieldLogicalName ="entity"                           }},
             // dunno
             {52, new ComponentType { ComponentTypeName="Ribbon Rule"                          , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                  }},
             // dunno
@@ -79,7 +79,7 @@ namespace Emmetienne.SolutionReplicator.Model
             // dunno
             {55, new ComponentType { ComponentTypeName="Ribbon Diff"                          , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                  }},
             // mix primaryentitytypecode and name
-            {59, new ComponentType { ComponentTypeName="Saved Query Visualization"            , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                                }},
+            {59, new ComponentType { ComponentTypeName="Saved Query Visualization"            , ComponentEntityLogicalName = "savedqueryvisualization", ComponentPrimaryFieldLogicalName ="name"                                }},
             {60, new ComponentType { ComponentTypeName="System Form"                          , ComponentEntityLogicalName = "systemform", ComponentPrimaryFieldLogicalName ="name"   ,ComponentPrimaryKeyLogicalName = "formid"   , AdditionalFieldsForComparisonList = new List<AdditionalComponentFieldForComparison>{ AdditionalComponentFieldForComparison.Create("objecttypecode",typeof(string)), AdditionalComponentFieldForComparison.Create("type", typeof(OptionSetValue)) }          }},
             {61, new ComponentType { ComponentTypeName="Web Resource"                         , ComponentEntityLogicalName = "webresource", ComponentPrimaryFieldLogicalName ="name"                   }},
             {62, new ComponentType { ComponentTypeName="Site Map"                             , ComponentEntityLogicalName = "sitemap", ComponentPrimaryFieldLogicalName ="sitemapname"               }},
@@ -89,7 +89,7 @@ namespace Emmetienne.SolutionReplicator.Model
             {65, new ComponentType { ComponentTypeName="Hierarchy Rule"                       , ComponentEntityLogicalName = "hierarchyrule", ComponentPrimaryFieldLogicalName ="name"                     }},
             {66, new ComponentType { ComponentTypeName="Custom Control"                       , ComponentEntityLogicalName = "customcontrol", ComponentPrimaryFieldLogicalName ="name"                     }},
             {68, new ComponentType { ComponentTypeName="Custom Control Default Config"        , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                                    }},
-            {70, new ComponentType { ComponentTypeName="Field Security Profile"               , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                             }},
+            {70, new ComponentType { ComponentTypeName="Field Security Profile"               , ComponentEntityLogicalName = "fieldsecurityprofile", ComponentPrimaryFieldLogicalName ="name"                             }},
             {71, new ComponentType { ComponentTypeName="Field Permission"                     , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                       }},
             {80, new ComponentType { ComponentTypeName="Model Driven App"                     , ComponentEntityLogicalName = "appmodule", ComponentPrimaryFieldLogicalName ="name"                  }},
             {90, new ComponentType { ComponentTypeName="Plugin Type"                          , ComponentEntityLogicalName = "plugintype", ComponentPrimaryFieldLogicalName ="name"                  }},
@@ -122,7 +122,7 @@ namespace Emmetienne.SolutionReplicator.Model
 
         private readonly Dictionary<string, ComponentType> DynamicsComponentTypeNameDictionary = new Dictionary<string, ComponentType>()
        {
-            {"customapi",new ComponentType { ComponentTypeName="Custom API "                            , ComponentEntityLogicalName = "customapi", ComponentPrimaryFieldLogicalName ="uniquename"                    } },
+            {"customapi",new ComponentType { ComponentTypeName="Custom API"                            , ComponentEntityLogicalName = "customapi", ComponentPrimaryFieldLogicalName ="uniquename"                    } },
             {"customapirequestparameter",new ComponentType { ComponentTypeName="Custom API Request Parameter"                            , ComponentEntityLogicalName = "customapirequestparameter", ComponentPrimaryFieldLogicalName ="name"/*,  AdditionalFieldsForComparisonList = new List<AdditionalComponentFieldForComparison>{ AdditionalComponentFieldForComparison.Create("customapiid",typeof(EntityReference)) }*/                        } },
             {"customapiresponseproperty",new ComponentType { ComponentTypeName="Custom API Response Parameter"                           , ComponentEntityLogicalName = "customapiresponseproperty", ComponentPrimaryFieldLogicalName ="name"/*, AdditionalFieldsForComparisonList = new List<AdditionalComponentFieldForComparison>{ AdditionalComponentFieldForComparison.Create("customapiid",typeof(EntityReference))  }*/                   } },
             {"settingdefinition",new ComponentType { ComponentTypeName="Setting Definition"                           , ComponentEntityLogicalName = "settingdefinition", ComponentPrimaryFieldLogicalName ="uniquename" , DoNotAddToSolution = false                   } },
@@ -137,6 +137,10 @@ namespace Emmetienne.SolutionReplicator.Model
             {"msdyn_sessiontemplate_applicationtab",new ComponentType { ComponentTypeName="Template parameter"                           , ComponentEntityLogicalName = "msdyn_sessiontemplate_applicationtab", ComponentPrimaryFieldLogicalName ="componentidunique", DoNotAddToSolution = false                    }
             },
             {"canvasapp",new ComponentType { ComponentTypeName="Canvas App"                           , ComponentEntityLogicalName = "canvasapp", ComponentPrimaryFieldLogicalName ="name", DoNotAddToSolution = false                    }
+            },
+            {"environmentvariabledefinition",new ComponentType { ComponentTypeName="Environment Variable Definition"                           , ComponentEntityLogicalName = "environmentvariabledefinition", ComponentPrimaryFieldLogicalName ="displayname", DoNotAddToSolution = false                    }
+            },
+            {"environmentvariablevalue",new ComponentType { ComponentTypeName="Environment Variable Value"                           , ComponentEntityLogicalName = "environmentvariablevalue", ComponentPrimaryFieldLogicalName ="schemaname", DoNotAddToSolution = false  }
             }
        };
 
@@ -169,30 +173,28 @@ namespace Emmetienne.SolutionReplicator.Model
             return "N/A";
         }
 
-        public void AddComponentTypeToCache(int componentType, ComponentType componentTypeObject)
-        {
-            if (!CachedDynamicsComponentTypeNameDictionary.ContainsKey(componentType))
-                CachedDynamicsComponentTypeNameDictionary.Add(componentType, componentTypeObject);
-        }
 
         public void InvalidateDynamicCache()
         {
             CachedDynamicsComponentTypeNameDictionary.Clear();
         }
 
-        public void AddComponentTypeToCache(string componentTypeLogicalName, int sourceComponentTypeCode, int targetComponentTypeCode)
+        public void AddComponentTypeToCache(string componentTypeLogicalName, int sourceComponentTypeCode, int? targetComponentTypeCode)
         {
             if (CachedDynamicsComponentTypeNameDictionary.ContainsKey(sourceComponentTypeCode))
                 return;
 
             var tmpComponentType = DynamicsComponentTypeNameDictionary[componentTypeLogicalName];
-            tmpComponentType.TargetComponentTypeCode = targetComponentTypeCode;
+
+            if (targetComponentTypeCode.HasValue)
+                tmpComponentType.TargetComponentTypeCode = targetComponentTypeCode;
+
             CachedDynamicsComponentTypeNameDictionary.Add(sourceComponentTypeCode, tmpComponentType);
         }
 
         public void HandleComponentCache(IOrganizationService sourceService, IOrganizationService targetService)
         {
-            if (sourceService == null || targetService == null)
+            if (sourceService == null)
                 return;
 
             if (CachedDynamicsComponentTypeNameDictionary.Count != 0)
@@ -201,15 +203,20 @@ namespace Emmetienne.SolutionReplicator.Model
             var entityLogicalNameList = DynamicsComponentTypeNameDictionary.Keys.ToList();
 
             var sourceEntityTypeCodeDictionary = RetrieveEntitiesMetadata(sourceService, entityLogicalNameList);
-            var targetEntityTypeCodeDictionary = RetrieveEntitiesMetadata(targetService, entityLogicalNameList);
 
-            if (sourceEntityTypeCodeDictionary.Count != targetEntityTypeCodeDictionary.Count)
+            Dictionary<string, int> targetEntityTypeCodeDictionary = null;
+
+            if (targetService != null)
+                targetEntityTypeCodeDictionary = RetrieveEntitiesMetadata(targetService, entityLogicalNameList);
+
+            if (targetEntityTypeCodeDictionary != null && sourceEntityTypeCodeDictionary.Count != targetEntityTypeCodeDictionary.Count)
                 throw new System.Exception("The source and target environments have different number of entities");
 
             foreach (var entityLogicalName in entityLogicalNameList)
             {
                 var sourceComponentTypeCode = sourceEntityTypeCodeDictionary[entityLogicalName];
-                var targetComponentTypeCode = targetEntityTypeCodeDictionary[entityLogicalName];
+
+                int? targetComponentTypeCode = targetEntityTypeCodeDictionary != null ? targetEntityTypeCodeDictionary[entityLogicalName] : (int?)null;
 
                 AddComponentTypeToCache(entityLogicalName, sourceComponentTypeCode, targetComponentTypeCode);
             }

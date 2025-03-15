@@ -4,6 +4,7 @@
 Solution Replicator is a plugin for [XrmToolbox](https://www.xrmtoolbox.com) that allows you to replicate a solution between environments. It is useful, for example, when you need to compare the customization.xml file between two environments.
 
 ## Changelog
+1.2025.3.1  - Fixed a bug that prevents the tool to perform entity key replication, QoL improvements (added component name column in the solution components pane, optimization for the component cache engine and visualization of the component types when only the source environment is selected), added handling for Environment Variable Definition and Environment Variable Value components, added new state for the components that cannot be replicated for various reason (e.g. Ribbon Customization for the Applications Ribbons component)
 1.2024.12.2 - Minor fix
 1.2024.12.1 - Fixed a bug that prevents the tool from loading after it has been previously closed
 1.2024.8.1  - Fixed some bugs and refactored some code, renamed the “Replication status” column in the solution components pane to “Component search result”, added “Replicated” and “Error message” columns to the solution components pane to show if the components have been successfully replicated
@@ -14,7 +15,8 @@ Solution Replicator is a plugin for [XrmToolbox](https://www.xrmtoolbox.com) tha
 ## Features
  - Replicate the solution between environments
  - Filter the solution by name          
- - Filter out managed solutions (the default behaviour is to not show managed solutions) 
+ - Filter out managed solutions (the default behaviour is to not show managed solutions)
+ - Show the solution components names
  - Export the source solution and the target solution
  - Open the source and the target solution
 
@@ -37,6 +39,7 @@ The "Component search status" column can have five states:
  - Not found on target environment -> The component has not been found on the target environment and thus it's not replicated in the target solution
  - Found multiple on target environment -> Multiple components have been found and each one has been added to the solution
  - Component type not yet handled by the tool -> The component type is not handled by the current version of the tool. If you find a component not handled, please open an issue 
+ - Component cannot be replicated -> The component cannot be replicated for various reasons, such as when uniqueness cannot be guaranteed or in specific scenarios like Ribbon Customization for Application Ribbons
  - Error -> An error has occoured and therefore the component will not be replicated, the exception will be logged. If you find an error, please open an issue 
 
 ## How this tool works

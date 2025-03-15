@@ -56,6 +56,7 @@ namespace Emmetienne.SolutionReplicator.Components
             var solutionComponentsDataTable = new DataTable();
             solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.ComponentType, typeof(string));
             solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.ComponentTypeName, typeof(string));
+            solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.ComponentName, typeof(string));
             solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.ObjectId, typeof(Guid));
             solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.ComponentSearchStatus, typeof(string));
             solutionComponentsDataTable.Columns.Add(ComponentConstants.SolutionComponentView.Replicated, typeof(bool));
@@ -63,7 +64,7 @@ namespace Emmetienne.SolutionReplicator.Components
 
             foreach (var result in list)
             {
-                solutionComponentsDataTable.Rows.Add(result.ComponentType, result.ComponentTypeName, result.ObjectId, result.ComponentSearchResult.Message);
+                solutionComponentsDataTable.Rows.Add(result.ComponentType, result.ComponentTypeName, result.ComponentName, result.ObjectId, result.ComponentSearchResult.Message);
             }
 
             this.solutionComponentGridViewComponent.DataSource = solutionComponentsDataTable;
@@ -77,6 +78,7 @@ namespace Emmetienne.SolutionReplicator.Components
         {
             solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.ComponentType].SortMode = DataGridViewColumnSortMode.NotSortable;
             solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.ComponentTypeName].SortMode = DataGridViewColumnSortMode.NotSortable;
+            solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.ComponentName].SortMode = DataGridViewColumnSortMode.NotSortable;
             solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.ObjectId].SortMode = DataGridViewColumnSortMode.NotSortable;
             solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.ComponentSearchStatus].SortMode = DataGridViewColumnSortMode.NotSortable;
             solutionComponentGridViewComponent.Columns[ComponentConstants.SolutionComponentView.Replicated].SortMode = DataGridViewColumnSortMode.NotSortable;

@@ -14,11 +14,13 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
                     return new AttributesSearchStrategy();
                 case 9:
                     return new GlobalOptionsetsSearchStrategy();
-                  
+
                 case 10:
                     return new EntityRelationshipsSearchStrategy();
                 case 14:
                     return new EntityKeysSearchStraregy();
+                case 50:
+                    return new CannotReplicateComponentStrategy();
                 default:
                     break;
             }

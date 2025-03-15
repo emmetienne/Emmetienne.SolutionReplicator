@@ -2,6 +2,7 @@
 using Emmetienne.SolutionReplicator.Services;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
+using System;
 using System.Collections.Generic;
 
 namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
@@ -34,23 +35,32 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
                     LogicalName = entityKeyLogicalName
                 };
 
-
-                var targetRetrieveResponse = (RetrieveEntityKeyResponse)targetEnvironmentService.Execute(targetEnvironmentRetrieveAttributeRequest);
-
-                if (sourceRetrieveResponse.EntityKeyMetadata == null)
+                try
                 {
+
+                    var targetRetrieveResponse = (RetrieveEntityKeyResponse)targetEnvironmentService.Execute(targetEnvironmentRetrieveAttributeRequest);
+
+                    if (sourceRetrieveResponse.EntityKeyMetadata == null)
+                    {
+                        component.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
+                        foundAndNotFoundComponents.NotFoundComponents.Add(component);
+                        continue;
+                    }
+
+                    var tmpTargetComponentWrapper = new SolutionComponentWrapper();
+                    tmpTargetComponentWrapper.TargetEnvironmentObjectId = targetRetrieveResponse.EntityKeyMetadata.MetadataId.Value;
+                    tmpTargetComponentWrapper.ObjectId = component.ObjectId;
+                    tmpTargetComponentWrapper.ComponentType = 14;
+                    tmpTargetComponentWrapper.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.foundOnTargetEnvironment];
+
+                    foundAndNotFoundComponents.FoundComponents.Add(tmpTargetComponentWrapper);
+                }
+                catch (Exception ex)
+                {
+                    logService.LogError($"Error while retrieving entity key {entityKeyLogicalName}", ex.Message);
                     component.ComponentSearchResult = ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.notFoundOnTargetEnvironment];
                     foundAndNotFoundComponents.NotFoundComponents.Add(component);
-                    continue;
                 }
-
-                var tmpTargetComponentWrapper = new SolutionComponentWrapper();
-                tmpTargetComponentWrapper.TargetEnvironmentObjectId = targetRetrieveResponse.EntityKeyMetadata.MetadataId.Value;
-                tmpTargetComponentWrapper.ObjectId = component.ObjectId;
-                tmpTargetComponentWrapper.ComponentType = 14;
-                tmpTargetComponentWrapper.ComponentSearchResult =   ComponentSearchResult.searchResultOptionDictionary[SolutionComponentSearchResult.foundOnTargetEnvironment];
-
-                foundAndNotFoundComponents.FoundComponents.Add(tmpTargetComponentWrapper);
             }
 
             return foundAndNotFoundComponents;
