@@ -25,7 +25,7 @@ jobs:
       run: Compress-Archive -Path .\bin\Release\Emmetienne.SolutionReplicator.dll -DestinationPath Release.zip
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: release-artifact
         path: Release.zip
@@ -45,7 +45,7 @@ jobs:
       shell: pwsh    
       
     - name: Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v2
       with:
         name: release-artifact
         path: .
