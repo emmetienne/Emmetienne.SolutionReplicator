@@ -1,4 +1,6 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using Emmetienne.SolutionReplicator.Model.Entities;
+using Emmetienne.SolutionReplicator.Repository;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using System;
@@ -120,7 +122,9 @@ namespace Emmetienne.SolutionReplicator.Model
 
     };
 
-        private readonly Dictionary<string, ComponentType> DynamicsComponentTypeNameDictionary = new Dictionary<string, ComponentType>()
+        private Dictionary<int, ComponentType> DynamicsComponentTypeDictionary = new Dictionary<int, ComponentType>();
+
+        private readonly Dictionary<string, ComponentType> SpecialRulesForSolutionComponentDefinitionDictionary = new Dictionary<string, ComponentType>()
        {
             {"customapi",new ComponentType { ComponentTypeName="Custom API"                            , ComponentEntityLogicalName = "customapi", ComponentPrimaryFieldLogicalName ="uniquename"                    } },
             {"customapirequestparameter",new ComponentType { ComponentTypeName="Custom API Request Parameter"                            , ComponentEntityLogicalName = "customapirequestparameter", ComponentPrimaryFieldLogicalName ="name"/*,  AdditionalFieldsForComparisonList = new List<AdditionalComponentFieldForComparison>{ AdditionalComponentFieldForComparison.Create("customapiid",typeof(EntityReference)) }*/                        } },
@@ -144,22 +148,22 @@ namespace Emmetienne.SolutionReplicator.Model
             }
        };
 
-        private Dictionary<int, ComponentType> CachedDynamicsComponentTypeNameDictionary = new Dictionary<int, ComponentType>();
+        //private Dictionary<int, ComponentType> CachedDynamicsComponentTypeNameDictionary = new Dictionary<int, ComponentType>();
 
         public ComponentType GetComponentTypeFromComponentTypeCode(int componentTypeCode)
         {
             if (FixedOptionSetComponentTypeNameDictionary.ContainsKey(componentTypeCode))
                 return FixedOptionSetComponentTypeNameDictionary[componentTypeCode];
 
-            if (CachedDynamicsComponentTypeNameDictionary.ContainsKey(componentTypeCode))
-                return CachedDynamicsComponentTypeNameDictionary[componentTypeCode];
+            if (DynamicsComponentTypeDictionary.ContainsKey(componentTypeCode))
+                return DynamicsComponentTypeDictionary[componentTypeCode];
 
             return null;
         }
 
         public bool ContainsKey(int componentType)
         {
-            return FixedOptionSetComponentTypeNameDictionary.ContainsKey(componentType) || CachedDynamicsComponentTypeNameDictionary.ContainsKey(componentType);
+            return FixedOptionSetComponentTypeNameDictionary.ContainsKey(componentType) || DynamicsComponentTypeDictionary.ContainsKey(componentType);
         }
 
         public string GetComponentTypeNameFromComponentType(int componentType)
@@ -167,8 +171,8 @@ namespace Emmetienne.SolutionReplicator.Model
             if (FixedOptionSetComponentTypeNameDictionary.ContainsKey(componentType))
                 return FixedOptionSetComponentTypeNameDictionary[componentType].ComponentTypeName;
 
-            if (CachedDynamicsComponentTypeNameDictionary.ContainsKey(componentType))
-                return CachedDynamicsComponentTypeNameDictionary[componentType].ComponentTypeName;
+            if (DynamicsComponentTypeDictionary.ContainsKey(componentType))
+                return DynamicsComponentTypeDictionary[componentType].ComponentTypeName;
 
             return "N/A";
         }
@@ -176,20 +180,24 @@ namespace Emmetienne.SolutionReplicator.Model
 
         public void InvalidateDynamicCache()
         {
-            CachedDynamicsComponentTypeNameDictionary.Clear();
+            DynamicsComponentTypeDictionary.Clear();
         }
 
-        public void AddComponentTypeToCache(string componentTypeLogicalName, int sourceComponentTypeCode, int? targetComponentTypeCode)
+
+        public ComponentType ToComponentType(Entity entity, bool source = true)
         {
-            if (CachedDynamicsComponentTypeNameDictionary.ContainsKey(sourceComponentTypeCode))
-                return;
+            var tmpComponentType = new ComponentType();
 
-            var tmpComponentType = DynamicsComponentTypeNameDictionary[componentTypeLogicalName];
+            tmpComponentType.ComponentEntityLogicalName = entity.GetAttributeValue<string>(solutioncomponentdefinition.primaryentityname);
 
-            if (targetComponentTypeCode.HasValue)
-                tmpComponentType.TargetComponentTypeCode = targetComponentTypeCode;
+            if (source && SpecialRulesForSolutionComponentDefinitionDictionary.ContainsKey(tmpComponentType.ComponentEntityLogicalName))
+                return SpecialRulesForSolutionComponentDefinitionDictionary[tmpComponentType.ComponentEntityLogicalName];
 
-            CachedDynamicsComponentTypeNameDictionary.Add(sourceComponentTypeCode, tmpComponentType);
+            tmpComponentType.ComponentTypeName = entity.GetAttributeValue<string>(solutioncomponentdefinition.name);
+            tmpComponentType.DoNotAddToSolution = false;
+            tmpComponentType.ComponentPrimaryFieldLogicalName = "name";
+
+            return tmpComponentType;
         }
 
         public void HandleComponentCache(IOrganizationService sourceService, IOrganizationService targetService)
@@ -197,30 +205,66 @@ namespace Emmetienne.SolutionReplicator.Model
             if (sourceService == null)
                 return;
 
-            if (CachedDynamicsComponentTypeNameDictionary.Count != 0)
+            var sourceSolutionComponentDefinitionRepository = new SolutionComponentsDefinitionsRepository(sourceService);
+            var sourceSolutionComponentDefinitionList = sourceSolutionComponentDefinitionRepository.GetSolutionComponentDefinitions();
+
+            List<Entity> targetSolutionComponentDefinition = null;
+
+            // create a dictionary from sourcesolutioncomponentdefinition using the primaryentityname field
+            foreach (var singleSolutionComponentDefinition in sourceSolutionComponentDefinitionList)
+            {
+                var tmpComponentType = ToComponentType(singleSolutionComponentDefinition, true);
+                var solutionComponentType = singleSolutionComponentDefinition.GetAttributeValue<int>(solutioncomponentdefinition.solutioncomponenttype);
+
+                DynamicsComponentTypeDictionary[solutionComponentType] = tmpComponentType;
+            }
+
+            if (targetService == null)
                 return;
 
-            var entityLogicalNameList = DynamicsComponentTypeNameDictionary.Keys.ToList();
+            var targetSolutionComponentDefinitionRepository = new SolutionComponentsDefinitionsRepository(targetService);
+            targetSolutionComponentDefinition = targetSolutionComponentDefinitionRepository.GetSolutionComponentDefinitions();
 
-            var sourceEntityTypeCodeDictionary = RetrieveEntitiesMetadata(sourceService, entityLogicalNameList);
-
-            Dictionary<string, int> targetEntityTypeCodeDictionary = null;
-
-            if (targetService != null)
-                targetEntityTypeCodeDictionary = RetrieveEntitiesMetadata(targetService, entityLogicalNameList);
-
-            if (targetEntityTypeCodeDictionary != null && sourceEntityTypeCodeDictionary.Count != targetEntityTypeCodeDictionary.Count)
-                throw new System.Exception("The source and target environments have different number of entities");
-
-            foreach (var entityLogicalName in entityLogicalNameList)
+            foreach(var entry in DynamicsComponentTypeDictionary)
             {
-                var sourceComponentTypeCode = sourceEntityTypeCodeDictionary[entityLogicalName];
+                var foundTargetSolutionComponentDefinition = targetSolutionComponentDefinition.FirstOrDefault(x => x.GetAttributeValue<string>(solutioncomponentdefinition.primaryentityname) == DynamicsComponentTypeDictionary[entry.Key].ComponentEntityLogicalName);
 
-                int? targetComponentTypeCode = targetEntityTypeCodeDictionary != null ? targetEntityTypeCodeDictionary[entityLogicalName] : (int?)null;
+                if (foundTargetSolutionComponentDefinition == null)
+                    continue;
 
-                AddComponentTypeToCache(entityLogicalName, sourceComponentTypeCode, targetComponentTypeCode);
+                DynamicsComponentTypeDictionary[entry.Key].TargetComponentTypeCode = foundTargetSolutionComponentDefinition.GetAttributeValue<int>(solutioncomponentdefinition.solutioncomponenttype);
             }
         }
+
+        //public void HandleComponentCache(IOrganizationService sourceService, IOrganizationService targetService)
+        //{
+        //    if (sourceService == null)
+        //        return;
+
+        //    if (CachedDynamicsComponentTypeNameDictionary.Count != 0)
+        //        return;
+
+        //    var entityLogicalNameList = DynamicsComponentTypeNameDictionary.Keys.ToList();
+
+        //    var sourceEntityTypeCodeDictionary = RetrieveEntitiesMetadata(sourceService, entityLogicalNameList);
+
+        //    Dictionary<string, int> targetEntityTypeCodeDictionary = null;
+
+        //    if (targetService != null)
+        //        targetEntityTypeCodeDictionary = RetrieveEntitiesMetadata(targetService, entityLogicalNameList);
+
+        //    if (targetEntityTypeCodeDictionary != null && sourceEntityTypeCodeDictionary.Count != targetEntityTypeCodeDictionary.Count)
+        //        throw new System.Exception("The source and target environments have different number of entities");
+
+        //    foreach (var entityLogicalName in entityLogicalNameList)
+        //    {
+        //        var sourceComponentTypeCode = sourceEntityTypeCodeDictionary[entityLogicalName];
+
+        //        int? targetComponentTypeCode = targetEntityTypeCodeDictionary != null ? targetEntityTypeCodeDictionary[entityLogicalName] : (int?)null;
+
+        //        AddComponentTypeToCache(entityLogicalName, sourceComponentTypeCode, targetComponentTypeCode);
+        //    }
+        //}
 
         private Dictionary<string, int> RetrieveEntitiesMetadata(IOrganizationService service, List<string> entityLogicalNameList)
         {

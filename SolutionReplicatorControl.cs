@@ -133,8 +133,8 @@ namespace Emmetienne.SolutionReplicator
 
             if (this.AdditionalConnectionDetails.Count > 0)
             {
-                ComponentTypeCache.Instance.HandleComponentCache(this.Service, this.AdditionalConnectionDetails[0].GetCrmServiceClient());
                 ComponentTypeCache.Instance.InvalidateDynamicCache();
+                ComponentTypeCache.Instance.HandleComponentCache(this.Service, this.AdditionalConnectionDetails[0].GetCrmServiceClient());
             }
 
             logService.LogWarning($"Source environment connection has changed to: {this.ConnectionDetail.WebApplicationUrl}");

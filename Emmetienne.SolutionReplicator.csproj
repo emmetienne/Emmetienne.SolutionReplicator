@@ -200,6 +200,7 @@
     <Compile Include="Components\TargetEnvironmentLabelView.cs" />
     <Compile Include="EventBus\EventBusSingleton.cs" />
     <Compile Include="Model\AdditionalComponentFieldForComparison.cs" />
+    <Compile Include="Model\Entities\SolutionComponentDefinition.cs" />
     <Compile Include="Model\ReplicationStatus.cs" />
     <Compile Include="Model\ExportSolutionSettings.cs" />
     <Compile Include="Model\SolutionComponentSearchResult.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Model\TargetSolutionSettings.cs" />
     <Compile Include="MyPlugin.cs" />
     <Compile Include="Repository\PublisherRepository.cs" />
+    <Compile Include="Repository\SolutionComponentsDefinitionsRepository.cs" />
     <Compile Include="Repository\SolutionComponentsRepository.cs" />
     <Compile Include="Repository\SolutionComponentTypesRepository.cs" />
     <Compile Include="Repository\SolutionRepository.cs" />
