@@ -1,15 +1,12 @@
 ﻿using Emmetienne.SolutionReplicator.Model.Entities;
 using Emmetienne.SolutionReplicator.Repository;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Emmetienne.SolutionReplicator.Model
 {
-
     public class ComponentTypeCache : Singleton<ComponentTypeCache>
     {
         private readonly Dictionary<int, ComponentType> FixedOptionSetComponentTypeNameDictionary = new Dictionary<int, ComponentType>()
@@ -117,14 +114,12 @@ namespace Emmetienne.SolutionReplicator.Model
             {206,new ComponentType { ComponentTypeName="SdkMessageResponse"                   , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                         }},
             {207,new ComponentType { ComponentTypeName="SdkMessageResponseField"              , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                              }},
             {208,new ComponentType { ComponentTypeName="Import Map"                           , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                 }},
-            {210,new ComponentType { ComponentTypeName="WebWizard"                            , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                    } },
-
-
+            {210,new ComponentType { ComponentTypeName="WebWizard"                            , ComponentEntityLogicalName = "", ComponentPrimaryFieldLogicalName =""                    } }
     };
 
         private Dictionary<int, ComponentType> DynamicsComponentTypeDictionary = new Dictionary<int, ComponentType>();
 
-        private readonly Dictionary<string, ComponentType> SpecialRulesForSolutionComponentDefinitionDictionary = new Dictionary<string, ComponentType>()
+        private readonly Dictionary<string, ComponentType> SpecialRulesForSolutionComponentDefinitionDictionary = new Dictionary<string, ComponentType>(StringComparer.OrdinalIgnoreCase)
        {
             {"customapi",new ComponentType { ComponentTypeName="Custom API"                            , ComponentEntityLogicalName = "customapi", ComponentPrimaryFieldLogicalName ="uniquename"                    } },
             {"customapirequestparameter",new ComponentType { ComponentTypeName="Custom API Request Parameter"                            , ComponentEntityLogicalName = "customapirequestparameter", ComponentPrimaryFieldLogicalName ="name"/*,  AdditionalFieldsForComparisonList = new List<AdditionalComponentFieldForComparison>{ AdditionalComponentFieldForComparison.Create("customapiid",typeof(EntityReference)) }*/                        } },
@@ -147,8 +142,6 @@ namespace Emmetienne.SolutionReplicator.Model
             {"environmentvariablevalue",new ComponentType { ComponentTypeName="Environment Variable Value"                           , ComponentEntityLogicalName = "environmentvariablevalue", ComponentPrimaryFieldLogicalName ="schemaname", DoNotAddToSolution = false  }
             }
        };
-
-        //private Dictionary<int, ComponentType> CachedDynamicsComponentTypeNameDictionary = new Dictionary<int, ComponentType>();
 
         public ComponentType GetComponentTypeFromComponentTypeCode(int componentTypeCode)
         {
@@ -210,7 +203,6 @@ namespace Emmetienne.SolutionReplicator.Model
 
             List<Entity> targetSolutionComponentDefinition = null;
 
-            // create a dictionary from sourcesolutioncomponentdefinition using the primaryentityname field
             foreach (var singleSolutionComponentDefinition in sourceSolutionComponentDefinitionList)
             {
                 var tmpComponentType = ToComponentType(singleSolutionComponentDefinition, true);
@@ -225,7 +217,7 @@ namespace Emmetienne.SolutionReplicator.Model
             var targetSolutionComponentDefinitionRepository = new SolutionComponentsDefinitionsRepository(targetService);
             targetSolutionComponentDefinition = targetSolutionComponentDefinitionRepository.GetSolutionComponentDefinitions();
 
-            foreach(var entry in DynamicsComponentTypeDictionary)
+            foreach (var entry in DynamicsComponentTypeDictionary)
             {
                 var foundTargetSolutionComponentDefinition = targetSolutionComponentDefinition.FirstOrDefault(x => x.GetAttributeValue<string>(solutioncomponentdefinition.primaryentityname) == DynamicsComponentTypeDictionary[entry.Key].ComponentEntityLogicalName);
 
@@ -234,76 +226,6 @@ namespace Emmetienne.SolutionReplicator.Model
 
                 DynamicsComponentTypeDictionary[entry.Key].TargetComponentTypeCode = foundTargetSolutionComponentDefinition.GetAttributeValue<int>(solutioncomponentdefinition.solutioncomponenttype);
             }
-        }
-
-        //public void HandleComponentCache(IOrganizationService sourceService, IOrganizationService targetService)
-        //{
-        //    if (sourceService == null)
-        //        return;
-
-        //    if (CachedDynamicsComponentTypeNameDictionary.Count != 0)
-        //        return;
-
-        //    var entityLogicalNameList = DynamicsComponentTypeNameDictionary.Keys.ToList();
-
-        //    var sourceEntityTypeCodeDictionary = RetrieveEntitiesMetadata(sourceService, entityLogicalNameList);
-
-        //    Dictionary<string, int> targetEntityTypeCodeDictionary = null;
-
-        //    if (targetService != null)
-        //        targetEntityTypeCodeDictionary = RetrieveEntitiesMetadata(targetService, entityLogicalNameList);
-
-        //    if (targetEntityTypeCodeDictionary != null && sourceEntityTypeCodeDictionary.Count != targetEntityTypeCodeDictionary.Count)
-        //        throw new System.Exception("The source and target environments have different number of entities");
-
-        //    foreach (var entityLogicalName in entityLogicalNameList)
-        //    {
-        //        var sourceComponentTypeCode = sourceEntityTypeCodeDictionary[entityLogicalName];
-
-        //        int? targetComponentTypeCode = targetEntityTypeCodeDictionary != null ? targetEntityTypeCodeDictionary[entityLogicalName] : (int?)null;
-
-        //        AddComponentTypeToCache(entityLogicalName, sourceComponentTypeCode, targetComponentTypeCode);
-        //    }
-        //}
-
-        private Dictionary<string, int> RetrieveEntitiesMetadata(IOrganizationService service, List<string> entityLogicalNameList)
-        {
-            var entityObjectTypeCodeDictionary = new Dictionary<string, int>();
-
-            var batchedRequests = new ExecuteMultipleRequest()
-            {
-                Settings = new ExecuteMultipleSettings()
-                {
-                    ContinueOnError = false,
-                    ReturnResponses = true
-                },
-                Requests = new OrganizationRequestCollection()
-            };
-
-            foreach (var entityLogicalName in entityLogicalNameList)
-            {
-                var tmpRequest = new RetrieveEntityRequest()
-                {
-                    EntityFilters = EntityFilters.Entity,
-                    LogicalName = entityLogicalName
-                };
-
-                batchedRequests.Requests.Add(tmpRequest);
-            }
-
-            var batchedResponse = (ExecuteMultipleResponse)service.Execute(batchedRequests);
-
-            foreach (var singleResponse in batchedResponse.Responses)
-            {
-                var tmpResponse = (RetrieveEntityResponse)singleResponse.Response;
-
-                if (tmpResponse.EntityMetadata == null || tmpResponse.EntityMetadata.ObjectTypeCode == null)
-                    continue;
-
-                entityObjectTypeCodeDictionary.Add(tmpResponse.EntityMetadata.LogicalName, tmpResponse.EntityMetadata.ObjectTypeCode.Value);
-            }
-
-            return entityObjectTypeCodeDictionary;
         }
     }
 }

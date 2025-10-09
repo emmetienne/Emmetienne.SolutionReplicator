@@ -4,6 +4,7 @@ using Emmetienne.SolutionReplicator.Services;
 using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
 using System;
+using System.Collections.Specialized;
 using XrmToolBox.Extensibility;
 
 namespace Emmetienne.SolutionReplicator
@@ -160,12 +161,16 @@ namespace Emmetienne.SolutionReplicator
             solutionReplicatorService.ReplicateSolution(this.solutionComponentsGridViewComponent.SolutionComponents, targetSolutionSettings);
         }
 
-        private void tsbSecondEnvinronment_Click(object sender, EventArgs e)
+        private void OnSecondEnvironmentButtonClick(object sender, EventArgs e)
         {
             EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(true);
 
             AddAdditionalOrganization();
+        }
 
+        protected override void ConnectionDetailsUpdated(NotifyCollectionChangedEventArgs e)
+        {
+            // sistemare che non ho capito che fa
             if (this.AdditionalConnectionDetails.Count == 0)
             {
                 EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(false);
@@ -187,6 +192,5 @@ namespace Emmetienne.SolutionReplicator
 
             logService.LogWarning($"Target environment connection has changed to: {this.AdditionalConnectionDetails[0].WebApplicationUrl}");
         }
-
     }
 }

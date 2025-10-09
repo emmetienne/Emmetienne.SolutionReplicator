@@ -143,7 +143,7 @@ namespace Emmetienne.SolutionReplicator
             this.tsbSecondEnvinronment.Name = "tsbSecondEnvinronment";
             this.tsbSecondEnvinronment.Size = new System.Drawing.Size(175, 22);
             this.tsbSecondEnvinronment.Text = "Connect to target environment";
-            this.tsbSecondEnvinronment.Click += new System.EventHandler(this.tsbSecondEnvinronment_Click);
+            this.tsbSecondEnvinronment.Click += new System.EventHandler(this.OnSecondEnvironmentButtonClick);
             // 
             // splitContainer
             // 
@@ -735,12 +735,7 @@ namespace Emmetienne.SolutionReplicator
             this.PerformLayout();
 
         }
-
-        protected override void ConnectionDetailsUpdated(NotifyCollectionChangedEventArgs e)
-        {
-            // sistemare che non ho capito che fa
-            return;
-        }
+             
 
         #endregion
         private System.Windows.Forms.ToolStrip toolStripMenu;

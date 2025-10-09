@@ -33,7 +33,7 @@ namespace Emmetienne.SolutionReplicator.Services
         {
             pluginControlBase.WorkAsync(new WorkAsyncInfo
             {
-                Message = "Searching component on target environment",
+                Message = "Replicating components on target environment",
                 Work = (worker, args) =>
                 {
                     EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(true);

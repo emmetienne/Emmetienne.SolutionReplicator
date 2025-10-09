@@ -33,6 +33,7 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
                     sourceEnvEntityQuery.NoLock = true;
                     sourceEnvEntityQuery.ColumnSet.AddColumns(componentTypeContent.ComponentPrimaryFieldLogicalName);
 
+
                     sourceEnvEntityQuery.Criteria.AddCondition(primaryKeyLogicalName, ConditionOperator.Equal, component.ObjectId);
 
 
@@ -64,6 +65,10 @@ namespace Emmetienne.SolutionReplicator.ComponentSearchServiceStrategy.Strategy
                     targetEnvEntityQuery.NoLock = true;
 
                     targetEnvEntityQuery.Criteria.AddCondition(componentTypeContent.ComponentPrimaryFieldLogicalName, ConditionOperator.Equal, comparisonFieldValue);
+
+                    // workaround for workflows
+                    if (componentType == 29)
+                        targetEnvEntityQuery.Criteria.AddCondition("parentworkflowid", ConditionOperator.Null);
 
                     if (componentTypeContent.AdditionalFieldsForComparisonList != null && componentTypeContent.AdditionalFieldsForComparisonList.Count > 0)
                     {
