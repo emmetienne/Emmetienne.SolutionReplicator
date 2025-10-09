@@ -97,6 +97,14 @@ namespace Emmetienne.SolutionReplicator.Services
 
         public void ExportSolution(bool exportFromSourceEnironment)
         {
+            if (string.IsNullOrWhiteSpace(this.exportSolutionPath))
+            {
+                var noExportFolderError = "No export folder has been provided";
+                MessageBox.Show(noExportFolderError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                logService.LogError(noExportFolderError);
+                return;
+            }
+
             var spinnerMessage = exportFromSourceEnironment ? $"Exporting solution {sourceSolutionUniqueName} from source environment" : $"Exporting solution {targetSolutionUniqueName} from target environment";
 
             pluginControlBase.WorkAsync(new WorkAsyncInfo
@@ -113,10 +121,15 @@ namespace Emmetienne.SolutionReplicator.Services
 
                         var solutionNameToUse = exportFromSourceEnironment ? sourceSolutionUniqueName : targetSolutionUniqueName;
 
-
                         if (string.IsNullOrEmpty(solutionNameToUse))
                         {
-                            logService.LogError($"No solution has been selected for {environmentMessage} environment");
+                            var noSolutionSelectedError = $"No solution has been selected for {environmentMessage} environment";
+                            MessageBox.Show(noSolutionSelectedError, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                            logService.LogError(noSolutionSelectedError);
+
+                            EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(false);
+
                             return;
                         }
 
