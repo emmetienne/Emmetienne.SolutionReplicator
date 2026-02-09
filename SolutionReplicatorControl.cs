@@ -5,6 +5,7 @@ using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Specialized;
+using System.Windows.Forms;
 using XrmToolBox.Extensibility;
 
 namespace Emmetienne.SolutionReplicator
@@ -119,7 +120,13 @@ namespace Emmetienne.SolutionReplicator
         /// </summary>
         public override void UpdateConnection(IOrganizationService newService, ConnectionDetail detail, string actionName, object parameter)
         {
-            if (Service == newService)
+            if (actionName.Equals("AdditionalOrganization", StringComparison.OrdinalIgnoreCase) && newService != null)
+            {
+                base.UpdateConnection(newService, detail, actionName, parameter);
+                return;
+            }
+
+            if (newService == null || newService == Service)
                 return;
 
             base.UpdateConnection(newService, detail, actionName, parameter);
@@ -164,6 +171,12 @@ namespace Emmetienne.SolutionReplicator
         private void OnSecondEnvironmentButtonClick(object sender, EventArgs e)
         {
             EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(true);
+
+            if (this.Service == null)
+            {
+                MessageBox.Show("Please connect to a source environment first.", "Connection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             AddAdditionalOrganization();
         }
