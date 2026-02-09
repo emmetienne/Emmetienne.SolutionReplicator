@@ -1,4 +1,6 @@
-﻿using System.Collections.Specialized;
+﻿using Emmetienne.SolutionReplicator.Controls;
+using Emmetienne.SolutionReplicator.EventBus;
+using System.Collections.Specialized;
 
 namespace Emmetienne.SolutionReplicator
 {
@@ -15,6 +17,8 @@ namespace Emmetienne.SolutionReplicator
         /// <param name="disposing">true si les ressources managées doivent être supprimées ; sinon, false.</param>
         protected override void Dispose(bool disposing)
         {
+            EventBusSingleton.Instance.Reset();
+
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -35,7 +39,7 @@ namespace Emmetienne.SolutionReplicator
             this.tsbLoadSolution = new System.Windows.Forms.ToolStripButton();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbSecondEnvinronment = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.splitContainer = new Emmetienne.SolutionReplicator.Controls.SplitContainerWithHandlesControl();
             this.sourceSolutionGroupBox = new System.Windows.Forms.GroupBox();
             this.solutionTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.solutionGridView = new System.Windows.Forms.DataGridView();
@@ -43,12 +47,12 @@ namespace Emmetienne.SolutionReplicator
             this.solutionFilterTextBox = new System.Windows.Forms.TextBox();
             this.showManagedCheckBox = new System.Windows.Forms.CheckBox();
             this.filterNameSolution = new System.Windows.Forms.Label();
-            this.componentsAndOptionsSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.componentsAndOptionsSplitContainer = new Emmetienne.SolutionReplicator.Controls.SplitContainerWithHandlesControl();
             this.sourceSolutionComponentsGroupBox = new System.Windows.Forms.GroupBox();
             this.solutionComponentsTable = new System.Windows.Forms.TableLayoutPanel();
             this.solutionComponentDataGridView = new System.Windows.Forms.DataGridView();
             this.showComponentNameCheckBox = new System.Windows.Forms.CheckBox();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer1 = new Emmetienne.SolutionReplicator.Controls.SplitContainerWithHandlesControl();
             this.targetSolutionGroupBox = new System.Windows.Forms.GroupBox();
             this.targetSolutionSettingsTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.solutionNameTextBox = new System.Windows.Forms.TextBox();
@@ -68,7 +72,7 @@ namespace Emmetienne.SolutionReplicator
             this.targetSolutionExportAndOpenTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.openTargetSolutionButton = new System.Windows.Forms.Button();
             this.exportTargetSolutionButton = new System.Windows.Forms.Button();
-            this.splitContainerLayout = new System.Windows.Forms.SplitContainer();
+            this.splitContainerLayout = new Emmetienne.SolutionReplicator.Controls.SplitContainerWithHandlesControl();
             this.logGroupBox = new System.Windows.Forms.GroupBox();
             this.logDataGridView = new System.Windows.Forms.DataGridView();
             this.timestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -741,12 +745,9 @@ namespace Emmetienne.SolutionReplicator
         private System.Windows.Forms.ToolStrip toolStripMenu;
         private System.Windows.Forms.ToolStripButton tsbLoadSolution;
         private System.Windows.Forms.ToolStripSeparator tssSeparator1;
-        private System.Windows.Forms.SplitContainer splitContainer;
         private System.Windows.Forms.DataGridView solutionGridView;
-        private System.Windows.Forms.SplitContainer splitContainerLayout;
         private System.Windows.Forms.GroupBox logGroupBox;
         private System.Windows.Forms.DataGridView solutionComponentDataGridView;
-        private System.Windows.Forms.SplitContainer componentsAndOptionsSplitContainer;
         private System.Windows.Forms.GroupBox targetSolutionGroupBox;
         private System.Windows.Forms.TableLayoutPanel targetSolutionSettingsTableLayout;
         private System.Windows.Forms.Label solutionNameLabel;
@@ -772,7 +773,6 @@ namespace Emmetienne.SolutionReplicator
         private System.Windows.Forms.TableLayoutPanel exportPathTableLayoutPanel;
         private System.Windows.Forms.TextBox exportPathTextBox;
         private System.Windows.Forms.Button openFolderSelectionButton;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox solutionExportGroupBox;
         private System.Windows.Forms.TableLayoutPanel exportTableLayout;
         private System.Windows.Forms.TableLayoutPanel targetSolutionExportAndOpenTableLayout;
@@ -782,5 +782,9 @@ namespace Emmetienne.SolutionReplicator
         private System.Windows.Forms.Label filterNameSolution;
         private System.Windows.Forms.TableLayoutPanel solutionComponentsTable;
         private System.Windows.Forms.CheckBox showComponentNameCheckBox;
+        private SplitContainerWithHandlesControl splitContainer;
+        private SplitContainerWithHandlesControl splitContainerLayout;
+        private SplitContainerWithHandlesControl componentsAndOptionsSplitContainer;
+        private SplitContainerWithHandlesControl splitContainer1;
     }
 }

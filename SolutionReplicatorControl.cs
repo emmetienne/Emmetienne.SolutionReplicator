@@ -170,7 +170,6 @@ namespace Emmetienne.SolutionReplicator
 
         protected override void ConnectionDetailsUpdated(NotifyCollectionChangedEventArgs e)
         {
-            // sistemare che non ho capito che fa
             if (this.AdditionalConnectionDetails.Count == 0)
             {
                 EventBus.EventBusSingleton.Instance.disableUiElements?.Invoke(false);

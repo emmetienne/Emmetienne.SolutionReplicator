@@ -3,6 +3,7 @@ using Emmetienne.SolutionReplicator.Model.Logging;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Emmetienne.SolutionReplicator.EventBus
 {
@@ -50,5 +51,16 @@ namespace Emmetienne.SolutionReplicator.EventBus
         public Action clearSolutionComponentView;
         #endregion
 
+        public void Reset(){
+            var fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach(var field in fields)
+            {
+                if (typeof(Delegate).IsAssignableFrom(field.FieldType))
+                {
+                    field.SetValue(this, null);
+                }
+            }
+        }
     }
 }

@@ -198,6 +198,9 @@
     <Compile Include="Components\SourceEnvironmentLabelView.cs" />
     <Compile Include="Components\ReplicateSolutionButtonView.cs" />
     <Compile Include="Components\TargetEnvironmentLabelView.cs" />
+    <Compile Include="Controls\SplitContainerWithHandlesControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="EventBus\EventBusSingleton.cs" />
     <Compile Include="Model\AdditionalComponentFieldForComparison.cs" />
     <Compile Include="Model\Entities\SolutionComponentDefinition.cs" />
