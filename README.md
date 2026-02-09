@@ -4,6 +4,7 @@
 Solution Replicator is a plugin for [XrmToolbox](https://www.xrmtoolbox.com) that allows you to replicate a solution between environments. It is useful, for example, when you need to compare the customization.xml file between two environments.
 
 ## Changelog
+- 1.2026.2.1  - Refactored component cache, improved connections handling and added handles to split container
 - 1.2025.10.1 - Fixed a bug that prevented the tool from working when some apps were not present in the target environment, refactored the component cache engine, other minor improvements
 - 1.2025.3.1  - Fixed a bug that prevents the tool to perform entity key replication, QoL improvements (added component name column in the solution components pane, optimization for the component cache engine and visualization of the component types when only the source environment is selected), added handling for Environment Variable Definition and Environment Variable Value components, added new state for the components that cannot be replicated for various reason (e.g. Ribbon Customization for the Applications Ribbons component)
 - 1.2024.12.2 - Minor fix
